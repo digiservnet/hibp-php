@@ -1,6 +1,6 @@
 <?php
 /**
- * DESCRIPTION_HERE
+ * PwnedPassword interface
  *
  * @author Ian <ian@ianh.io>
  * @since 27/02/2018

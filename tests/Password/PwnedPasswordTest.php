@@ -113,4 +113,17 @@ class PwnedPasswordTest extends TestCase
 
         $this->assertEquals(0, $response);
     }
+
+    /** @test */
+    public function invalid_range_request_should_return_status_code_400()
+    {
+        try {
+            $this->pwnedPassword->range(
+                'ZXCVB',
+                '0000000000000000000000000000000000000000'
+            );
+        } catch (GuzzleException $e) {
+            $this->assertEquals(400, $e->getCode());
+        }
+    }
 }
