@@ -4,6 +4,8 @@ namespace Icawebdesign\Hibp\Password;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Icawebdesign\Hibp\Models\PwnedPassword as PasswordData;
+use Tightenco\Collect\Support\Collection;
 
 /**
  * PwnedPassword module
@@ -72,7 +74,7 @@ class PwnedPassword implements PwnedPasswordInterface
      * @throws GuzzleException
      * @return int
      */
-    public function range(string $hashSnippet, string $hash)
+    public function range(string $hashSnippet, string $hash): int
     {
         $hashSnippet = strtoupper($hashSnippet);
         $hash = strtoupper($hash);
@@ -88,24 +90,42 @@ class PwnedPassword implements PwnedPasswordInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        $results = collect(explode("\r\n", (string)$response->getBody()));
-        $match = $results->map(function($hashSuffix) use ($hashSnippet, $hash) {
-            list($suffix, $count) = explode(':', $hashSuffix);
-            $fullHash = sprintf('%s%s', $hashSnippet, $suffix);
-
-            return collect([
-                $fullHash => [
-                    'hashSnippet' => $fullHash,
-                    'count' => (int)$count,
-                    'matched' => $fullHash == $hash,
-                ],
-            ]);
-        });
+        $pwnedPassword = new PasswordData();
+        $match = $pwnedPassword->getRangeData($response, $hashSnippet, $hash);
 
         if ($match->collapse()->has($hash)) {
             return $match->collapse()->get($hash)['count'];
         }
 
         return 0;
+    }
+
+    /**
+     * @param string $hashSnippet
+     * @param string $hash
+     *
+     * @return Collection
+     * @throws GuzzleException
+     */
+    public function rangeData(string $hashSnippet, string $hash): Collection
+    {
+        $hashSnippet = strtoupper($hashSnippet);
+        $hash = strtoupper($hash);
+
+        try {
+            $response = $this->client->request('GET',
+                sprintf('%s/range/%s', $this->config['api_root'], $hashSnippet)
+            );
+        } catch (GuzzleException $e) {
+            $this->statusCode = $e->getCode();
+            throw $e;
+        }
+
+        $this->statusCode = $response->getStatusCode();
+
+        $pwnedPassword = new PasswordData();
+        $match = $pwnedPassword->getRangeData($response, $hashSnippet, $hash);
+
+        return $match->collapse();
     }
 }

@@ -1,6 +1,6 @@
 <?php
 /**
- * PwnedPasswords tests
+ * PwnedPassword tests
  *
  * @author Ian <ian@ianh.io>
  * @since 28/02/2018
@@ -9,6 +9,7 @@
 use GuzzleHttp\Exception\GuzzleException;
 use Icawebdesign\Hibp\Password\PwnedPassword;
 use PHPUnit\Framework\TestCase;
+use Tightenco\Collect\Support\Collection;
 
 class PwnedPasswordTest extends TestCase
 {
@@ -125,5 +126,20 @@ class PwnedPasswordTest extends TestCase
         } catch (GuzzleException $e) {
             $this->assertEquals(400, $e->getCode());
         }
+    }
+
+    /** @test */
+    public function successful_range_data_lookup_should_return_collection()
+    {
+        try {
+            $data = $this->pwnedPassword->rangeData(
+                '5baa6',
+                '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
+            );
+        } catch (GuzzleException $e) {
+            echo $e->getCode();
+        }
+
+        $this->assertInstanceOf(Collection::class, $data);
     }
 }
