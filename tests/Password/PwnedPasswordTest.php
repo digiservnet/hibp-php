@@ -31,7 +31,7 @@ class PwnedPasswordTest extends TestCase
     /** @test */
     public function instance_of_class_should_be_a_PwnedPassword()
     {
-        $this->assertInstanceOf(Icawebdesign\Hibp\Password\PwnedPassword::class, $this->pwnedPassword);
+        $this->assertInstanceOf(PwnedPassword::class, $this->pwnedPassword);
     }
 
     /** @test */

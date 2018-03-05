@@ -1,14 +1,14 @@
 <?php
 /**
- * PwnedPassword interface
+ * Breaches interface
  *
  * @author Ian <ian@ianh.io>
- * @since 27/02/2018
+ * @since 04/03/2018
  */
 
-namespace Icawebdesign\Hibp\Password;
+namespace Icawebdesign\Hibp\Breaches;
 
-interface PwnedPasswordInterface
+interface BreachesInterface
 {
     /**
      * @param array $config

@@ -5,6 +5,12 @@ namespace Icawebdesign\Hibp\Password;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 
+/**
+ * PwnedPassword module
+ *
+ * @author Ian <ian@ianh.io>
+ * @since 27/02/2018
+ */
 class PwnedPassword implements PwnedPasswordInterface
 {
     /** @var array */
