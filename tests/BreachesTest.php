@@ -16,6 +16,18 @@ class BreachesTest extends TestCase
 {
     protected $breaches;
 
+    /**
+     * Add delay between tests to prevent hitting rate limit
+     *
+     * @see https://haveibeenpwned.com/API/v2#RateLimiting
+     *
+     * @param float $delay
+     */
+    protected function addDelay(float $delay = 1.2)
+    {
+        usleep($delay * 1000000);
+    }
+
     public function setUp()
     {
         parent::setUp();
@@ -33,6 +45,8 @@ class BreachesTest extends TestCase
     public function instance_of_class_should_be_a_Breaches()
     {
         $this->assertInstanceOf(Breaches::class, $this->breaches);
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -43,6 +57,8 @@ class BreachesTest extends TestCase
         } catch (GuzzleException $e) {}
 
         $this->assertEquals(200, $this->breaches->getStatusCode());
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -55,6 +71,8 @@ class BreachesTest extends TestCase
         $this->assertInstanceOf(Collection::class, $breaches);
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -83,6 +101,8 @@ class BreachesTest extends TestCase
         $this->assertAttributeInternalType('bool', 'retired', $breach);
         $this->assertAttributeInternalType('bool', 'spamList', $breach);
         $this->assertAttributeNotEmpty('logoType', $breach);
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -93,6 +113,8 @@ class BreachesTest extends TestCase
         } catch (GuzzleException $e) {}
 
         $this->assertEquals(200, $this->breaches->getStatusCode());
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -103,6 +125,8 @@ class BreachesTest extends TestCase
         } catch (GuzzleException $e) {}
 
         $this->assertInstanceOf(Collection::class, $dataClasses);
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -113,6 +137,8 @@ class BreachesTest extends TestCase
         } catch (GuzzleException $e) {}
 
         $this->assertEquals(200, $this->breaches->getStatusCode());
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -128,6 +154,8 @@ class BreachesTest extends TestCase
         $this->assertInstanceOf(Collection::class, $breaches);
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -138,5 +166,7 @@ class BreachesTest extends TestCase
         } catch (GuzzleException $e) {
             $this->assertEquals(404, $e->getCode());
         }
+
+        $this->addDelay();
     }
 }

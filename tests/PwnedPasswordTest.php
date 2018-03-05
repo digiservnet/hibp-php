@@ -15,6 +15,18 @@ class PwnedPasswordTest extends TestCase
 {
     protected $pwnedPassword;
 
+    /**
+     * Add delay between tests to prevent hitting rate limit
+     *
+     * @see https://haveibeenpwned.com/API/v2#RateLimiting
+     *
+     * @param float $delay
+     */
+    protected function addDelay(float $delay = 1.2)
+    {
+        usleep($delay * 1000000);
+    }
+
     public function setUp()
     {
         parent::setUp();
@@ -33,6 +45,8 @@ class PwnedPasswordTest extends TestCase
     public function instance_of_class_should_be_a_PwnedPassword()
     {
         $this->assertInstanceOf(PwnedPassword::class, $this->pwnedPassword);
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -44,6 +58,8 @@ class PwnedPasswordTest extends TestCase
         }
 
         $this->assertEquals(200, $this->pwnedPassword->getStatusCode());
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -58,6 +74,8 @@ class PwnedPasswordTest extends TestCase
         if (200 === $this->pwnedPassword->getStatusCode()) {
             $this->assertInternalType('int', $response);
         }
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -68,6 +86,8 @@ class PwnedPasswordTest extends TestCase
         } catch (GuzzleException $e) {
             $this->assertEquals(404, $e->getCode());
         }
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -83,6 +103,8 @@ class PwnedPasswordTest extends TestCase
         }
 
         $this->assertEquals(200, $this->pwnedPassword->getStatusCode());
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -98,6 +120,8 @@ class PwnedPasswordTest extends TestCase
         }
 
         $this->assertGreaterThan(0, $response);
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -113,6 +137,8 @@ class PwnedPasswordTest extends TestCase
         }
 
         $this->assertEquals(0, $response);
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -126,6 +152,8 @@ class PwnedPasswordTest extends TestCase
         } catch (GuzzleException $e) {
             $this->assertEquals(400, $e->getCode());
         }
+
+        $this->addDelay();
     }
 
     /** @test */
@@ -141,5 +169,7 @@ class PwnedPasswordTest extends TestCase
         }
 
         $this->assertInstanceOf(Collection::class, $data);
+
+        $this->addDelay();
     }
 }
