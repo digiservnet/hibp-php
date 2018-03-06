@@ -401,9 +401,9 @@ class BreachSiteEntity
     /**
      * Transform data map into entity
      *
-     * @param stdClass|null $data
+     * @param stdClass $data
      */
-    public function map(stdClass $data = null)
+    public function map(stdClass $data)
     {
         $this
             ->setTitle($data->Title)
