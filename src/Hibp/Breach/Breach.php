@@ -1,6 +1,6 @@
 <?php
 
-namespace Icawebdesign\Hibp\Breaches;
+namespace Icawebdesign\Hibp\Breach;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
@@ -8,12 +8,12 @@ use stdClass;
 use Tightenco\Collect\Support\Collection;
 
 /**
- * Breaches module
+ * Breach module
  *
  * @author Ian <ian@ianh.io>
  * @since 04/03/2018
  */
-class Breaches implements BreachesInterface
+class Breach implements BreachInterface
 {
     /** @var array */
     protected $config;

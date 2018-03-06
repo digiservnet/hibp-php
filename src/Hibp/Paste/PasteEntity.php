@@ -6,12 +6,12 @@
  * @since 05/03/2018
  */
 
-namespace Icawebdesign\Hibp\Pastes;
+namespace Icawebdesign\Hibp\Paste;
 
 use Carbon\Carbon;
 use stdClass;
 
-class PastesEntity
+class PasteEntity
 {
     /** @var string */
     protected $source;
@@ -47,9 +47,9 @@ class PastesEntity
     /**
      * @param string $source
      *
-     * @return PastesEntity
+     * @return PasteEntity
      */
-    public function setSource(string $source): PastesEntity
+    public function setSource(string $source): PasteEntity
     {
         $this->source = $source;
 
@@ -67,9 +67,9 @@ class PastesEntity
     /**
      * @param string $id
      *
-     * @return PastesEntity
+     * @return PasteEntity
      */
-    public function setId(string $id): PastesEntity
+    public function setId(string $id): PasteEntity
     {
         $this->id = $id;
 
@@ -87,9 +87,9 @@ class PastesEntity
     /**
      * @param string|null $title
      *
-     * @return PastesEntity
+     * @return PasteEntity
      */
-    public function setTitle(string $title = null): PastesEntity
+    public function setTitle(string $title = null): PasteEntity
     {
         $this->title = $title;
 
@@ -107,9 +107,9 @@ class PastesEntity
     /**
      * @param string|null $date
      *
-     * @return PastesEntity
+     * @return PasteEntity
      */
-    public function setDate(string $date = null): PastesEntity
+    public function setDate(string $date = null): PasteEntity
     {
         if (null === $date) {
             $this->date = null;
@@ -133,9 +133,9 @@ class PastesEntity
     /**
      * @param int $emailCount
      *
-     * @return PastesEntity
+     * @return PasteEntity
      */
-    public function setEmailCount(int $emailCount): PastesEntity
+    public function setEmailCount(int $emailCount): PasteEntity
     {
         $this->emailCount = $emailCount;
 

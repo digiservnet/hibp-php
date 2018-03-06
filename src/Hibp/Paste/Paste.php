@@ -1,18 +1,18 @@
 <?php
 /**
- * Pastes
+ * Paste
  *
  * @author Ian <ian@ianh.io>
  * @since 05/03/2018
  */
 
-namespace Icawebdesign\Hibp\Pastes;
+namespace Icawebdesign\Hibp\Paste;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Tightenco\Collect\Support\Collection;
 
-class Pastes implements PastesInterface
+class Paste implements PasteInterface
 {
     /** @var array */
     protected $config;
@@ -62,7 +62,7 @@ class Pastes implements PastesInterface
         $this->statusCode = $response->getStatusCode();
         return collect(json_decode((string)$response->getBody()))
             ->map(function($paste) {
-                return new PastesEntity($paste);
+                return new PasteEntity($paste);
             });
     }
 }

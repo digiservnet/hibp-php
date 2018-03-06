@@ -6,7 +6,7 @@
  * @since 04/03/2018
  */
 
-namespace Icawebdesign\Hibp\Breaches;
+namespace Icawebdesign\Hibp\Breach;
 
 use Carbon\Carbon;
 use stdClass;

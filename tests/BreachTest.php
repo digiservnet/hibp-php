@@ -1,18 +1,18 @@
 <?php
 /**
- * Breaches tests
+ * Breach tests
  *
  * @author Ian <ian@ianh.io>
  * @since 04/03/2018
  */
 
-use Icawebdesign\Hibp\Breaches\Breaches;
+use Icawebdesign\Hibp\Breach\Breach;
 use GuzzleHttp\Exception\GuzzleException;
-use Icawebdesign\Hibp\Breaches\BreachSiteEntity;
+use Icawebdesign\Hibp\Breach\BreachSiteEntity;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
 
-class BreachesTest extends TestCase
+class BreachTest extends TestCase
 {
     protected $breaches;
 
@@ -31,7 +31,7 @@ class BreachesTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->breaches = new Breaches([
+        $this->breaches = new Breach([
             'api_root' => 'https://haveibeenpwned.com/api/v2',
         ]);
     }
@@ -44,7 +44,7 @@ class BreachesTest extends TestCase
     /** @test */
     public function instance_of_class_should_be_a_Breaches()
     {
-        $this->assertInstanceOf(Breaches::class, $this->breaches);
+        $this->assertInstanceOf(Breach::class, $this->breaches);
 
         $this->addDelay();
     }

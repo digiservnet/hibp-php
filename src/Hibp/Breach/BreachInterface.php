@@ -1,14 +1,14 @@
 <?php
 /**
- * Pastes interface
+ * Breach interface
  *
  * @author Ian <ian@ianh.io>
- * @since 05/03/2018
+ * @since 04/03/2018
  */
 
-namespace Icawebdesign\Hibp\Pastes;
+namespace Icawebdesign\Hibp\Breach;
 
-interface PastesInterface
+interface BreachInterface
 {
     /**
      * @param array $config

@@ -1,18 +1,18 @@
 <?php
 
 use GuzzleHttp\Exception\GuzzleException;
-use Icawebdesign\Hibp\Pastes\Pastes;
+use Icawebdesign\Hibp\Paste\Paste;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
 
 /**
- * Pastes tests
+ * Paste tests
  *
  * @author Ian <ian@ianh.io>
  * @since 05/03/2018
  */
 
-class PastesTest extends TestCase
+class PasteTest extends TestCase
 {
     protected $pastes;
 
@@ -31,7 +31,7 @@ class PastesTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->pastes = new Pastes([
+        $this->pastes = new Paste([
             'api_root' => 'https://haveibeenpwned.com/api/v2',
         ]);
     }
@@ -45,7 +45,7 @@ class PastesTest extends TestCase
     /** @test */
     public function instance_of_class_should_be_a_Pastes()
     {
-        $this->assertInstanceOf(Pastes::class, $this->pastes);
+        $this->assertInstanceOf(Paste::class, $this->pastes);
 
         $this->addDelay();
     }
