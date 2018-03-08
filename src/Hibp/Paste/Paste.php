@@ -14,21 +14,24 @@ use Tightenco\Collect\Support\Collection;
 
 class Paste implements PasteInterface
 {
-    /** @var array */
-    protected $config;
-
     /** @var Client */
     protected $client;
 
     /** @var int */
     protected $statusCode;
 
+    /** @var string */
+    protected $apiRoot;
+
     /**
      * @param array $config
      */
     public function __construct(array $config)
     {
-        $this->config = $config;
+        $this->apiRoot = sprintf('%s/v%d',
+            $config['api_root'],
+            $config['api_version']
+        );
         $this->client = new Client();
     }
 
@@ -52,7 +55,7 @@ class Paste implements PasteInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/pasteaccount/%s', $this->config['api_root'], $emailAddress)
+                sprintf('%s/pasteaccount/%s', $this->apiRoot, $emailAddress)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();

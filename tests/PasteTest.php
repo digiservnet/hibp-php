@@ -1,6 +1,7 @@
 <?php
 
 use GuzzleHttp\Exception\GuzzleException;
+use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\Paste\Paste;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
@@ -31,9 +32,9 @@ class PasteTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->pastes = new Paste([
-            'api_root' => 'https://haveibeenpwned.com/api/v2',
-        ]);
+        $config = Hibp::loadConfig();
+
+        $this->pastes = new Paste($config['hibp']);
     }
 
     public function tearDown()

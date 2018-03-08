@@ -15,21 +15,21 @@ use Tightenco\Collect\Support\Collection;
  */
 class PwnedPassword implements PwnedPasswordInterface
 {
-    /** @var array */
-    protected $config;
-
     /** @var Client */
     protected $client;
 
     /** @var int */
     protected $statusCode;
 
+    /** @var string */
+    protected $apiRoot;
+
     /**
      * @param array $config
      */
     public function __construct(array $config)
     {
-        $this->config = $config;
+        $this->apiRoot = $config['pwned_passwords']['api_root'];
         $this->client = new Client();
     }
 
@@ -55,7 +55,7 @@ class PwnedPassword implements PwnedPasswordInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/pwnedpassword/%s', $this->config['api_root'], $password)
+                sprintf('%s/pwnedpassword/%s', $this->apiRoot, $password)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -81,7 +81,7 @@ class PwnedPassword implements PwnedPasswordInterface
 
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/range/%s', $this->config['api_root'], $hashSnippet)
+                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -114,7 +114,7 @@ class PwnedPassword implements PwnedPasswordInterface
 
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/range/%s', $this->config['api_root'], $hashSnippet)
+                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();

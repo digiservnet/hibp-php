@@ -9,6 +9,7 @@
 use Icawebdesign\Hibp\Breach\Breach;
 use GuzzleHttp\Exception\GuzzleException;
 use Icawebdesign\Hibp\Breach\BreachSiteEntity;
+use Icawebdesign\Hibp\Hibp;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
 
@@ -31,9 +32,9 @@ class BreachTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->breaches = new Breach([
-            'api_root' => 'https://haveibeenpwned.com/api/v2',
-        ]);
+        $config = Hibp::loadConfig();
+
+        $this->breaches = new Breach($config);
     }
 
     public function tearDown()

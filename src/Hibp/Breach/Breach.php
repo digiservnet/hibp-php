@@ -4,7 +4,6 @@ namespace Icawebdesign\Hibp\Breach;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
-use stdClass;
 use Tightenco\Collect\Support\Collection;
 
 /**
@@ -15,21 +14,24 @@ use Tightenco\Collect\Support\Collection;
  */
 class Breach implements BreachInterface
 {
-    /** @var array */
-    protected $config;
-
     /** @var Client */
     protected $client;
 
     /** @var int */
     protected $statusCode;
 
+    /** @var string */
+    protected $apiRoot;
+
     /**
      * @param array $config
      */
     public function __construct(array $config)
     {
-        $this->config = $config;
+        $this->apiRoot = sprintf('%s/v%d',
+            $config['hibp']['api_root'],
+            $config['hibp']['api_version']
+        );
         $this->client = new Client();
     }
 
@@ -51,7 +53,7 @@ class Breach implements BreachInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/breaches', $this->config['api_root'])
+                sprintf('%s/breaches', $this->apiRoot)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -71,14 +73,17 @@ class Breach implements BreachInterface
      *
      * @param string $account
      *
-     * @return stdClass
+     * @return BreachSiteEntity
      * @throws GuzzleException
      */
     public function getBreach(string $account): BreachSiteEntity
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/breach/%s', $this->config['api_root'], $account)
+                sprintf('%s/breach/%s',
+                    $this->apiRoot,
+                    urlencode($account)
+                )
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -98,7 +103,7 @@ class Breach implements BreachInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/dataclasses', $this->config['api_root'])
+                sprintf('%s/dataclasses', $this->apiRoot)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -123,7 +128,7 @@ class Breach implements BreachInterface
         try {
             $response = $this->client->request('GET',
                 sprintf('%s/breachedaccount/%s',
-                    $this->config['api_root'],
+                    $this->apiRoot,
                     urlencode($emailAddress)
                 )
             );

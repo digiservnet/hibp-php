@@ -7,6 +7,7 @@
  */
 
 use GuzzleHttp\Exception\GuzzleException;
+use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\Password\PwnedPassword;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
@@ -30,9 +31,9 @@ class PwnedPasswordTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $this->pwnedPassword = new PwnedPassword([
-            'api_root'      => 'https://api.pwnedpasswords.com',
-        ]);
+        $config = Hibp::loadConfig();
+
+        $this->pwnedPassword = new PwnedPassword($config);
     }
 
     public function tearDown()
@@ -68,7 +69,7 @@ class PwnedPasswordTest extends TestCase
         try {
             $response = $this->pwnedPassword->lookup('password');
         } catch (GuzzleException $e) {
-            dd($e->getCode());
+            echo $e->getCode();
         }
 
         if (200 === $this->pwnedPassword->getStatusCode()) {
