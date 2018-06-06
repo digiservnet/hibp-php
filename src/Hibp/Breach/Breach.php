@@ -28,10 +28,7 @@ class Breach implements BreachInterface
      */
     public function __construct(array $config)
     {
-        $this->apiRoot = sprintf('%s/v%d',
-            $config['hibp']['api_root'],
-            $config['hibp']['api_version']
-        );
+        $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
         $this->client = new Client();
     }
 
@@ -53,7 +50,7 @@ class Breach implements BreachInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/breaches', $this->apiRoot)
+                $this->apiRoot . '/breaches'
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -80,10 +77,7 @@ class Breach implements BreachInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/breach/%s',
-                    $this->apiRoot,
-                    urlencode($account)
-                )
+                $this->apiRoot . '/breach/' . urlencode($account)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -103,7 +97,7 @@ class Breach implements BreachInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/dataclasses', $this->apiRoot)
+                $this->apiRoot . '/dataclasses'
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -127,10 +121,7 @@ class Breach implements BreachInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/breachedaccount/%s',
-                    $this->apiRoot,
-                    urlencode($emailAddress)
-                )
+                $this->apiRoot . '/breachedaccount/' . urlencode($emailAddress)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();

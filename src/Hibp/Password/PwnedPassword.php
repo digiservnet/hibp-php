@@ -55,7 +55,7 @@ class PwnedPassword implements PwnedPasswordInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/pwnedpassword/%s', $this->apiRoot, $password)
+                $this->apiRoot . '/pwnedpassword/' . $password
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -81,7 +81,7 @@ class PwnedPassword implements PwnedPasswordInterface
 
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet)
+                $this->apiRoot . '/range/' . $hashSnippet
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
@@ -114,7 +114,7 @@ class PwnedPassword implements PwnedPasswordInterface
 
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet)
+                $this->apiRoot . '/range/' . $hashSnippet
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();

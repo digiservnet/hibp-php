@@ -29,7 +29,7 @@ class PwnedPassword
 
         return $results->map(function($hashSuffix) use ($hashSnippet, $hash) {
             list($suffix, $count) = explode(':', $hashSuffix);
-            $fullHash = sprintf('%s%s', $hashSnippet, $suffix);
+            $fullHash = $hashSnippet . $suffix;
 
             return collect([
                 $fullHash => [

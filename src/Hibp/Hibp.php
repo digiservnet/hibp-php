@@ -24,7 +24,7 @@ class Hibp
      */
     public static function loadConfig(): array
     {
-        self::$config = Yaml::parseFile(sprintf('%s/../config/config.yml', __DIR__));
+        self::$config = Yaml::parseFile(__DIR__ . '/../config/config.yml');
 
         return self::$config;
     }

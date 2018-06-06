@@ -28,10 +28,7 @@ class Paste implements PasteInterface
      */
     public function __construct(array $config)
     {
-        $this->apiRoot = sprintf('%s/v%d',
-            $config['api_root'],
-            $config['api_version']
-        );
+        $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
         $this->client = new Client();
     }
 
@@ -55,7 +52,7 @@ class Paste implements PasteInterface
     {
         try {
             $response = $this->client->request('GET',
-                sprintf('%s/pasteaccount/%s', $this->apiRoot, $emailAddress)
+                $this->apiRoot . '/pasteaccount/' . urlencode($emailAddress)
             );
         } catch (GuzzleException $e) {
             $this->statusCode = $e->getCode();
