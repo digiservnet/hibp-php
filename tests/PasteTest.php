@@ -3,6 +3,7 @@
 use GuzzleHttp\Exception\GuzzleException;
 use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\Paste\Paste;
+use Icawebdesign\Hibp\Paste\PasteEntity;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
 
@@ -74,7 +75,7 @@ class PasteTest extends TestCase
     {
         return collect(json_decode(self::PASTE_LOOKUP))
             ->map(function($paste) {
-                return new Icawebdesign\Hibp\Paste\PasteEntity($paste);
+                return new PasteEntity($paste);
             });
     }
 }
