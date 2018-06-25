@@ -4,6 +4,7 @@ namespace Icawebdesign\Hibp\Password;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\Models\PwnedPassword as PasswordData;
 use Tightenco\Collect\Support\Collection;
 
@@ -24,11 +25,10 @@ class PwnedPassword implements PwnedPasswordInterface
     /** @var string */
     protected $apiRoot;
 
-    /**
-     * @param array $config
-     */
-    public function __construct(array $config)
+    public function __construct()
     {
+        $config = Hibp::loadConfig();
+
         $this->apiRoot = $config['pwned_passwords']['api_root'];
         $this->client = new Client();
     }

@@ -7,9 +7,7 @@
  */
 
 use Icawebdesign\Hibp\Breach\Breach;
-use GuzzleHttp\Exception\GuzzleException;
 use Icawebdesign\Hibp\Breach\BreachSiteEntity;
-use Icawebdesign\Hibp\Hibp;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
 
@@ -28,9 +26,7 @@ class BreachTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = Hibp::loadConfig();
-
-        $this->breaches = new Breach($config);
+        $this->breaches = new Breach();
     }
 
     public function tearDown()
@@ -49,11 +45,11 @@ class BreachTest extends TestCase
     {
         $data = $this->getBreachSitesData();
 
-        $mock = Mockery::mock();
-        $mock->shouldReceive('getStatusCode')->once()->andReturn(200);
-        $mock->shouldReceive('getAllBreachSites')->once()->andReturn($data);
-        $mock->shouldReceive('count')->once()->andReturn($data->count());
-        $mock->shouldReceive('first')->once()->andReturn($data->first());
+        $mock = \Mockery::mock(Breach::class);
+        $mock->allows()->getStatusCode()->once()->andReturn(200);
+        $mock->allows()->getAllBreachSites()->once()->andReturn($data);
+        $mock->allows()->count()->once()->andReturn($data->count());
+        $mock->allows()->first()->once()->andReturn($data->first());
 
         $breaches = $mock->getAllBreachSites();
 
@@ -68,9 +64,9 @@ class BreachTest extends TestCase
     {
         $data = $this->getBreachSitesData();
 
-        $mock = \Mockery::mock();
-        $mock->shouldReceive('getStatusCode')->once()->andReturn(200);
-        $mock->shouldReceive('getBreach')
+        $mock = \Mockery::mock(Breach::class);
+        $mock->allows()->getStatusCode()->once()->andReturn(200);
+        $mock->allows()->getBreach()
              ->once()->with('000webhost')
                      ->andReturn($data->first());
 
@@ -100,9 +96,9 @@ class BreachTest extends TestCase
     {
         $data = $this->getDataClassesData();
 
-        $mock = \Mockery::mock();
-        $mock->shouldReceive('getStatusCode')->once()->andReturn(200);
-        $mock->shouldReceive('getAllDataClasses')->once()->andReturn($data);
+        $mock = \Mockery::mock(Breach::class);
+        $mock->allows()->getStatusCode()->once()->andReturn(200);
+        $mock->allows()->getAllDataClasses()->once()->andReturn($data);
 
         $dataClasses = $mock->getAllDataClasses();
         $this->assertEquals(200, $mock->getStatusCode());
@@ -113,9 +109,10 @@ class BreachTest extends TestCase
     public function getting_breach_data_for_account_should_return_a_collection()
     {
         $data = $this->getBreachedAccountData();
-        $mock = \Mockery::mock();
-        $mock->shouldReceive('getStatusCode')->once()->andReturn(200);
-        $mock->shouldReceive('getBreachedAccount')
+
+        $mock = \Mockery::mock(Breach::class);
+        $mock->allows()->getStatusCode()->once()->andReturn(200);
+        $mock->allows()->getBreachedAccount()
              ->once()->with('test@example.com')
              ->andReturn($data);
 

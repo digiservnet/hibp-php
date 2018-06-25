@@ -19,10 +19,8 @@ composer require icawebdesign/hibp-php
 
 ```php
 use Icawebdesign\Hibp\Breach;
-use IcaWebdesign\Hibp\Hibp;
 
-$config = Hibp::loadConfig();
-$breach = new Breach($config);
+$breach = new Breach();
 $breachSites = $breach->getAllBreachSites();
 ```
 
@@ -30,30 +28,24 @@ $breachSites = $breach->getAllBreachSites();
 
 ```php
 use Icawebdesign\Hibp\Breach;
-use IcaWebdesign\Hibp\Hibp;
 
-$config = Hibp::loadConfig();
-$breach = new Breach($config);
+$breach = new Breach();
 $breachSite = $breach->getBreach('adobe');
 ```
 
 ### Get list of data classes for breach sites
 ```php
 use Icawebdesign\Hibp\Breach;
-use IcaWebdesign\Hibp\Hibp;
 
-$config = Hibp::loadConfig();
-$breach = new Breach($config);
+$breach = new Breach();
 $dataClasses = $breach->getAllDataClasses();
 ```
 
 ### Get data for a breached email account
 ```php
 use Icawebdesign\Hibp\Breach;
-use IcaWebdesign\Hibp\Hibp;
 
-$config = Hibp::loadConfig();
-$breach = new Breach($config);
+$breach = new Breach();
 $data = $breach->getBreachedAccount('test@example.com');
 ```
 
@@ -62,20 +54,16 @@ $data = $breach->getBreachedAccount('test@example.com');
 ### Get number of times a password appears in the system
 ```php
 use Icawebdesign\Hibp\PwnedPassword;
-use IcaWebdesign\Hibp\Hibp;
 
-$config = Hibp::loadConfig();
-$pwnedPassword = new PwnedPassword($config);
+$pwnedPassword = new PwnedPassword();
 $count = $pwnedPassword->lookup('password');
 ```
 
 ### Get number of times the start of a hash appears in the system matching against a full hash
 ```php
 use Icawebdesign\Hibp\PwnedPassword;
-use IcaWebdesign\Hibp\Hibp;
 
-$config = Hibp::loadConfig();
-$pwnedPassword = new PwnedPassword($config);
+$pwnedPassword = new PwnedPassword();
 $count = $pwnedPassword->range(
     '5baa6',
     '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
@@ -85,10 +73,8 @@ $count = $pwnedPassword->range(
 ### Get a collection of hash data from a start of a hash and matching against a full hash
 ```php
 use Icawebdesign\Hibp\PwnedPassword;
-use IcaWebdesign\Hibp\Hibp;
 
-$config = Hibp::loadConfig();
-$pwnedPassword = new PwnedPassword($config);
+$pwnedPassword = new PwnedPassword();
 $hashData = $pwnedPassword->rangeData(
     '5baa6',
     '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
@@ -100,9 +86,7 @@ $hashData = $pwnedPassword->rangeData(
 ### Get a collection of pastes that a specified email account has appeared in
 ```php
 use Icawebdesign\Hibp\Paste;
-use IcaWebdesign\Hibp\Hibp;
 
-$config = Hibp::loadConfig();
-$paste = new Paste($config);
+$paste = new Paste();
 $data = $paste->lookup('test@example.com');
 ```

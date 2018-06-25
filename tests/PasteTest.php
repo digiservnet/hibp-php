@@ -1,7 +1,5 @@
 <?php
 
-use GuzzleHttp\Exception\GuzzleException;
-use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\Paste\Paste;
 use Icawebdesign\Hibp\Paste\PasteEntity;
 use PHPUnit\Framework\TestCase;
@@ -23,9 +21,7 @@ class PasteTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = Hibp::loadConfig();
-
-        $this->pastes = new Paste($config['hibp']);
+        $this->pastes = new Paste();
     }
 
     public function tearDown()
@@ -45,8 +41,8 @@ class PasteTest extends TestCase
     {
         $pasteData = $this->getPasteData();
         $mock = \Mockery::mock(Paste::class);
-        $mock->shouldReceive('getStatusCode')->once()->andReturn(200);
-        $mock->shouldReceive('lookup')
+        $mock->allows()->getStatusCode()->once()->andReturn(200);
+        $mock->allows()->lookup()
             ->once()
             ->with('test@example.com')
             ->andReturn($pasteData);

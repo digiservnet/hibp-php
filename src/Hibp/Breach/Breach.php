@@ -4,6 +4,7 @@ namespace Icawebdesign\Hibp\Breach;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use Icawebdesign\Hibp\Hibp;
 use Tightenco\Collect\Support\Collection;
 
 /**
@@ -23,11 +24,9 @@ class Breach implements BreachInterface
     /** @var string */
     protected $apiRoot;
 
-    /**
-     * @param array $config
-     */
-    public function __construct(array $config)
+    public function __construct()
     {
+        $config = Hibp::loadConfig();
         $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
         $this->client = new Client();
     }

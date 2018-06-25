@@ -6,8 +6,6 @@
  * @since 28/02/2018
  */
 
-use GuzzleHttp\Exception\GuzzleException;
-use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\Password\PwnedPassword;
 use PHPUnit\Framework\TestCase;
 use Tightenco\Collect\Support\Collection;
@@ -43,9 +41,7 @@ class PwnedPasswordTest extends TestCase
     public function setUp()
     {
         parent::setUp();
-        $config = Hibp::loadConfig();
-
-        $this->pwnedPassword = new PwnedPassword($config);
+        $this->pwnedPassword = new PwnedPassword();
     }
 
     public function tearDown()
@@ -64,8 +60,8 @@ class PwnedPasswordTest extends TestCase
     public function successful_lookup_should_return_an_integer_count()
     {
         $mock = \Mockery::mock(PwnedPassword::class);
-        $mock->shouldReceive('getStatusCode')->once()->andReturn(200);
-        $mock->shouldReceive('lookup')->once()->andReturn(100);
+        $mock->allows()->getStatusCode()->once()->andReturn(200);
+        $mock->allows()->lookup('password')->once()->andReturn(100);
 
         $this->assertEquals(200, $mock->getStatusCode());
 
@@ -79,7 +75,7 @@ class PwnedPasswordTest extends TestCase
     public function successful_range_lookup_should_return_positive_integer()
     {
         $mock = \Mockery::mock(PwnedPassword::class);
-        $mock->shouldReceive('range')
+        $mock->allows()->range()
             ->once()
             ->withArgs(['5baa6', '5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8'])
             ->once()
@@ -95,7 +91,7 @@ class PwnedPasswordTest extends TestCase
     public function failed_range_lookup_should_return_zero()
     {
         $mock = \Mockery::mock(PwnedPassword::class);
-        $mock->shouldReceive('range')
+        $mock->allows()->range()
             ->once()
             ->withArgs(['00000', '0000000000000000000000000000000000000000'])
             ->andReturn(0);
@@ -111,12 +107,14 @@ class PwnedPasswordTest extends TestCase
         $rangeData = $this->getRangeData('5baa6', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 
         $mock = \Mockery::mock(PwnedPassword::class);
-        $mock->shouldReceive('rangeData')
+        $mock->allows()->rangeData()
             ->once()
             ->withArgs(['5baa6', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'])
-            ->andReturn($rangeData);
+            ->andReturns($rangeData);
 
-        $this->assertInstanceOf(Collection::class, $rangeData);
+        $response = $mock->rangeData('5baa6', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+
+        $this->assertInstanceOf(Collection::class, $response);
     }
 
     /**

@@ -8,15 +8,38 @@
 
 namespace Icawebdesign\Hibp\Breach;
 
+use Tightenco\Collect\Support\Collection;
+
 interface BreachInterface
 {
-    /**
-     * @param array $config
-     */
-    public function __construct(array $config);
+    public function __construct();
 
     /**
      * @return int
      */
     public function getStatusCode(): int;
+
+    /**
+     * @return Collection
+     */
+    public function getAllBreachSites(): Collection;
+
+    /**
+     * @param string $account
+     *
+     * @return BreachSiteEntity
+     */
+    public function getBreach(string $account): BreachSiteEntity;
+
+    /**
+     * @return Collection
+     */
+    public function getAllDataClasses(): Collection;
+
+    /**
+     * @param string $emailAddress
+     *
+     * @return Collection
+     */
+    public function getBreachedAccount(string $emailAddress): Collection;
 }

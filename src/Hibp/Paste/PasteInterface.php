@@ -8,15 +8,24 @@
 
 namespace Icawebdesign\Hibp\Paste;
 
+use Tightenco\Collect\Support\Collection;
+
 interface PasteInterface
 {
     /**
      * @param array $config
      */
-    public function __construct(array $config);
+    public function __construct();
 
     /**
      * @return int
      */
     public function getStatusCode(): int;
+
+    /**
+     * @param string $emailAddress
+     *
+     * @return Collection
+     */
+    public function lookup(string $emailAddress): Collection;
 }
