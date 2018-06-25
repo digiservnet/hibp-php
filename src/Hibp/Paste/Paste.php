@@ -28,7 +28,7 @@ class Paste implements PasteInterface
      */
     public function __construct(array $config)
     {
-        $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
+        $this->apiRoot = $config['api_root'] . '/v' . $config['api_version'];
         $this->client = new Client();
     }
 
