@@ -11,7 +11,6 @@ namespace Icawebdesign\Hibp\Paste;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Icawebdesign\Hibp\Hibp;
-use Tightenco\Collect\Support\Collection;
 
 class Paste implements PasteInterface
 {
@@ -44,10 +43,10 @@ class Paste implements PasteInterface
      *
      * @param string $emailAddress
      *
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      * @throws GuzzleException
      */
-    public function lookup(string $emailAddress): Collection
+    public function lookup(string $emailAddress): \Tightenco\Collect\Support\Collection
     {
         try {
             $response = $this->client->request('GET',
@@ -59,7 +58,7 @@ class Paste implements PasteInterface
         }
 
         $this->statusCode = $response->getStatusCode();
-        return collect(json_decode((string)$response->getBody()))
+        return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
             ->map(function($paste) {
                 return new PasteEntity($paste);
             });

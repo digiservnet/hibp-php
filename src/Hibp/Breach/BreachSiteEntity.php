@@ -10,7 +10,6 @@ namespace Icawebdesign\Hibp\Breach;
 
 use Carbon\Carbon;
 use stdClass;
-use Tightenco\Collect\Support\Collection;
 
 class BreachSiteEntity
 {
@@ -38,7 +37,7 @@ class BreachSiteEntity
     /** @var string */
     protected $description;
 
-    /** @var Collection */
+    /** @var \Tightenco\Collect\Support\Collection */
     protected $dataClasses;
 
     /** @var bool */
@@ -253,7 +252,7 @@ class BreachSiteEntity
      */
     public function setDataClasses(array $dataClasses): BreachSiteEntity
     {
-        $this->dataClasses = collect($dataClasses);
+        $this->dataClasses = \Tightenco\Collect\Support\Collection::make($dataClasses);
 
         return $this;
     }

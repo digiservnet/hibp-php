@@ -3,7 +3,6 @@
 use Icawebdesign\Hibp\Paste\Paste;
 use Icawebdesign\Hibp\Paste\PasteEntity;
 use PHPUnit\Framework\TestCase;
-use Tightenco\Collect\Support\Collection;
 
 /**
  * Paste tests
@@ -50,7 +49,7 @@ class PasteTest extends TestCase
         $data = $mock->lookup('test@example.com');
         
         $this->assertEquals(200, $mock->getStatusCode());
-        $this->assertInstanceOf(Collection::class, $data);
+        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $data);
         $this->assertGreaterThan(0, $data->count());
 
         $paste = $data->first();
@@ -65,11 +64,11 @@ class PasteTest extends TestCase
     }
 
     /**
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      */
-    protected function getPasteData(): Collection
+    protected function getPasteData(): \Tightenco\Collect\Support\Collection
     {
-        return collect(json_decode(self::PASTE_LOOKUP))
+        return \Tightenco\Collect\Support\Collection::make(json_decode(self::PASTE_LOOKUP))
             ->map(function($paste) {
                 return new PasteEntity($paste);
             });

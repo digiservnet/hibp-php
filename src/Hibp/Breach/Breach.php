@@ -5,7 +5,6 @@ namespace Icawebdesign\Hibp\Breach;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use Icawebdesign\Hibp\Hibp;
-use Tightenco\Collect\Support\Collection;
 
 /**
  * Breach module
@@ -42,10 +41,10 @@ class Breach implements BreachInterface
     /**
      * Get all breach sites in system
      *
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      * @throws GuzzleException
      */
-    public function getAllBreachSites(): Collection
+    public function getAllBreachSites(): \Tightenco\Collect\Support\Collection
     {
         try {
             $response = $this->client->request('GET',
@@ -58,7 +57,7 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return collect(json_decode((string)$response->getBody()))
+        return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
             ->map(function($breach) {
                 return new BreachSiteEntity($breach);
             });
@@ -89,10 +88,10 @@ class Breach implements BreachInterface
     /**
      * Get list of all data classes in the system
      *
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      * @throws GuzzleException
      */
-    public function getAllDataClasses(): Collection
+    public function getAllDataClasses(): \Tightenco\Collect\Support\Collection
     {
         try {
             $response = $this->client->request('GET',
@@ -105,7 +104,7 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return collect(json_decode((string)$response->getBody()));
+        return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()));
     }
 
     /**
@@ -113,10 +112,10 @@ class Breach implements BreachInterface
      *
      * @param string $emailAddress
      *
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      * @throws GuzzleException
      */
-    public function getBreachedAccount(string $emailAddress): Collection
+    public function getBreachedAccount(string $emailAddress): \Tightenco\Collect\Support\Collection
     {
         try {
             $response = $this->client->request('GET',
@@ -129,7 +128,7 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return collect(json_decode((string)$response->getBody()))
+        return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
             ->map(function($breach) {
                 return new BreachSiteEntity($breach);
             });

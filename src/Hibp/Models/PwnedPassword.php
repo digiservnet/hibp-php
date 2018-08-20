@@ -1,6 +1,6 @@
 <?php
 /**
- * DESCRIPTION_HERE
+ * PwnedPassword
  *
  * @author Ian <ian@ianh.io>
  * @since 05/03/2018
@@ -9,7 +9,6 @@
 namespace Icawebdesign\Hibp\Models;
 
 use GuzzleHttp\Psr7\Response;
-use Tightenco\Collect\Support\Collection;
 
 class PwnedPassword
 {
@@ -18,20 +17,20 @@ class PwnedPassword
      * @param string $hashSnippet
      * @param string $hash
      *
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      */
-    public function getRangeData(Response $response, string $hashSnippet, string $hash): Collection
+    public function getRangeData(Response $response, string $hashSnippet, string $hash): \Tightenco\Collect\Support\Collection
     {
         $hashSnippet = strtoupper($hashSnippet);
         $hash = strtoupper($hash);
 
-        $results = collect(explode("\r\n", (string)$response->getBody()));
+        $results = \Tightenco\Collect\Support\Collection::make(explode("\r\n", (string)$response->getBody()));
 
         return $results->map(function($hashSuffix) use ($hashSnippet, $hash) {
             list($suffix, $count) = explode(':', $hashSuffix);
             $fullHash = $hashSnippet . $suffix;
 
-            return collect([
+            return \Tightenco\Collect\Support\Collection::make([
                 $fullHash => [
                     'hashSnippet' => $fullHash,
                     'count' => (int)$count,
