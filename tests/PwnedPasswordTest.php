@@ -8,7 +8,6 @@
 
 use Icawebdesign\Hibp\Password\PwnedPassword;
 use PHPUnit\Framework\TestCase;
-use Tightenco\Collect\Support\Collection;
 
 class PwnedPasswordTest extends TestCase
 {
@@ -114,24 +113,24 @@ class PwnedPasswordTest extends TestCase
 
         $response = $mock->rangeData('5baa6', '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 
-        $this->assertInstanceOf(Collection::class, $response);
+        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $response);
     }
 
     /**
      * @param $hashSnippet string
      * @param $hash string
      *
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      */
-    protected function getRangeData($hashSnippet, $hash): Collection
+    protected function getRangeData($hashSnippet, $hash): \Tightenco\Collect\Support\Collection
     {
-        $results = collect(explode("\r\n", self::RANGE_DATA));
+        $results = \Tightenco\Collect\Support\Collection::make(explode("\r\n", self::RANGE_DATA));
 
         return $results->map(function($hashSuffix) use ($hashSnippet, $hash) {
             list($suffix, $count) = explode(':', $hashSuffix);
             $fullHash = $hashSnippet . $suffix;
 
-            return collect([
+            return \Tightenco\Collect\Support\Collection::make([
                 $fullHash => [
                     'hashSnippet' => $fullHash,
                     'count' => (int)$count,

@@ -9,7 +9,6 @@
 use Icawebdesign\Hibp\Breach\Breach;
 use Icawebdesign\Hibp\Breach\BreachSiteEntity;
 use PHPUnit\Framework\TestCase;
-use Tightenco\Collect\Support\Collection;
 
 class BreachTest extends TestCase
 {
@@ -54,7 +53,7 @@ class BreachTest extends TestCase
         $breaches = $mock->getAllBreachSites();
 
         $this->assertEquals(200, $mock->getStatusCode());
-        $this->assertInstanceOf(Collection::class, $breaches);
+        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
         $this->assertGreaterThan(0, $mock->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $mock->first());
     }
@@ -102,7 +101,7 @@ class BreachTest extends TestCase
 
         $dataClasses = $mock->getAllDataClasses();
         $this->assertEquals(200, $mock->getStatusCode());
-        $this->assertInstanceOf(Collection::class, $dataClasses);
+        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $dataClasses);
     }
 
     /** @test */
@@ -119,36 +118,36 @@ class BreachTest extends TestCase
         $breaches = $mock->getBreachedAccount('test@example.com');
 
         $this->assertEquals(200, $mock->getStatusCode());
-        $this->assertInstanceOf(Collection::class, $breaches);
+        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
     /**
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      */
-    protected function getBreachSitesData(): Collection
+    protected function getBreachSitesData(): \Tightenco\Collect\Support\Collection
     {
-        return collect(json_decode(self::BREACH_SITES))
+        return \Tightenco\Collect\Support\Collection::make(json_decode(self::BREACH_SITES))
             ->map(function($breach) {
                 return new BreachSiteEntity($breach);
             });
     }
 
     /**
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      */
-    protected function getDataClassesData(): Collection
+    protected function getDataClassesData(): \Tightenco\Collect\Support\Collection
     {
-        return collect(json_decode(self::DATA_CLASSES));
+        return \Tightenco\Collect\Support\Collection::make(json_decode(self::DATA_CLASSES));
     }
 
     /**
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      */
-    protected function getBreachedAccountData(): Collection
+    protected function getBreachedAccountData(): \Tightenco\Collect\Support\Collection
     {
-        return collect(json_decode(self::BREACHED_ACCOUNT))
+        return \Tightenco\Collect\Support\Collection::make(json_decode(self::BREACHED_ACCOUNT))
             ->map(function($breach) {
                 return new BreachSiteEntity($breach);
             });
