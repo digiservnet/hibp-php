@@ -51,14 +51,6 @@ $data = $breach->getBreachedAccount('test@example.com');
 
 ## Usage examples for Pwned Passwords
 
-### Get number of times a password appears in the system
-```php
-use Icawebdesign\Hibp\PwnedPassword;
-
-$pwnedPassword = new PwnedPassword();
-$count = $pwnedPassword->lookup('password');
-```
-
 ### Get number of times the start of a hash appears in the system matching against a full hash
 ```php
 use Icawebdesign\Hibp\PwnedPassword;
