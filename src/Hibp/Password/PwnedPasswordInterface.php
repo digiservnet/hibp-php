@@ -19,13 +19,6 @@ interface PwnedPasswordInterface
      */
     public function getStatusCode(): int;
 
-    /**
-     * @param string $password
-     *
-     * @return int
-     */
-    public function lookup(string $password): int;
-
     public function range(string $hashSnippet, string $hash): int;
 
     public function rangeData(string $hashSnippet, string $hash): Collection;

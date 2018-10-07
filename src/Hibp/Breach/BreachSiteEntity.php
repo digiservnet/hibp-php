@@ -50,9 +50,6 @@ class BreachSiteEntity
     protected $sensitive;
 
     /** @var bool */
-    protected $active;
-
-    /** @var bool */
     protected $retired;
 
     /** @var bool */
@@ -320,26 +317,6 @@ class BreachSiteEntity
     /**
      * @return bool
      */
-    public function isActive(): bool
-    {
-        return $this->active;
-    }
-
-    /**
-     * @param bool $active
-     *
-     * @return BreachSiteEntity
-     */
-    public function setActive(bool $active): BreachSiteEntity
-    {
-        $this->active = $active;
-
-        return $this;
-    }
-
-    /**
-     * @return bool
-     */
     public function isRetired(): bool
     {
         return $this->retired;
@@ -417,7 +394,6 @@ class BreachSiteEntity
             ->setVerified($data->IsVerified)
             ->setFabricated($data->IsFabricated)
             ->setSensitive($data->IsSensitive)
-            ->setActive($data->IsActive)
             ->setRetired($data->IsRetired)
             ->setSpamList($data->IsSpamList)
             ->setLogoType($data->LogoType);

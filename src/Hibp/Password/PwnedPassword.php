@@ -44,30 +44,6 @@ class PwnedPassword implements PwnedPasswordInterface
     }
 
     /**
-     * Retrieve number of times a password has been listed
-     *
-     * @param string $password
-     *
-     * @throws GuzzleException
-     * @return int
-     */
-    public function lookup(string $password): int
-    {
-        try {
-            $response = $this->client->request('GET',
-                $this->apiRoot . '/pwnedpassword/' . $password
-            );
-        } catch (GuzzleException $e) {
-            $this->statusCode = $e->getCode();
-            throw $e;
-        }
-
-        $this->statusCode = $response->getStatusCode();
-
-        return (int)$response->getBody();
-    }
-
-    /**
      * @param string $hashSnippet
      * @param string $hash
      *
