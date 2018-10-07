@@ -15,4 +15,4 @@ chmod +x /usr/local/bin/phpunit
 
 # Install mysql driver
 # Here you can install any other extension that you need
-docker-php-ext-install mbstring mcrypt pdo_mysql pdo_pgsql curl json intl gd xml zip bz2 opcache xdebug
+docker-php-ext-install mbstring curl json intl gd xml zip bz2 opcache xdebug
