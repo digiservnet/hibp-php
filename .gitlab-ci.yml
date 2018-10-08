@@ -37,8 +37,23 @@ variables:
 #  MYSQL_DATABASE: mysql_database
 #  MYSQL_ROOT_PASSWORD: mysql_strong_password
 
+# Define pipeline stages
+stages:
+  - syntax
+  - tests
+
+phpcs:
+  stage: syntax
+  script:
+    - ./vendor/bin/phpcs --error-severity=1 --warning-severity=8 --extensions=php
+
+php-7.1:
+  stage: tests
+  script:
+    - vendor/bin/phpunit --configuration phpunit.xml --colors=never --coverage-text
+
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
-test:
-  script:
-  - vendor/bin/phpunit --configuration phpunit.xml --colors=never --coverage-text
+#test:
+#  script:
+#  - vendor/bin/phpunit --configuration phpunit.xml --colors=never --coverage-text
