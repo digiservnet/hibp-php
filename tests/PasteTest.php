@@ -39,9 +39,7 @@ class PasteTest extends TestCase
 
         $this->assertAttributeNotEmpty('source', $account);
         $this->assertAttributeNotEmpty('id', $account);
-        $this->assertAttributeNotEmpty('date', $account);
         $this->assertAttributeNotEmpty('emailCount', $account);
-        $this->assertInstanceOf(Carbon\Carbon::class, $account->getDate());
         $this->assertInternalType('int', $account->getEmailCount());
         $this->assertGreaterThan(0, $account->getEmailCount());
     }

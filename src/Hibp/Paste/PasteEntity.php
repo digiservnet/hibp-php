@@ -99,7 +99,7 @@ class PasteEntity
     /**
      * @return Carbon|null
      */
-    public function getDate(): Carbon
+    public function getDate()
     {
         return $this->date;
     }
