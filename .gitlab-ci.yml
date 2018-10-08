@@ -21,6 +21,7 @@ before_script:
 #- cd src
 #- curl -sS https://getcomposer.org/installer | php
 #- php composer.phar install
+- apt-get install unzip
 - composer self-update
 - composer update
 
