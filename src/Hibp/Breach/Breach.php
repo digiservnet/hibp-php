@@ -47,7 +47,8 @@ class Breach implements BreachInterface
     public function getAllBreachSites(): \Tightenco\Collect\Support\Collection
     {
         try {
-            $response = $this->client->request('GET',
+            $response = $this->client->request(
+                'GET',
                 $this->apiRoot . '/breaches'
             );
         } catch (GuzzleException $e) {
@@ -58,7 +59,7 @@ class Breach implements BreachInterface
         $this->statusCode = $response->getStatusCode();
 
         return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
-            ->map(function($breach) {
+            ->map(function ($breach) {
                 return new BreachSiteEntity($breach);
             });
     }
@@ -74,7 +75,8 @@ class Breach implements BreachInterface
     public function getBreach(string $account): BreachSiteEntity
     {
         try {
-            $response = $this->client->request('GET',
+            $response = $this->client->request(
+                'GET',
                 $this->apiRoot . '/breach/' . urlencode($account)
             );
         } catch (GuzzleException $e) {
@@ -94,7 +96,8 @@ class Breach implements BreachInterface
     public function getAllDataClasses(): \Tightenco\Collect\Support\Collection
     {
         try {
-            $response = $this->client->request('GET',
+            $response = $this->client->request(
+                'GET',
                 $this->apiRoot . '/dataclasses'
             );
         } catch (GuzzleException $e) {
@@ -118,7 +121,8 @@ class Breach implements BreachInterface
     public function getBreachedAccount(string $emailAddress): \Tightenco\Collect\Support\Collection
     {
         try {
-            $response = $this->client->request('GET',
+            $response = $this->client->request(
+                'GET',
                 $this->apiRoot . '/breachedaccount/' . urlencode($emailAddress)
             );
         } catch (GuzzleException $e) {
@@ -129,7 +133,7 @@ class Breach implements BreachInterface
         $this->statusCode = $response->getStatusCode();
 
         return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
-            ->map(function($breach) {
+            ->map(function ($breach) {
                 return new BreachSiteEntity($breach);
             });
     }

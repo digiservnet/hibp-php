@@ -49,7 +49,8 @@ class Paste implements PasteInterface
     public function lookup(string $emailAddress): \Tightenco\Collect\Support\Collection
     {
         try {
-            $response = $this->client->request('GET',
+            $response = $this->client->request(
+                'GET',
                 $this->apiRoot . '/pasteaccount/' . urlencode($emailAddress)
             );
         } catch (GuzzleException $e) {
@@ -59,7 +60,7 @@ class Paste implements PasteInterface
 
         $this->statusCode = $response->getStatusCode();
         return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
-            ->map(function($paste) {
+            ->map(function ($paste) {
                 return new PasteEntity($paste);
             });
     }

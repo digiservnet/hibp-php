@@ -26,7 +26,7 @@ class PwnedPassword
 
         $results = \Tightenco\Collect\Support\Collection::make(explode("\r\n", (string)$response->getBody()));
 
-        return $results->map(function($hashSuffix) use ($hashSnippet, $hash) {
+        return $results->map(function ($hashSuffix) use ($hashSnippet, $hash) {
             list($suffix, $count) = explode(':', $hashSuffix);
             $fullHash = $hashSnippet . $suffix;
 

@@ -56,7 +56,8 @@ class PwnedPassword implements PwnedPasswordInterface
         $hash = strtoupper($hash);
 
         try {
-            $response = $this->client->request('GET',
+            $response = $this->client->request(
+                'GET',
                 $this->apiRoot . '/range/' . $hashSnippet
             );
         } catch (GuzzleException $e) {
@@ -89,7 +90,8 @@ class PwnedPassword implements PwnedPasswordInterface
         $hash = strtoupper($hash);
 
         try {
-            $response = $this->client->request('GET',
+            $response = $this->client->request(
+                'GET',
                 $this->apiRoot . '/range/' . $hashSnippet
             );
         } catch (GuzzleException $e) {
