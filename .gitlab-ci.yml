@@ -47,11 +47,17 @@ phpcs:
   stage: syntax
   script:
     - ./vendor/bin/phpcs --error-severity=1 --warning-severity=8 --extensions=php
+  only:
+    refs:
+      - master
 
 php-7.1:
   stage: tests
   script:
     - vendor/bin/phpunit --configuration phpunit.xml --colors=never --coverage-text
+  only:
+    refs:
+      - master
 
 # Run our tests
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
