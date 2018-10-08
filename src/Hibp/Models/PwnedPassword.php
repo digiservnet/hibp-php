@@ -19,8 +19,11 @@ class PwnedPassword
      *
      * @return \Tightenco\Collect\Support\Collection
      */
-    public function getRangeData(Response $response, string $hashSnippet, string $hash): \Tightenco\Collect\Support\Collection
-    {
+    public function getRangeData(
+        Response $response,
+        string $hashSnippet,
+        string $hash
+    ): \Tightenco\Collect\Support\Collection {
         $hashSnippet = strtoupper($hashSnippet);
         $hash = strtoupper($hash);
 
