@@ -14,8 +14,4 @@ namespace Icawebdesign\Hibp\Exception;
 interface Exception
 {
 
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> 1b24b511090d681f3f1bd6a7884c60028796b126
