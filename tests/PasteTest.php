@@ -27,7 +27,7 @@ class PasteTest extends TestCase
     }
 
     /** @test */
-    public function successful_lookup_should_return_a_collection()
+    public function successfulLookupReturnsACollection()
     {
         $pastes = $this->paste->lookup('test@example.com');
 
@@ -43,5 +43,13 @@ class PasteTest extends TestCase
         $this->assertInternalType('string', $account->getLink());
         $this->assertInternalType('int', $account->getEmailCount());
         $this->assertGreaterThan(0, $account->getEmailCount());
+    }
+
+    /** @test */
+    public function unsuccessfulLookupThrowsException()
+    {
+        $this->expectException(\GuzzleHttp\Exception\GuzzleException::class);
+
+        $this->paste->lookup('invalid_email_address');
     }
 }

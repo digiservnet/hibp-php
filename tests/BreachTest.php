@@ -29,7 +29,7 @@ class BreachTest extends TestCase
     }
 
     /** @test */
-    public function getting_all_breachesites_should_return_a_collection()
+    public function gettingAllBreachesitesReturnsACollection()
     {
         $breaches = $this->breach->getAllBreachSites();
 
@@ -40,7 +40,7 @@ class BreachTest extends TestCase
     }
 
     /** @test */
-    public function successful_breach_lookup_should_return_BreachSiteEntity()
+    public function successfulBreachLookupReturnsABreachSiteEntity()
     {
         $breachedAccount = $this->breach->getBreach('000webhost');
 
@@ -63,7 +63,15 @@ class BreachTest extends TestCase
     }
 
     /** @test */
-    public function getting_all_dataclasses_should_return_a_collection()
+    public function unsuccessfulBreachLookupThrowsAnException()
+    {
+        $this->expectException(\GuzzleHttp\Exception\GuzzleException::class);
+
+        $this->breach->getBreach('&&');
+    }
+
+    /** @test */
+    public function gettingAllDataclassesReturnsACollection()
     {
         $dataClasses = $this->breach->getAllDataClasses();
         $this->assertEquals(200, $this->breach->getStatusCode());
@@ -71,7 +79,7 @@ class BreachTest extends TestCase
     }
 
     /** @test */
-    public function getting_breach_data_for_account_should_return_a_collection()
+    public function gettingBreachDataForAccountReturnsACollection()
     {
         $breaches = $this->breach->getBreachedAccount('test@example.com');
 
@@ -79,5 +87,12 @@ class BreachTest extends TestCase
         $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+    }
+
+    /** @test */
+    public function gettingBreachDataForAnInvalidAccountThrowsAnException()
+    {
+        $this->expectException(\GuzzleHttp\Exception\GuzzleException::class);
+        $this->breach->getBreachedAccount('invalid_email_address');
     }
 }
