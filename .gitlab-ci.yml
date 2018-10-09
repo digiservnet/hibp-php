@@ -41,7 +41,8 @@ variables:
 # Define pipeline stages
 stages:
   - syntax
-  - tests
+  - mess
+  - test
 
 phpcs:
   stage: syntax
@@ -51,8 +52,17 @@ phpcs:
     refs:
       - master
 
+phpmd:
+  stage: mess
+  script:
+    - ./vendor/phpmd/phpmd/src/bin/phpmd src/ text cleancode,codesize,design,unusedcode,naming
+  only:
+    refs:
+      - master
+  allow_failure: true
+
 php-7.1:
-  stage: tests
+  stage: test
   script:
     - vendor/bin/phpunit --configuration phpunit.xml --colors=never --coverage-text
   only:

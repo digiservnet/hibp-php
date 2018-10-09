@@ -40,6 +40,7 @@ class PasteTest extends TestCase
         $this->assertAttributeNotEmpty('source', $account);
         $this->assertAttributeNotEmpty('id', $account);
         $this->assertAttributeNotEmpty('emailCount', $account);
+        $this->assertInternalType('string', $account->getLink());
         $this->assertInternalType('int', $account->getEmailCount());
         $this->assertGreaterThan(0, $account->getEmailCount());
     }

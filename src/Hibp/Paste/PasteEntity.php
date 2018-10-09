@@ -10,6 +10,7 @@ namespace Icawebdesign\Hibp\Paste;
 
 use Carbon\Carbon;
 use stdClass;
+use Tightenco\Collect\Support\Collection;
 
 class PasteEntity
 {
@@ -27,6 +28,14 @@ class PasteEntity
 
     /** @var int */
     protected $emailCount;
+
+    /** @var string */
+    protected $link;
+
+    /** @var array */
+    protected $pasteSites = [
+        'pastebin' => 'https://pastebin.com/',
+    ];
 
     /**
      * @param stdClass $data
@@ -143,15 +152,43 @@ class PasteEntity
     }
 
     /**
+     * @return string
+     */
+    public function getLink(): string
+    {
+        return $this->link;
+    }
+
+    /**
+     * @param string $link
+     *
+     * @return PasteEntity
+     */
+    public function setLink(string $link): PasteEntity
+    {
+        $this->link = $link;
+
+        return $this;
+    }
+
+    /**
      * @param stdClass $data
      */
     public function map(stdClass $data)
     {
+        $sourceKey = strtolower($data->Source);
+        $sourceLink = $data->Id;
+
+        if (array_key_exists($sourceKey, $this->pasteSites)) {
+            $sourceLink = $this->pasteSites[$sourceKey] . $data->Id;
+        }
+
         $this
             ->setSource($data->Source)
             ->setId($data->Id)
             ->setTitle($data->Title)
             ->setDate($data->Date)
-            ->setEmailCount($data->EmailCount);
+            ->setEmailCount($data->EmailCount)
+            ->setLink($sourceLink);
     }
 }
