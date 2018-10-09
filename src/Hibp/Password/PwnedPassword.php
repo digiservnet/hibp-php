@@ -4,8 +4,9 @@ namespace Icawebdesign\Hibp\Password;
 
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Hibp;
-use Icawebdesign\Hibp\Models\PwnedPassword as PasswordData;
+use Icawebdesign\Hibp\Model\PwnedPassword as PasswordData;
 use Tightenco\Collect\Support\Collection;
 
 /**
@@ -60,7 +61,7 @@ class PwnedPassword implements PwnedPasswordInterface
                 'GET',
                 $this->apiRoot . '/range/' . $hashSnippet
             );
-        } catch (GuzzleException $e) {
+        } catch (RequestException $e) {
             $this->statusCode = $e->getCode();
             throw $e;
         }
@@ -94,7 +95,7 @@ class PwnedPassword implements PwnedPasswordInterface
                 'GET',
                 $this->apiRoot . '/range/' . $hashSnippet
             );
-        } catch (GuzzleException $e) {
+        } catch (RequestException $e) {
             $this->statusCode = $e->getCode();
             throw $e;
         }

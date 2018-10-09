@@ -55,9 +55,9 @@ class PwnedPasswordTest extends TestCase
     }
 
     /** @test */
-    public function invalidRangeThrowsAnException()
+    public function invalidRangeThrowsARequestException()
     {
-        $this->expectException(\GuzzleHttp\Exception\GuzzleException::class);
+        $this->expectException(\GuzzleHttp\Exception\RequestException::class);
 
         $this->pwnedPassword->range('&&', '&&');
     }
@@ -65,7 +65,7 @@ class PwnedPasswordTest extends TestCase
     /** @test */
     public function invalidRangeDataThrowsAnException()
     {
-        $this->expectException(\GuzzleHttp\Exception\GuzzleException::class);
+        $this->expectException(\GuzzleHttp\Exception\RequestException::class);
 
         $this->pwnedPassword->rangeData('&&', '&&');
     }

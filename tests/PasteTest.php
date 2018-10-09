@@ -46,10 +46,18 @@ class PasteTest extends TestCase
     }
 
     /** @test */
-    public function unsuccessfulLookupThrowsException()
+    public function invalidLookupThrowsException()
     {
-        $this->expectException(\GuzzleHttp\Exception\GuzzleException::class);
+        $this->expectException(\GuzzleHttp\Exception\RequestException::class);
 
         $this->paste->lookup('invalid_email_address');
+    }
+
+    /** @test */
+    public function notFoundLookupThrowsPasteNotFoundException()
+    {
+        $this->expectException(\Icawebdesign\Hibp\Exception\PasteNotFoundException::class);
+
+        $this->paste->lookup('unknown-address@example.com');
     }
 }
