@@ -6,7 +6,7 @@
  * @since 05/03/2018
  */
 
-namespace Icawebdesign\Hibp\Models;
+namespace Icawebdesign\Hibp\Model;
 
 use GuzzleHttp\Psr7\Response;
 

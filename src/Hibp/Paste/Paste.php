@@ -9,7 +9,9 @@
 namespace Icawebdesign\Hibp\Paste;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Hibp;
 
 class Paste implements PasteInterface
@@ -53,9 +55,22 @@ class Paste implements PasteInterface
                 'GET',
                 $this->apiRoot . '/pasteaccount/' . urlencode($emailAddress)
             );
-        } catch (GuzzleException $e) {
+        } catch (ClientException $e) {
             $this->statusCode = $e->getCode();
-            throw $e;
+
+            switch ($e->getCode()) {
+                case 400:
+                    throw new RequestException($e->getMessage(), $e->getRequest());
+                    break;
+
+                case 404:
+                    throw new \Icawebdesign\Hibp\Exception\PasteNotFoundException($e->getMessage());
+                    break;
+
+                default:
+                    throw $e;
+                    break;
+            }
         }
 
         $this->statusCode = $response->getStatusCode();

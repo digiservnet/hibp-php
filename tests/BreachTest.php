@@ -63,9 +63,9 @@ class BreachTest extends TestCase
     }
 
     /** @test */
-    public function unsuccessfulBreachLookupThrowsAnException()
+    public function unsuccessfulBreachLookupThrowsABreachNotFoundException()
     {
-        $this->expectException(\GuzzleHttp\Exception\GuzzleException::class);
+        $this->expectException(\Icawebdesign\Hibp\Exception\BreachNotFoundException::class);
 
         $this->breach->getBreach('&&');
     }
@@ -90,9 +90,9 @@ class BreachTest extends TestCase
     }
 
     /** @test */
-    public function gettingBreachDataForAnInvalidAccountThrowsAnException()
+    public function gettingBreachDataForAnInvalidAccountThrowsABreachNotFoundException()
     {
-        $this->expectException(\GuzzleHttp\Exception\GuzzleException::class);
+        $this->expectException(\Icawebdesign\Hibp\Exception\BreachNotFoundException::class);
         $this->breach->getBreachedAccount('invalid_email_address');
     }
 }

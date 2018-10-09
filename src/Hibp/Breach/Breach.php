@@ -3,7 +3,10 @@
 namespace Icawebdesign\Hibp\Breach;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\RequestException;
+use Icawebdesign\Hibp\Exception\BreachNotFoundException;
 use Icawebdesign\Hibp\Hibp;
 
 /**
@@ -51,7 +54,7 @@ class Breach implements BreachInterface
                 'GET',
                 $this->apiRoot . '/breaches'
             );
-        } catch (GuzzleException $e) {
+        } catch (RequestException $e) {
             $this->statusCode = $e->getCode();
             throw $e;
         }
@@ -79,9 +82,22 @@ class Breach implements BreachInterface
                 'GET',
                 $this->apiRoot . '/breach/' . urlencode($account)
             );
-        } catch (GuzzleException $e) {
+        } catch (ClientException $e) {
             $this->statusCode = $e->getCode();
-            throw $e;
+
+            switch ($e->getCode()) {
+                case 404:
+                    throw new BreachNotFoundException($e->getMessage());
+                    break;
+
+                case 400:
+                    throw new RequestException($e->getMessage(), $e->getRequest());
+                    break;
+
+                default:
+                    throw $e;
+                    break;
+            }
         }
 
         return new BreachSiteEntity(json_decode((string)$response->getBody()));
@@ -125,9 +141,22 @@ class Breach implements BreachInterface
                 'GET',
                 $this->apiRoot . '/breachedaccount/' . urlencode($emailAddress)
             );
-        } catch (GuzzleException $e) {
+        } catch (ClientException $e) {
             $this->statusCode = $e->getCode();
-            throw $e;
+
+            switch ($e->getCode()) {
+                case 404:
+                    throw new BreachNotFoundException($e->getMessage());
+                    break;
+
+                case 400:
+                    throw new RequestException($e->getMessage(), $e->getRequest());
+                    break;
+
+                default:
+                    throw $e;
+                    break;
+            }
         }
 
         $this->statusCode = $response->getStatusCode();
