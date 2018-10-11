@@ -26,14 +26,14 @@ class PwnedPassword
     ): \Tightenco\Collect\Support\Collection {
         $hashSnippet = strtoupper($hashSnippet);
         $hash = strtoupper($hash);
+        $collection = new \Tightenco\Collect\Support\Collection();
+        $results = $collection->make(explode("\r\n", (string)$response->getBody()));
 
-        $results = \Tightenco\Collect\Support\Collection::make(explode("\r\n", (string)$response->getBody()));
-
-        return $results->map(function ($hashSuffix) use ($hashSnippet, $hash) {
+        return $results->map(function ($hashSuffix) use ($hashSnippet, $hash, $collection) {
             list($suffix, $count) = explode(':', $hashSuffix);
             $fullHash = $hashSnippet . $suffix;
 
-            return \Tightenco\Collect\Support\Collection::make([
+            return $collection->make([
                 $fullHash => [
                     'hashSnippet' => $fullHash,
                     'count' => (int)$count,

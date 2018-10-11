@@ -28,7 +28,7 @@ class PwnedPassword implements PwnedPasswordInterface
 
     public function __construct()
     {
-        $config = Hibp::loadConfig();
+        $config = (new Hibp())->loadConfig();
 
         $this->apiRoot = $config['pwned_passwords']['api_root'];
         $this->client = new Client();

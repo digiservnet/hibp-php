@@ -28,7 +28,7 @@ class Breach implements BreachInterface
 
     public function __construct()
     {
-        $config = Hibp::loadConfig();
+        $config = (new Hibp())->loadConfig();
         $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
         $this->client = new Client();
     }
@@ -60,8 +60,9 @@ class Breach implements BreachInterface
         }
 
         $this->statusCode = $response->getStatusCode();
+        $collection = new \Tightenco\Collect\Support\Collection();
 
-        return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
+        return $collection->make(json_decode((string)$response->getBody()))
             ->map(function ($breach) {
                 return new BreachSiteEntity($breach);
             });
@@ -122,8 +123,9 @@ class Breach implements BreachInterface
         }
 
         $this->statusCode = $response->getStatusCode();
+        $collection = new \Tightenco\Collect\Support\Collection();
 
-        return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()));
+        return $collection->make(json_decode((string)$response->getBody()));
     }
 
     /**
@@ -160,8 +162,9 @@ class Breach implements BreachInterface
         }
 
         $this->statusCode = $response->getStatusCode();
+        $collection = new \Tightenco\Collect\Support\Collection();
 
-        return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
+        return $collection->make(json_decode((string)$response->getBody()))
             ->map(function ($breach) {
                 return new BreachSiteEntity($breach);
             });

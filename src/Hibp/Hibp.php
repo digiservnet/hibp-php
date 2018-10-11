@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 class Hibp
 {
     /** @var array */
-    private static $config;
+    private $config;
 
     /**
      * Load config file
@@ -22,10 +22,11 @@ class Hibp
      * @return array
      * @throws ParseException
      */
-    public static function loadConfig(): array
+    public function loadConfig(): array
     {
-        self::$config = Yaml::parseFile(__DIR__ . '/../config/config.yml');
+        $yaml = new Yaml();
+        $this->config = $yaml->parseFile(__DIR__ . '/../config/config.yml');
 
-        return self::$config;
+        return $this->config;
     }
 }

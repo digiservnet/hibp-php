@@ -27,7 +27,7 @@ class Paste implements PasteInterface
 
     public function __construct()
     {
-        $config = Hibp::loadConfig();
+        $config = (new Hibp())->loadConfig();
         $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
         $this->client = new Client();
     }
@@ -74,7 +74,9 @@ class Paste implements PasteInterface
         }
 
         $this->statusCode = $response->getStatusCode();
-        return \Tightenco\Collect\Support\Collection::make(json_decode((string)$response->getBody()))
+        $collection = new \Tightenco\Collect\Support\Collection();
+
+        return $collection->make(json_decode((string)$response->getBody()))
             ->map(function ($paste) {
                 return new PasteEntity($paste);
             });
