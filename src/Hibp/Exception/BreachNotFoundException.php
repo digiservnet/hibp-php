@@ -15,6 +15,8 @@ class BreachNotFoundException extends \RuntimeException implements Exception
         if (!$message) {
             throw new $this('Unknown ' . \get_class($this));
         }
+
+        parent::__construct($message, $code);
     }
 
     public function __toString()

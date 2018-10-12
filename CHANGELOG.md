@@ -1,5 +1,8 @@
 # HIBP-PHP Changelog
 
+- 2.0.9
+    - Package maintenance updates
+    
 - 2.0.8
     - Package maintenance updates
     

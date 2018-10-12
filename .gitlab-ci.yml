@@ -55,7 +55,7 @@ phpcs:
 phpmd:
   stage: mess
   script:
-    - ./vendor/phpmd/phpmd/src/bin/phpmd src/ text cleancode,codesize,design,unusedcode,naming
+    - ./vendor/phpmd/phpmd/src/bin/phpmd src/ text _phpmd/rules.xml
   only:
     refs:
       - master
