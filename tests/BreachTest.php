@@ -59,7 +59,7 @@ class BreachTest extends TestCase
         $this->assertAttributeInternalType('bool', 'sensitive', $breachedAccount);
         $this->assertAttributeInternalType('bool', 'retired', $breachedAccount);
         $this->assertAttributeInternalType('bool', 'spamList', $breachedAccount);
-        $this->assertAttributeNotEmpty('logoType', $breachedAccount);
+        $this->assertAttributeNotEmpty('logoPath', $breachedAccount);
     }
 
     /** @test */

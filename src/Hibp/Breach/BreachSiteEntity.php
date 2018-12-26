@@ -56,7 +56,7 @@ class BreachSiteEntity
     protected $spamList;
 
     /** @var string */
-    protected $logoType;
+    protected $logoPath;
 
     /**
      * @param stdClass|null $data
@@ -235,9 +235,9 @@ class BreachSiteEntity
     }
 
     /**
-     * @return Collection
+     * @return \Tightenco\Collect\Support\Collection
      */
-    public function getDataClasses(): Collection
+    public function getDataClasses(): \Tightenco\Collect\Support\Collection
     {
         return $this->dataClasses;
     }
@@ -357,19 +357,19 @@ class BreachSiteEntity
     /**
      * @return string
      */
-    public function getLogoType(): string
+    public function getLogoPath(): string
     {
-        return $this->logoType;
+        return $this->logoPath;
     }
 
     /**
-     * @param string $logoType
+     * @param string $logoPath
      *
      * @return BreachSiteEntity
      */
-    public function setLogoType(string $logoType): BreachSiteEntity
+    public function setLogoPath(string $logoPath): BreachSiteEntity
     {
-        $this->logoType = $logoType;
+        $this->logoPath = $logoPath;
 
         return $this;
     }
@@ -396,6 +396,6 @@ class BreachSiteEntity
             ->setSensitive($data->IsSensitive)
             ->setRetired($data->IsRetired)
             ->setSpamList($data->IsSpamList)
-            ->setLogoType($data->LogoType);
+            ->setLogoPath($data->LogoPath);
     }
 }

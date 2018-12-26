@@ -1,5 +1,8 @@
 # HIBP-PHP Changelog
 
+- 3.0.0
+    - Update BreachSiteEntity to match HIBP API changes. LogoType has become LogoPath.
+    
 - 2.0.9
     - Package maintenance updates
     
