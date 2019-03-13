@@ -6,6 +6,8 @@
  * @since 28/02/2018
  */
 
+namespace Icawebdesign\Test;
+
 use Icawebdesign\Hibp\Password\PwnedPassword;
 use PHPUnit\Framework\TestCase;
 
@@ -14,13 +16,13 @@ class PwnedPasswordTest extends TestCase
     /** @var PwnedPassword */
     protected $pwnedPassword;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->pwnedPassword = new PwnedPassword();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->pwnedPassword = null;
@@ -32,7 +34,7 @@ class PwnedPasswordTest extends TestCase
         $response = $this->pwnedPassword->range('5baa6', '5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
 
         $this->assertEquals(200, $this->pwnedPassword->getStatusCode());
-        $this->assertInternalType('int', $response);
+        $this->assertIsInt($response);
         $this->assertGreaterThan(0, $response);
     }
 

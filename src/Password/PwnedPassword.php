@@ -31,7 +31,11 @@ class PwnedPassword implements PwnedPasswordInterface
         $config = (new Hibp())->loadConfig();
 
         $this->apiRoot = $config['pwned_passwords']['api_root'];
-        $this->client = new Client();
+        $this->client = new Client([
+            'headers' => [
+                'User-Agent' => $config['global']['user_agent'],
+            ],
+        ]);
     }
 
     /**

@@ -30,7 +30,11 @@ class Breach implements BreachInterface
     {
         $config = (new Hibp())->loadConfig();
         $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
-        $this->client = new Client();
+        $this->client = new Client([
+            'headers' => [
+                'User-Agent' => $config['global']['user_agent'],
+            ],
+        ]);
     }
 
     /**

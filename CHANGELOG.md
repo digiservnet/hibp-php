@@ -1,5 +1,8 @@
 # HIBP-PHP Changelog
 
+- 3.1.0
+    - Update src directory structure and refactor unit tests for PHPUnit 8.x deprecations.
+
 - 3.0.0
     - Update BreachSiteEntity to match HIBP API changes. LogoType has become LogoPath.
     

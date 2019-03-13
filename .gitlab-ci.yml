@@ -64,7 +64,7 @@ phpmd:
 php-7.1:
   stage: test
   script:
-    - vendor/bin/phpunit --configuration phpunit.xml --colors=never --coverage-text
+    - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
   only:
     refs:
       - master
@@ -73,4 +73,4 @@ php-7.1:
 # If Xdebug was installed you can generate a coverage report and see code coverage metrics.
 #test:
 #  script:
-#  - vendor/bin/phpunit --configuration phpunit.xml --colors=never --coverage-text
+#  - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text

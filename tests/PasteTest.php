@@ -1,6 +1,9 @@
 <?php
 
+namespace Icawebdesign\Test;
+
 use Icawebdesign\Hibp\Paste\Paste;
+use Icawebdesign\Hibp\Paste\PasteEntity;
 use PHPUnit\Framework\TestCase;
 
 /**
@@ -14,13 +17,13 @@ class PasteTest extends TestCase
 {
     protected $paste;
 
-    public function setUp()
+    public function setUp(): void
     {
         parent::setUp();
         $this->paste = new Paste();
     }
 
-    public function tearDown()
+    public function tearDown(): void
     {
         parent::tearDown();
         $this->paste = null;
@@ -35,13 +38,14 @@ class PasteTest extends TestCase
         $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $pastes);
         $this->assertGreaterThan(0, $pastes->count());
 
+        /** @var PasteEntity $account */
         $account = $pastes->first();
 
-        $this->assertAttributeNotEmpty('source', $account);
-        $this->assertAttributeNotEmpty('id', $account);
-        $this->assertAttributeNotEmpty('emailCount', $account);
-        $this->assertInternalType('string', $account->getLink());
-        $this->assertInternalType('int', $account->getEmailCount());
+        $this->assertNotEmpty($account->getSource());
+        $this->assertNotEmpty($account->getId());
+        $this->assertIsInt($account->getEmailCount());
+        $this->assertIsString($account->getLink());
+        $this->assertIsInt($account->getEmailCount());
         $this->assertGreaterThan(0, $account->getEmailCount());
     }
 

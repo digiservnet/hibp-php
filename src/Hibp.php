@@ -25,7 +25,7 @@ class Hibp
     public function loadConfig(): array
     {
         $yaml = new Yaml();
-        $this->config = $yaml->parseFile(__DIR__ . '/../config/config.yml');
+        $this->config = $yaml->parseFile(__DIR__ . '/config/config.yml');
 
         return $this->config;
     }
