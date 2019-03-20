@@ -84,3 +84,19 @@ use Icawebdesign\Hibp\Paste;
 $paste = new Paste();
 $data = $paste->lookup('test@example.com');
 ```
+
+## Laravel specifics
+If using the package within a Laravel application, you can simply use the provided facades, eg:
+```php
+// Breach
+$breachSites = Breach::getAllBreachSites();
+
+// Paste
+$paste = Paste::lookup('test@example.com');
+
+// PwnedPassword
+$count = PwnedPassword::range(
+    '5baa6',
+    '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
+);
+```
