@@ -1,5 +1,14 @@
 # HIBP-PHP Changelog
 
+- 3.2.2
+    - Update user-agent string
+
+- 3.2.1
+    - PHP CodeSniffer fixes
+
+- 3.2.0
+    - Add Laravel-specific classes for Service Providers and Facades
+    
 - 3.1.0
     - Update src directory structure and refactor unit tests for PHPUnit 8.x deprecations.
 

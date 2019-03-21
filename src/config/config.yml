@@ -1,6 +1,6 @@
 # Have I Been Pwned configuration
 global:
-  user_agent: "hibp-php/1.0"
+  user_agent: "hibp-php/3"
 
 hibp:
   api_root: "https://haveibeenpwned.com/api"

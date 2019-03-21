@@ -1,16 +1,18 @@
 {
   "name":        "icawebdesign/hibp-php",
-  "version":     "3.2.0",
+  "version":     "3.2.2",
   "description": "PHP library for accessing the Have I Been Pwned API.",
   "keywords":    [
     "hibp",
-    "icawebdesign"
+    "icawebdesign",
+    "haveibeenpwned"
   ],
   "license":     "MIT",
   "authors":     [
     {
       "name":  "Ian.H",
-      "email": "ian@ianh.io"
+      "email": "ian@ianh.io",
+      "role":  "Developer"
     }
   ],
   "type":        "library",
