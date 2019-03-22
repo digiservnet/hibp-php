@@ -20,9 +20,10 @@ interface BreachInterface
     public function getStatusCode(): int;
 
     /**
+     * @param string $domainFilter
      * @return Collection
      */
-    public function getAllBreachSites(): Collection;
+    public function getAllBreachSites(string $domainFilter = null): Collection;
 
     /**
      * @param string $account
@@ -38,8 +39,31 @@ interface BreachInterface
 
     /**
      * @param string $emailAddress
+     * @param bool $includeUnverified
+     * @param string $domainFilter
      *
      * @return Collection
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function getBreachedAccount(string $emailAddress): Collection;
+    public function getBreachedAccount(
+        string $emailAddress,
+        bool $includeUnverified = false,
+        string $domainFilter = null
+    ): Collection;
+
+    /**
+     * @param string $emailAccount
+     * @param bool $includeUnverified
+     * @param string $domainFilter
+     *
+     * @return Collection
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function getBreachedAccountTruncated(
+        string $emailAccount,
+        bool $includeUnverified = false,
+        string $domainFilter = null
+    ): Collection;
 }

@@ -1,5 +1,11 @@
 # HIBP-PHP Changelog
 
+- 3.3.0
+    - Add breach lookup params  
+    Truncate responses to only return breach names  
+    Filter results to specific domains  
+    Include unverified results in responses
+    
 - 3.2.2
     - Update user-agent string
 

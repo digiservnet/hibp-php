@@ -48,15 +48,23 @@ class Breach implements BreachInterface
     /**
      * Get all breach sites in system
      *
+     * @param string $domainFilter
+     *
      * @return \Tightenco\Collect\Support\Collection
      * @throws GuzzleException
      */
-    public function getAllBreachSites(): \Tightenco\Collect\Support\Collection
+    public function getAllBreachSites(string $domainFilter = null): \Tightenco\Collect\Support\Collection
     {
+        $uri = sprintf('%s/breaches', $this->apiRoot);
+
+        if ((null !== $domainFilter) && ('' !== trim($domainFilter))) {
+            $uri = sprintf('%s?domain=%s', $uri, urlencode($domainFilter));
+        }
+
         try {
             $response = $this->client->request(
                 'GET',
-                $this->apiRoot . '/breaches'
+                $uri
             );
         } catch (RequestException $e) {
             $this->statusCode = $e->getCode();
@@ -136,16 +144,34 @@ class Breach implements BreachInterface
      * Get list of breached sites an email address was found in
      *
      * @param string $emailAddress
+     * @param bool $includeUnverified
+     * @param string $domainFilter
      *
      * @return \Tightenco\Collect\Support\Collection
      * @throws GuzzleException
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
-    public function getBreachedAccount(string $emailAddress): \Tightenco\Collect\Support\Collection
-    {
+    public function getBreachedAccount(
+        string $emailAddress,
+        bool $includeUnverified = false,
+        string $domainFilter = null
+    ): \Tightenco\Collect\Support\Collection {
+        $uri = sprintf(
+            '%s/breachedaccount/%s?includeUnverified=%s',
+            $this->apiRoot,
+            urlencode($emailAddress),
+            $includeUnverified ? 'true' : 'false'
+        );
+
+        if ((null !== $domainFilter) && ('' !== trim($domainFilter))) {
+            $uri = sprintf('%s&domain=%s', $uri, urlencode($domainFilter));
+        }
+
         try {
             $response = $this->client->request(
                 'GET',
-                $this->apiRoot . '/breachedaccount/' . urlencode($emailAddress)
+                $uri
             );
         } catch (ClientException $e) {
             $this->statusCode = $e->getCode();
@@ -171,6 +197,53 @@ class Breach implements BreachInterface
         return $collection->make(json_decode((string)$response->getBody()))
             ->map(function ($breach) {
                 return new BreachSiteEntity($breach);
+            });
+    }
+
+    /**
+     * Get breach data for an account but only return breach name
+     *
+     * @param string $emailAddress
+     * @param bool $includeUnverified
+     * @param string $domainFilter
+     *
+     * @return \Tightenco\Collect\Support\Collection
+     * @throws GuzzleException
+     *
+     * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
+     */
+    public function getBreachedAccountTruncated(
+        string $emailAddress,
+        bool $includeUnverified = false,
+        string $domainFilter = null
+    ): \Tightenco\Collect\Support\Collection {
+        $uri = sprintf(
+            '%s/breachedaccount/%s?truncateResponse=true&includeUnverified=%s',
+            $this->apiRoot,
+            urlencode($emailAddress),
+            $includeUnverified ? 'true' : 'false'
+        );
+
+        if ((null !== $domainFilter) && ('' !== trim($domainFilter))) {
+            $uri = sprintf('%s&domain=%s', $uri, urlencode($domainFilter));
+        }
+
+        try {
+            $response = $this->client->request(
+                'GET',
+                $uri
+            );
+        } catch (RequestException $e) {
+            $this->statusCode = $e->getCode();
+            throw $e;
+        }
+
+        $this->statusCode = $response->getStatusCode();
+        $collection = new \Tightenco\Collect\Support\Collection();
+
+        return $collection->make(json_decode((string)$response->getBody()))
+            ->map(function ($breach) {
+                return new BreachSiteTruncatedEntity($breach);
             });
     }
 }

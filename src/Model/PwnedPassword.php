@@ -14,18 +14,16 @@ class PwnedPassword
 {
     /**
      * @param Response $response
-     * @param string $hashSnippet
      * @param string $hash
      *
      * @return \Tightenco\Collect\Support\Collection
      */
     public function getRangeData(
         Response $response,
-        string $hashSnippet,
         string $hash
     ): \Tightenco\Collect\Support\Collection {
-        $hashSnippet = strtoupper($hashSnippet);
         $hash = strtoupper($hash);
+        $hashSnippet = substr($hash, 0, 5);
         $collection = new \Tightenco\Collect\Support\Collection();
         $results = $collection->make(explode("\r\n", (string)$response->getBody()));
 

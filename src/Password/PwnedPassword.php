@@ -54,6 +54,8 @@ class PwnedPassword implements PwnedPasswordInterface
      *
      * @throws GuzzleException
      * @return int
+     *
+     * @deprecated 4.0.0 Use rangeFromHash() method instead
      */
     public function range(string $hashSnippet, string $hash): int
     {
@@ -73,7 +75,7 @@ class PwnedPassword implements PwnedPasswordInterface
         $this->statusCode = $response->getStatusCode();
 
         $pwnedPassword = new PasswordData();
-        $match = $pwnedPassword->getRangeData($response, $hashSnippet, $hash);
+        $match = $pwnedPassword->getRangeData($response, $hash);
 
         if ($match->collapse()->has($hash)) {
             return $match->collapse()->get($hash)['count'];
@@ -88,6 +90,8 @@ class PwnedPassword implements PwnedPasswordInterface
      *
      * @return Collection
      * @throws GuzzleException
+     *
+     * @deprecated 4.0.0 Use rangeDataFromHash() method instead
      */
     public function rangeData(string $hashSnippet, string $hash): Collection
     {
@@ -107,7 +111,69 @@ class PwnedPassword implements PwnedPasswordInterface
         $this->statusCode = $response->getStatusCode();
 
         $pwnedPassword = new PasswordData();
-        $match = $pwnedPassword->getRangeData($response, $hashSnippet, $hash);
+        $match = $pwnedPassword->getRangeData($response, $hash);
+
+        return $match->collapse();
+    }
+
+    /**
+     * @param string $hash
+     *
+     * @return int
+     * @throws GuzzleException
+     */
+    public function rangeFromHash(string $hash): int
+    {
+        $hash = strtoupper($hash);
+        $hashSnippet = substr($hash, 0, 5);
+
+        try {
+            $response = $this->client->request(
+                'GET',
+                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet)
+            );
+        } catch (RequestException $e) {
+            $this->statusCode = $e->getCode();
+            throw $e;
+        }
+
+        $this->statusCode = $response->getStatusCode();
+
+        $pwnedPassword = new PasswordData();
+        $match = $pwnedPassword->getRangeData($response, $hash);
+
+        if ($match->collapse()->has($hash)) {
+            return $match->collapse()->get($hash)['count'];
+        }
+
+        return 0;
+    }
+
+    /**
+     * @param string $hash
+     *
+     * @return Collection
+     * @throws GuzzleException
+     */
+    public function rangeDataFromHash(string $hash): Collection
+    {
+        $hash = strtoupper($hash);
+        $hashSnippet =substr($hash, 0, 5);
+
+        try {
+            $response = $this->client->request(
+                'GET',
+                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet)
+            );
+        } catch (RequestException $e) {
+            $this->statusCode = $e->getCode();
+            throw $e;
+        }
+
+        $this->statusCode = $response->getStatusCode();
+
+        $pwnedPassword = new PasswordData();
+        $match = $pwnedPassword->getRangeData($response, $hash);
 
         return $match->collapse();
     }

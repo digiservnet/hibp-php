@@ -9,8 +9,6 @@ HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://hav
 * PHP 7.1.3+
 
 ## Installation
-
-
 ```bash
 composer require icawebdesign/hibp-php
 ```
@@ -18,7 +16,6 @@ composer require icawebdesign/hibp-php
 ## Usage examples for Breach Sites data
 
 ### Get all breach sites
-
 ```php
 use Icawebdesign\Hibp\Breach;
 
@@ -26,8 +23,16 @@ $breach = new Breach();
 $breachSites = $breach->getAllBreachSites();
 ```
 
-### Get single breach site
+Or we can filter for a domain the breach was listed in:
 
+```php
+use Icawebdesign\Hibp\Breach;
+
+$breach = new Breach();
+$breachSites = $breach->getAllBreachSites('adobe.com');
+```
+
+### Get single breach site
 ```php
 use Icawebdesign\Hibp\Breach;
 
@@ -51,6 +56,24 @@ $breach = new Breach();
 $data = $breach->getBreachedAccount('test@example.com');
 ```
 
+We can retrieve unverified accounts too by specifying `true` for the second param (not retrieved by default):
+
+```php
+use Icawebdesign\Hibp\Breach;
+
+$breach = new Breach();
+$data = $breach->getBreachedAccount('test@example.com', true);
+```
+
+We can also filter results back to a specific breached domain by adding a domain as the 3rd param
+
+```php
+use Icawebdesign\Hibp\Breach;
+
+$breach = new Breach();
+$data = $breach->getBreachedAccount('test@example.com', true, 'adobe.com');
+```
+
 ## Usage examples for Pwned Passwords
 
 ### Get number of times the start of a hash appears in the system matching against a full hash
@@ -58,10 +81,7 @@ $data = $breach->getBreachedAccount('test@example.com');
 use Icawebdesign\Hibp\PwnedPassword;
 
 $pwnedPassword = new PwnedPassword();
-$count = $pwnedPassword->range(
-    '5baa6',
-    '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
-);
+$count = $pwnedPassword->rangeFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
 ### Get a collection of hash data from a start of a hash and matching against a full hash
@@ -69,10 +89,7 @@ $count = $pwnedPassword->range(
 use Icawebdesign\Hibp\PwnedPassword;
 
 $pwnedPassword = new PwnedPassword();
-$hashData = $pwnedPassword->rangeData(
-    '5baa6',
-    '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
-);
+$hashData = $pwnedPassword->rangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
 ## Usage examples for Paste lists
@@ -95,8 +112,29 @@ $breachSites = Breach::getAllBreachSites();
 $paste = Paste::lookup('test@example.com');
 
 // PwnedPassword
-$count = PwnedPassword::range(
-    '5baa6',
-    '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8'
-);
+$count = PwnedPassword::rangeFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
+
+### Deprecations
+The `range()` and `rangeData()` methods have been deprecated in the `PwnedPassword` class and will be removed in version `4.0.0`.
+
+### Changelog
+
+Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
+
+## Contributing
+
+Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
+
+### Security
+
+If you discover any security related issues, please email ian@ianh.io instead of using the issue tracker.
+
+## Credits
+
+- [Ian.H](https://github.com/icawebdesign)
+- [All Contributors](../../contributors)
+
+## License
+
+The MIT License (MIT). Please see [License File](LICENSE) for more information.
