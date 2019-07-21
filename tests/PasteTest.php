@@ -15,12 +15,15 @@ use PHPUnit\Framework\TestCase;
 
 class PasteTest extends TestCase
 {
+    protected $apiKey = '';
+
     protected $paste;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->paste = new Paste();
+        $this->apiKey = file_get_contents(sprintf('%s/../api.key', __DIR__));
+        $this->paste = new Paste($this->apiKey);
     }
 
     public function tearDown(): void

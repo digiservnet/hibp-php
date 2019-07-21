@@ -15,6 +15,8 @@ use PHPUnit\Framework\TestCase;
 
 class BreachTest extends TestCase
 {
+    protected $apiKey = '';
+
     /** @var Breach */
     protected $breach;
 
@@ -23,7 +25,8 @@ class BreachTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->breach = new Breach();
+        $this->apiKey = file_get_contents(sprintf('%s/../api.key', __DIR__));
+        $this->breach = new Breach($this->apiKey);
     }
 
     public function tearDown(): void

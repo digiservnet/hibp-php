@@ -1,12 +1,14 @@
 # PHP library for Have I Been Pwned and Pwned Passwords.
 
-[![pipeline status](https://gitlab.2up.io/ian/hibp-php/badges/master/pipeline.svg)](https://gitlab.2up.io/ian/hibp-php/commits/master) [![coverage report](https://gitlab.2up.io/ian/hibp-php/badges/master/coverage.svg)](https://gitlab.2up.io/ian/hibp-php/commits/master)
+[![pipeline status](https://gitlab.2up.io/ian/hibp-php/badges/master/pipeline.svg)](https://gitlab.2up.io/ian/hibp-php/commits/master)
 
-HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and [Pwned Passwords](https://pwnedpassword.com) APIs.
+HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and Pwned Passwords APIs.
+
+The HIBP API now requires an [API Key](https://haveibeenpwned.com/API/Key) that needs to be purchased.
 
 ## Requirements
 
-* PHP 7.1.3+
+* PHP 7.2.0+
 
 ## Installation
 ```bash

@@ -12,7 +12,12 @@ use Tightenco\Collect\Support\Collection;
 
 interface BreachInterface
 {
-    public function __construct();
+    /**
+     * BreachInterface constructor.
+     *
+     * @param string $apiKey
+     */
+    public function __construct(string $apiKey);
 
     /**
      * @return int

@@ -26,13 +26,14 @@ class Breach implements BreachInterface
     /** @var string */
     protected $apiRoot;
 
-    public function __construct()
+    public function __construct(string $apiKey)
     {
         $config = (new Hibp())->loadConfig();
         $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
         $this->client = new Client([
             'headers' => [
                 'User-Agent' => $config['global']['user_agent'],
+                'hibp-api-key' => $apiKey,
             ],
         ]);
     }
@@ -158,7 +159,7 @@ class Breach implements BreachInterface
         string $domainFilter = null
     ): \Tightenco\Collect\Support\Collection {
         $uri = sprintf(
-            '%s/breachedaccount/%s?includeUnverified=%s',
+            '%s/breachedaccount/%s?truncateResponse=false&includeUnverified=%s',
             $this->apiRoot,
             urlencode($emailAddress),
             $includeUnverified ? 'true' : 'false'

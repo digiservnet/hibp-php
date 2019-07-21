@@ -1,5 +1,9 @@
 # HIBP-PHP Changelog
 
+- 4.0.0
+    - Update to use HIBP API v3
+    - Remove deprecated `range()` and `rangeData()` methods from `PwnedPassword` class.
+    
 - 3.3.0
     - Add breach lookup params  
     Truncate responses to only return breach names  

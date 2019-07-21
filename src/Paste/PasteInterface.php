@@ -13,9 +13,11 @@ use Tightenco\Collect\Support\Collection;
 interface PasteInterface
 {
     /**
-     * @param array $config
+     * PasteInterface constructor.
+     *
+     * @param string $apiKey
      */
-    public function __construct();
+    public function __construct(string $apiKey);
 
     /**
      * @return int

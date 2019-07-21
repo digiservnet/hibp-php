@@ -4,3 +4,4 @@ composer.lock
 .idea/
 .editorconfig
 build/
+api.key
