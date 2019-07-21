@@ -4,7 +4,7 @@
 
 HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and Pwned Passwords APIs.
 
-The HIBP API now requires an [API Key](https://haveibeenpwned.com/API/Key) that needs to be purchased.
+The HIBP API now requires an [API Key](https://haveibeenpwned.com/API/Key) that needs to be purchased at the HIBP site.
 
 ## Requirements
 
@@ -21,7 +21,7 @@ composer require icawebdesign/hibp-php
 ```php
 use Icawebdesign\Hibp\Breach;
 
-$breach = new Breach();
+$breach = new Breach($apiKey);
 $breachSites = $breach->getAllBreachSites();
 ```
 
@@ -30,7 +30,7 @@ Or we can filter for a domain the breach was listed in:
 ```php
 use Icawebdesign\Hibp\Breach;
 
-$breach = new Breach();
+$breach = new Breach($apiKey);
 $breachSites = $breach->getAllBreachSites('adobe.com');
 ```
 
@@ -38,7 +38,7 @@ $breachSites = $breach->getAllBreachSites('adobe.com');
 ```php
 use Icawebdesign\Hibp\Breach;
 
-$breach = new Breach();
+$breach = new Breach($apiKey);
 $breachSite = $breach->getBreach('adobe');
 ```
 
@@ -46,7 +46,7 @@ $breachSite = $breach->getBreach('adobe');
 ```php
 use Icawebdesign\Hibp\Breach;
 
-$breach = new Breach();
+$breach = new Breach($apiKey);
 $dataClasses = $breach->getAllDataClasses();
 ```
 
@@ -54,7 +54,7 @@ $dataClasses = $breach->getAllDataClasses();
 ```php
 use Icawebdesign\Hibp\Breach;
 
-$breach = new Breach();
+$breach = new Breach($apiKey);
 $data = $breach->getBreachedAccount('test@example.com');
 ```
 
@@ -63,7 +63,7 @@ We can retrieve unverified accounts too by specifying `true` for the second para
 ```php
 use Icawebdesign\Hibp\Breach;
 
-$breach = new Breach();
+$breach = new Breach($apiKey);
 $data = $breach->getBreachedAccount('test@example.com', true);
 ```
 
@@ -72,7 +72,7 @@ We can also filter results back to a specific breached domain by adding a domain
 ```php
 use Icawebdesign\Hibp\Breach;
 
-$breach = new Breach();
+$breach = new Breach($apiKey);
 $data = $breach->getBreachedAccount('test@example.com', true, 'adobe.com');
 ```
 
@@ -100,7 +100,7 @@ $hashData = $pwnedPassword->rangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7
 ```php
 use Icawebdesign\Hibp\Paste;
 
-$paste = new Paste();
+$paste = new Paste($apiKey);
 $data = $paste->lookup('test@example.com');
 ```
 

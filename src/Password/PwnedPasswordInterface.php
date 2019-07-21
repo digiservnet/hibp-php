@@ -19,7 +19,7 @@ interface PwnedPasswordInterface
      */
     public function getStatusCode(): int;
 
-    public function range(string $hashSnippet, string $hash): int;
+    public function rangeFromHash(string $hash): int;
 
-    public function rangeData(string $hashSnippet, string $hash): Collection;
+    public function rangeDataFromHash(string $hash): Collection;
 }
