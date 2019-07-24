@@ -13,15 +13,17 @@ use Illuminate\Support\ServiceProvider;
 
 class PasteServiceProvider extends ServiceProvider
 {
+    protected $apiKey = '';
+
     public function boot()
     {
-        //
+        $this->apiKey = env('HIBP_API_KEY');
     }
 
     public function register()
     {
         $this->app->bind('paste', function () {
-            return new Paste();
+            return new Paste($this->apiKey);
         });
     }
 }
