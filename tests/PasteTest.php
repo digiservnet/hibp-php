@@ -32,7 +32,7 @@ class PasteTest extends TestCase
         $this->paste = null;
     }
 
-    protected function delay(int $microseconds = 1600): void
+    protected function delay(int $microseconds = 1600000): void
     {
         usleep($microseconds);
     }

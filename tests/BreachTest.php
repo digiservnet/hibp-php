@@ -35,7 +35,7 @@ class BreachTest extends TestCase
         $this->breach = null;
     }
 
-    protected function delay(int $microseconds = 1600): void
+    protected function delay(int $microseconds = 1600000): void
     {
         usleep($microseconds);
     }
