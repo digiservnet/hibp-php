@@ -64,6 +64,7 @@ phpmd:
 php-7.2:
   stage: test
   script:
+    - echo "$HIBP_API_KEY" > api.key
     - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
   only:
     refs:
