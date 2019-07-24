@@ -108,7 +108,7 @@ $data = $paste->lookup('test@example.com');
 
 ## Laravel specifics
 If using the package within a Laravel application, you can use the provided facades.
-First, you need to add your HIBP API key to your `.env' file, or your preferred method for adding values to your server environment variables.
+First, you need to add your HIBP API key to your `.env` file, or your preferred method for adding values to your server environment variables.
 
 ```
 HIBP_API_KEY=abcdefgh123456789
