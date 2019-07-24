@@ -35,9 +35,15 @@ class BreachTest extends TestCase
         $this->breach = null;
     }
 
+    protected function delay(int $microseconds = 1600): void
+    {
+        usleep($microseconds);
+    }
+
     /** @test */
     public function gettingAllBreachSitesReturnsACollection(): void
     {
+        $this->delay();
         $breaches = $this->breach->getAllBreachSites();
 
         $this->assertEquals(200, $this->breach->getStatusCode());
@@ -49,6 +55,7 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingAllFilteredBreachSitesReturnsACollection(): void
     {
+        $this->delay();
         $breaches = $this->breach->getAllBreachSites('adobe.com');
 
         $this->assertEquals(200, $this->breach->getStatusCode());
@@ -60,6 +67,7 @@ class BreachTest extends TestCase
     /** @test */
     public function successfulBreachLookupReturnsABreachSiteEntity(): void
     {
+        $this->delay();
         $breachedAccount = $this->breach->getBreach('000webhost');
 
         $this->assertInstanceOf(BreachSiteEntity::class, $breachedAccount);
@@ -83,6 +91,7 @@ class BreachTest extends TestCase
     /** @test */
     public function unsuccessfulBreachLookupThrowsABreachNotFoundException(): void
     {
+        $this->delay();
         $this->expectException(\Icawebdesign\Hibp\Exception\BreachNotFoundException::class);
 
         $this->breach->getBreach('&&');
@@ -91,6 +100,7 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingAllDataclassesReturnsACollection(): void
     {
+        $this->delay();
         $dataClasses = $this->breach->getAllDataClasses();
         $this->assertEquals(200, $this->breach->getStatusCode());
         $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $dataClasses);
@@ -99,6 +109,7 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingBreachDataForAccountReturnsACollection(): void
     {
+        $this->delay();
         $breaches = $this->breach->getBreachedAccount('test@example.com', false);
 
         $this->assertEquals(200, $this->breach->getStatusCode());
@@ -110,6 +121,7 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingBreachDataForAnInvalidAccountThrowsABreachNotFoundException(): void
     {
+        $this->delay();
         $this->expectException(\Icawebdesign\Hibp\Exception\BreachNotFoundException::class);
         $this->breach->getBreachedAccount('invalid_email_address');
     }
@@ -117,6 +129,7 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingTruncatedBreachedAccountsReturnsACollectionOfBreachSiteTruncatedEntities(): void
     {
+        $this->delay();
         $breaches = $this->breach->getBreachedAccountTruncated('test@example.com', false);
 
         $this->assertEquals(200, $this->breach->getStatusCode());
@@ -128,6 +141,7 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingFilteredBreachedAccountReturnsACollectionOfBreachSiteEntities(): void
     {
+        $this->delay();
         $breaches = $this->breach->getBreachedAccount(
             'test@example.com',
             true,
@@ -143,6 +157,7 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingFilteredTruncatedBreachedAccountsReturnsACollectionOfBreachSiteTruncatedEntities(): void
     {
+        $this->delay();
         $breaches = $this->breach->getBreachedAccountTruncated(
             'test@example.com',
             false,

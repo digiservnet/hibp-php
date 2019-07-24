@@ -32,9 +32,15 @@ class PasteTest extends TestCase
         $this->paste = null;
     }
 
+    protected function delay(int $microseconds = 1600): void
+    {
+        usleep($microseconds);
+    }
+
     /** @test */
     public function successfulLookupReturnsACollection()
     {
+        $this->delay();
         $pastes = $this->paste->lookup('test@example.com');
 
         $this->assertEquals(200, $this->paste->getStatusCode());
@@ -55,6 +61,7 @@ class PasteTest extends TestCase
     /** @test */
     public function invalidLookupThrowsException()
     {
+        $this->delay();
         $this->expectException(\GuzzleHttp\Exception\RequestException::class);
 
         $this->paste->lookup('invalid_email_address');
@@ -63,6 +70,7 @@ class PasteTest extends TestCase
     /** @test */
     public function notFoundLookupThrowsPasteNotFoundException()
     {
+        $this->delay();
         $this->expectException(\Icawebdesign\Hibp\Exception\PasteNotFoundException::class);
 
         $this->paste->lookup('unknown-address@example.com');
