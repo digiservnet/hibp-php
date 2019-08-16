@@ -1,6 +1,9 @@
 # PHP library for Have I Been Pwned and Pwned Passwords.
 
 [![pipeline status](https://gitlab.2up.io/ian/hibp-php/badges/master/pipeline.svg)](https://gitlab.2up.io/ian/hibp-php/commits/master)
+[![Latest Stable Version](https://poser.pugx.org/icawebdesign/hibp-php/version)](https://packagist.org/packages/icawebdesign/hibp-php)
+[![Total Downloads](https://poser.pugx.org/icawebdesign/hibp-php/downloads)](https://packagist.org/packages/icawebdesign/hibp-php)
+[![License](https://poser.pugx.org/icawebdesign/hibp-php/license)](https://packagist.org/packages/icawebdesign/hibp-php)
 
 HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and Pwned Passwords APIs.
 
