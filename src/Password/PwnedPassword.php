@@ -105,9 +105,6 @@ class PwnedPassword implements PwnedPasswordInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        $pwnedPassword = new PasswordData();
-        $match = $pwnedPassword->getRangeData($response, $hash);
-
-        return $match->collapse();
+        return (new PasswordData())->getRangeData($response, $hash)->collapse();
     }
 }

@@ -1,0 +1,175 @@
+[
+  {
+    "Name": "000webhost",
+    "Title": "000webhost",
+    "Domain": "000webhost.com",
+    "BreachDate": "2015-03-01",
+    "AddedDate": "2015-10-26T23:35:45Z",
+    "ModifiedDate": "2017-12-10T21:44:27Z",
+    "PwnCount": 14936670,
+    "Description": "In approximately March 2015, the free web hosting provider <a href=\"http://www.troyhunt.com/2015/10/breaches-traders-plain-text-passwords.html\" target=\"_blank\" rel=\"noopener\">000webhost suffered a major data breach</a> that exposed almost 15 million customer records. The data was sold and traded before 000webhost was alerted in October. The breach included names, email addresses and plain text passwords.",
+    "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/000webhost.png",
+    "DataClasses": [
+      "Email addresses",
+      "IP addresses",
+      "Names",
+      "Passwords"
+    ],
+    "IsVerified": true,
+    "IsFabricated": false,
+    "IsSensitive": false,
+    "IsRetired": false,
+    "IsSpamList": false
+  },
+  {
+    "Name": "126",
+    "Title": "126",
+    "Domain": "126.com",
+    "BreachDate": "2012-01-01",
+    "AddedDate": "2016-10-08T07:46:05Z",
+    "ModifiedDate": "2016-10-08T07:46:05Z",
+    "PwnCount": 6414191,
+    "Description": "In approximately 2012, it's alleged that the Chinese email service known as <a href=\"http://126.com\" target=\"_blank\" rel=\"noopener\">126</a> suffered a data breach that impacted 6.4 million subscribers. Whilst there is evidence that the data is legitimate, due to the difficulty of emphatically verifying the Chinese breach it has been flagged as &quot;unverified&quot;. The data in the breach contains email addresses and plain text passwords. <a href=\"https://www.troyhunt.com/handling-chinese-data-breaches-in-have-i-been-pwned/\" target=\"_blank\" rel=\"noopener\">Read more about Chinese data breaches in Have I Been Pwned.</a>",
+    "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/126.png",
+    "DataClasses": [
+      "Email addresses",
+      "Passwords"
+    ],
+    "IsVerified": false,
+    "IsFabricated": false,
+    "IsSensitive": false,
+    "IsRetired": false,
+    "IsSpamList": false
+  },
+  {
+    "Name": "17Media",
+    "Title": "17",
+    "Domain": "17app.co",
+    "BreachDate": "2016-04-19",
+    "AddedDate": "2016-07-08T01:55:03Z",
+    "ModifiedDate": "2016-07-08T01:55:03Z",
+    "PwnCount": 4009640,
+    "Description": "In April 2016, customer data obtained from the streaming app known as &quot;17&quot; <a href=\"http://motherboard.vice.com/read/another-day-another-hack-millions-of-user-accounts-for-streaming-app-17\" target=\"_blank\" rel=\"noopener\">appeared listed for sale on a Tor hidden service marketplace</a>. The data contained over 4 million unique email addresses along with IP addresses, usernames and passwords stored as unsalted MD5 hashes.",
+    "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/17Media.png",
+    "DataClasses": [
+      "Device information",
+      "Email addresses",
+      "IP addresses",
+      "Passwords",
+      "Usernames"
+    ],
+    "IsVerified": true,
+    "IsFabricated": false,
+    "IsSensitive": false,
+    "IsRetired": false,
+    "IsSpamList": false
+  },
+  {
+    "Name": "17173",
+    "Title": "17173",
+    "Domain": "17173.com",
+    "BreachDate": "2011-12-28",
+    "AddedDate": "2018-04-28T04:53:15Z",
+    "ModifiedDate": "2018-04-28T04:53:15Z",
+    "PwnCount": 7485802,
+    "Description": "In late 2011, <a href=\"https://news.softpedia.com/news/China-Investigates-Hacking-Operations-That-Exposed-100-Million-Users-244312.shtml\" target=\"_blank\" rel=\"noopener\">a series of data breaches in China affected up to 100 million users</a>, including 7.5 million from the gaming site known as 17173. Whilst there is evidence that the data is legitimate, due to the difficulty of emphatically verifying the Chinese breach it has been flagged as &quot;unverified&quot;. The data in the breach contains usernames, email addresses and salted MD5 password hashes and was provided with support from <a href=\"https://dehashed.com/\" target=\"_blank\" rel=\"noopener\">dehashed.com</a>. <a href=\"https://www.troyhunt.com/handling-chinese-data-breaches-in-have-i-been-pwned/\" target=\"_blank\" rel=\"noopener\">Read more about Chinese data breaches in Have I Been Pwned.</a>",
+    "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/17173.png",
+    "DataClasses": [
+      "Email addresses",
+      "Passwords",
+      "Usernames"
+    ],
+    "IsVerified": false,
+    "IsFabricated": false,
+    "IsSensitive": false,
+    "IsRetired": false,
+    "IsSpamList": false
+  },
+  {
+    "Name": "2844Breaches",
+    "Title": "2,844 Separate Data Breaches",
+    "Domain": "",
+    "BreachDate": "2018-02-19",
+    "AddedDate": "2018-02-26T10:06:02Z",
+    "ModifiedDate": "2018-02-26T10:06:02Z",
+    "PwnCount": 80115532,
+    "Description": "In February 2018, <a href=\"https://www.troyhunt.com/ive-just-added-2844-new-data-breaches-with-80m-records-to-have-i-been-pwned/\" target=\"_blank\" rel=\"noopener\">a massive collection of almost 3,000 alleged data breaches was found online</a>. Whilst some of the data had previously been seen in Have I Been Pwned, 2,844 of the files consisting of more than 80 million unique email addresses had not previously been seen. Each file contained both an email address and plain text password and were consequently loaded as a single &quot;unverified&quot; data breach.",
+    "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/List.png",
+    "DataClasses": [
+      "Email addresses",
+      "Passwords"
+    ],
+    "IsVerified": false,
+    "IsFabricated": false,
+    "IsSensitive": false,
+    "IsRetired": false,
+    "IsSpamList": false
+  },
+  {
+    "Name": "2fast4u",
+    "Title": "2fast4u",
+    "Domain": "2fast4u.be",
+    "BreachDate": "2017-12-20",
+    "AddedDate": "2018-01-07T08:19:39Z",
+    "ModifiedDate": "2018-01-07T08:19:39Z",
+    "PwnCount": 17706,
+    "Description": "In December 2017, the Belgian motorcycle forum <a href=\"https://www.2fast4u.be\" target=\"_blank\" rel=\"noopener\">2fast4u</a> discovered a data breach of their system. The breach of the vBulletin message board impacted over 17k individual users and exposed email addresses, usersnames and salted MD5 passwords.",
+    "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/2fast4u.png",
+    "DataClasses": [
+      "Email addresses",
+      "Passwords",
+      "Usernames"
+    ],
+    "IsVerified": true,
+    "IsFabricated": false,
+    "IsSensitive": false,
+    "IsRetired": false,
+    "IsSpamList": false
+  },
+  {
+    "Name": "500px",
+    "Title": "500px",
+    "Domain": "500px.com",
+    "BreachDate": "2018-07-05",
+    "AddedDate": "2019-03-25T08:01:09Z",
+    "ModifiedDate": "2019-03-25T08:01:09Z",
+    "PwnCount": 14867999,
+    "Description": "In mid-2018, the online photography community <a href=\"https://support.500px.com/hc/en-us/articles/360017752493-Security-Issue-February-2019-FAQ\" target=\"_blank\" rel=\"noopener\">500px suffered a data breach</a>. The incident exposed almost 15 million unique email addresses alongside names, usernames, genders, dates of birth and either an MD5 or bcrypt password hash. In 2019, <a href=\"https://www.theregister.co.uk/2019/02/11/620_million_hacked_accounts_dark_web/\" target=\"_blank\" rel=\"noopener\">the data appeared listed for sale on a dark web marketplace</a> (along with several other large breaches) and subsequently began circulating more broadly. The data was provided to HIBP by a source who requested it to be attributed to &quot;BenjaminBlue@exploit.im&quot;.",
+    "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/500px.png",
+    "DataClasses": [
+      "Dates of birth",
+      "Email addresses",
+      "Genders",
+      "Geographic locations",
+      "Names",
+      "Passwords",
+      "Usernames"
+    ],
+    "IsVerified": true,
+    "IsFabricated": false,
+    "IsSensitive": false,
+    "IsRetired": false,
+    "IsSpamList": false
+  },
+  {
+    "Name": "7k7k",
+    "Title": "7k7k",
+    "Domain": "7k7k.com",
+    "BreachDate": "2011-01-01",
+    "AddedDate": "2017-09-26T21:54:01Z",
+    "ModifiedDate": "2017-09-26T21:54:01Z",
+    "PwnCount": 9121434,
+    "Description": "In approximately 2011, it's alleged that the Chinese gaming site known as <a href=\"http://www.7k7k.com\" target=\"_blank\" rel=\"noopener\">7k7k</a> suffered a data breach that impacted 9.1 million subscribers. Whilst there is evidence that the data is legitimate, due to the difficulty of emphatically verifying the Chinese breach it has been flagged as &quot;unverified&quot;. The data in the breach contains usernames, email addresses and plain text passwords. <a href=\"https://www.troyhunt.com/handling-chinese-data-breaches-in-have-i-been-pwned/\" target=\"_blank\" rel=\"noopener\">Read more about Chinese data breaches in Have I Been Pwned.</a>",
+    "LogoPath": "https://haveibeenpwned.com/Content/Images/PwnedLogos/7k7k.png",
+    "DataClasses": [
+      "Email addresses",
+      "Passwords",
+      "Usernames"
+    ],
+    "IsVerified": false,
+    "IsFabricated": false,
+    "IsSensitive": false,
+    "IsRetired": false,
+    "IsSpamList": false
+  }
+]

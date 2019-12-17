@@ -2,7 +2,10 @@
 
 namespace Icawebdesign\Hibp\Exception;
 
-class PasteNotFoundException extends \RuntimeException implements Exception
+use RuntimeException;
+use function get_class;
+
+class PasteNotFoundException extends RuntimeException
 {
     /**
      * PasteNotFoundException constructor
@@ -13,7 +16,7 @@ class PasteNotFoundException extends \RuntimeException implements Exception
     public function __construct(string $message = null, int $code = 0)
     {
         if (!$message) {
-            throw new $this('Unknown ' . \get_class($this));
+            throw new $this(sprintf('Unknown %s', get_class($this)));
         }
         
         parent::__construct($message, $code);
@@ -23,7 +26,7 @@ class PasteNotFoundException extends \RuntimeException implements Exception
     {
         return sprintf(
             "%s %s in %s(%s)\n%s",
-            \get_class($this),
+            get_class($this),
             $this->message,
             $this->file,
             $this->line,

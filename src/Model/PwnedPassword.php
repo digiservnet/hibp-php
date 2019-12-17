@@ -8,23 +8,24 @@
 
 namespace Icawebdesign\Hibp\Model;
 
-use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
+use Tightenco\Collect\Support\Collection;
 
 class PwnedPassword
 {
     /**
-     * @param Response $response
+     * @param ResponseInterface $response
      * @param string $hash
      *
-     * @return \Tightenco\Collect\Support\Collection
+     * @return Collection
      */
     public function getRangeData(
-        Response $response,
+        ResponseInterface $response,
         string $hash
-    ): \Tightenco\Collect\Support\Collection {
+    ): Collection {
         $hash = strtoupper($hash);
         $hashSnippet = substr($hash, 0, 5);
-        $collection = new \Tightenco\Collect\Support\Collection();
+        $collection = new Collection();
         $results = $collection->make(explode("\r\n", (string)$response->getBody()));
 
         return $results->map(function ($hashSuffix) use ($hashSnippet, $hash, $collection) {

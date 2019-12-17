@@ -9,6 +9,7 @@
 namespace Icawebdesign\Hibp\Paste;
 
 use Carbon\Carbon;
+use Exception;
 use stdClass;
 use Tightenco\Collect\Support\Collection;
 
@@ -38,7 +39,11 @@ class PasteEntity
     ];
 
     /**
+     * PasteEntity constructor.
+     *
      * @param stdClass $data
+     *
+     * @throws Exception
      */
     public function __construct(stdClass $data)
     {
@@ -117,6 +122,7 @@ class PasteEntity
      * @param string|null $date
      *
      * @return PasteEntity
+     * @throws Exception
      */
     public function setDate(string $date = null): PasteEntity
     {
@@ -173,6 +179,8 @@ class PasteEntity
 
     /**
      * @param stdClass $data
+     *
+     * @throws Exception
      */
     public function map(stdClass $data)
     {

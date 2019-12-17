@@ -5,3 +5,4 @@ composer.lock
 .editorconfig
 build/
 api.key
+.phpunit.result.cache

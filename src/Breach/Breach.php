@@ -2,12 +2,14 @@
 
 namespace Icawebdesign\Hibp\Breach;
 
+use Exception;
 use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\BreachNotFoundException;
 use Icawebdesign\Hibp\Hibp;
+use Tightenco\Collect\Support\Collection;
 
 /**
  * Breach module
@@ -29,7 +31,7 @@ class Breach implements BreachInterface
     public function __construct(string $apiKey)
     {
         $config = (new Hibp())->loadConfig();
-        $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
+        $this->apiRoot = sprintf('%s/v%d', $config['hibp']['api_root'], $config['hibp']['api_version']);
         $this->client = new Client([
             'headers' => [
                 'User-Agent' => $config['global']['user_agent'],
@@ -51,10 +53,10 @@ class Breach implements BreachInterface
      *
      * @param string $domainFilter
      *
-     * @return \Tightenco\Collect\Support\Collection
+     * @return Collection
      * @throws GuzzleException
      */
-    public function getAllBreachSites(string $domainFilter = null): \Tightenco\Collect\Support\Collection
+    public function getAllBreachSites(string $domainFilter = null): Collection
     {
         $uri = sprintf('%s/breaches', $this->apiRoot);
 
@@ -73,7 +75,7 @@ class Breach implements BreachInterface
         }
 
         $this->statusCode = $response->getStatusCode();
-        $collection = new \Tightenco\Collect\Support\Collection();
+        $collection = new Collection();
 
         return $collection->make(json_decode((string)$response->getBody()))
             ->map(function ($breach) {
@@ -87,14 +89,14 @@ class Breach implements BreachInterface
      * @param string $account
      *
      * @return BreachSiteEntity
-     * @throws GuzzleException
+     * @throws Exception
      */
     public function getBreach(string $account): BreachSiteEntity
     {
         try {
             $response = $this->client->request(
                 'GET',
-                $this->apiRoot . '/breach/' . urlencode($account)
+                sprintf('%s/breach/%s', $this->apiRoot, urlencode($account))
             );
         } catch (ClientException $e) {
             $this->statusCode = $e->getCode();
@@ -120,25 +122,24 @@ class Breach implements BreachInterface
     /**
      * Get list of all data classes in the system
      *
-     * @return \Tightenco\Collect\Support\Collection
+     * @return Collection
      * @throws GuzzleException
      */
-    public function getAllDataClasses(): \Tightenco\Collect\Support\Collection
+    public function getAllDataClasses(): Collection
     {
         try {
             $response = $this->client->request(
                 'GET',
-                $this->apiRoot . '/dataclasses'
+                sprintf('%s/dataclasses', $this->apiRoot)
             );
-        } catch (GuzzleException $e) {
+        } catch (ClientException $e) {
             $this->statusCode = $e->getCode();
             throw $e;
         }
 
         $this->statusCode = $response->getStatusCode();
-        $collection = new \Tightenco\Collect\Support\Collection();
 
-        return $collection->make(json_decode((string)$response->getBody()));
+        return (new Collection())->make(json_decode((string)$response->getBody()));
     }
 
     /**
@@ -148,7 +149,7 @@ class Breach implements BreachInterface
      * @param bool $includeUnverified
      * @param string $domainFilter
      *
-     * @return \Tightenco\Collect\Support\Collection
+     * @return Collection
      * @throws GuzzleException
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
@@ -157,7 +158,7 @@ class Breach implements BreachInterface
         string $emailAddress,
         bool $includeUnverified = false,
         string $domainFilter = null
-    ): \Tightenco\Collect\Support\Collection {
+    ): Collection {
         $uri = sprintf(
             '%s/breachedaccount/%s?truncateResponse=false&includeUnverified=%s',
             $this->apiRoot,
@@ -193,9 +194,8 @@ class Breach implements BreachInterface
         }
 
         $this->statusCode = $response->getStatusCode();
-        $collection = new \Tightenco\Collect\Support\Collection();
 
-        return $collection->make(json_decode((string)$response->getBody()))
+        return (new Collection())->make(json_decode((string)$response->getBody()))
             ->map(function ($breach) {
                 return new BreachSiteEntity($breach);
             });
@@ -208,7 +208,7 @@ class Breach implements BreachInterface
      * @param bool $includeUnverified
      * @param string $domainFilter
      *
-     * @return \Tightenco\Collect\Support\Collection
+     * @return Collection
      * @throws GuzzleException
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
@@ -217,7 +217,7 @@ class Breach implements BreachInterface
         string $emailAddress,
         bool $includeUnverified = false,
         string $domainFilter = null
-    ): \Tightenco\Collect\Support\Collection {
+    ): Collection {
         $uri = sprintf(
             '%s/breachedaccount/%s?truncateResponse=true&includeUnverified=%s',
             $this->apiRoot,
@@ -240,9 +240,8 @@ class Breach implements BreachInterface
         }
 
         $this->statusCode = $response->getStatusCode();
-        $collection = new \Tightenco\Collect\Support\Collection();
 
-        return $collection->make(json_decode((string)$response->getBody()))
+        return (new Collection())->make(json_decode((string)$response->getBody()))
             ->map(function ($breach) {
                 return new BreachSiteTruncatedEntity($breach);
             });

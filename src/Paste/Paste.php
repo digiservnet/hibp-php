@@ -12,7 +12,9 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
+use Icawebdesign\Hibp\Exception\PasteNotFoundException;
 use Icawebdesign\Hibp\Hibp;
+use Tightenco\Collect\Support\Collection;
 
 class Paste implements PasteInterface
 {
@@ -28,7 +30,7 @@ class Paste implements PasteInterface
     public function __construct(string $apiKey)
     {
         $config = (new Hibp())->loadConfig();
-        $this->apiRoot = $config['hibp']['api_root'] . '/v' . $config['hibp']['api_version'];
+        $this->apiRoot = sprintf('%s/v%d', $config['hibp']['api_root'], $config['hibp']['api_version']);
         $this->client = new Client([
             'headers' => [
                 'User-Agent' => $config['global']['user_agent'],
@@ -50,15 +52,15 @@ class Paste implements PasteInterface
      *
      * @param string $emailAddress
      *
-     * @return \Tightenco\Collect\Support\Collection
+     * @return Collection
      * @throws GuzzleException
      */
-    public function lookup(string $emailAddress): \Tightenco\Collect\Support\Collection
+    public function lookup(string $emailAddress): Collection
     {
         try {
             $response = $this->client->request(
                 'GET',
-                $this->apiRoot . '/pasteaccount/' . urlencode($emailAddress)
+                sprintf('%s/pasteaccount/%s', $this->apiRoot, urlencode($emailAddress))
             );
         } catch (ClientException $e) {
             $this->statusCode = $e->getCode();
@@ -69,7 +71,7 @@ class Paste implements PasteInterface
                     break;
 
                 case 404:
-                    throw new \Icawebdesign\Hibp\Exception\PasteNotFoundException($e->getMessage());
+                    throw new PasteNotFoundException($e->getMessage());
                     break;
 
                 default:
@@ -79,9 +81,8 @@ class Paste implements PasteInterface
         }
 
         $this->statusCode = $response->getStatusCode();
-        $collection = new \Tightenco\Collect\Support\Collection();
 
-        return $collection->make(json_decode((string)$response->getBody()))
+        return (new Collection())->make(json_decode((string)$response->getBody()))
             ->map(function ($paste) {
                 return new PasteEntity($paste);
             });

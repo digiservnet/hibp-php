@@ -1,11 +1,10 @@
 # PHP library for Have I Been Pwned and Pwned Passwords.
 
-[![pipeline status](https://gitlab.2up.io/ian/hibp-php/badges/master/pipeline.svg)](https://gitlab.2up.io/ian/hibp-php/commits/master)
 [![Latest Stable Version](https://poser.pugx.org/icawebdesign/hibp-php/version)](https://packagist.org/packages/icawebdesign/hibp-php)
 [![Total Downloads](https://poser.pugx.org/icawebdesign/hibp-php/downloads)](https://packagist.org/packages/icawebdesign/hibp-php)
 [![License](https://poser.pugx.org/icawebdesign/hibp-php/license)](https://packagist.org/packages/icawebdesign/hibp-php)
 
-HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and Pwned Passwords APIs.
+HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and Pwned Passwords APIs (currently v3).
 
 The HIBP API now requires an [API Key](https://haveibeenpwned.com/API/Key) that needs to be purchased at the HIBP site for any lookups that use an email address. This currently means that if you're only using this package for lookups from the PwnedPassword section of the API, then an API key isn't required.
 
@@ -129,9 +128,6 @@ $paste = Paste::lookup('test@example.com');
 // PwnedPassword
 $count = PwnedPassword::rangeFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
-
-### Deprecations
-The `range()` and `rangeData()` methods have been deprecated in the `PwnedPassword` class and will be removed in version `4.0.0`.
 
 ### Changelog
 

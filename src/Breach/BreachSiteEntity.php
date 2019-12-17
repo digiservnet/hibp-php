@@ -9,7 +9,9 @@
 namespace Icawebdesign\Hibp\Breach;
 
 use Carbon\Carbon;
+use Exception;
 use stdClass;
+use Tightenco\Collect\Support\Collection;
 
 class BreachSiteEntity
 {
@@ -37,7 +39,7 @@ class BreachSiteEntity
     /** @var string */
     protected $description;
 
-    /** @var \Tightenco\Collect\Support\Collection */
+    /** @var Collection */
     protected $dataClasses;
 
     /** @var bool */
@@ -59,13 +61,15 @@ class BreachSiteEntity
     protected $logoPath;
 
     /**
+     * BreachSiteEntity constructor.
+     *
      * @param stdClass|null $data
+     *
+     * @throws Exception
      */
     public function __construct(stdClass $data = null)
     {
         $this->map($data);
-
-        return $this;
     }
 
     /**
@@ -138,8 +142,8 @@ class BreachSiteEntity
 
     /**
      * @param string $breachDate
-     *
      * @return BreachSiteEntity
+     * @throws Exception
      */
     public function setBreachDate(string $breachDate): BreachSiteEntity
     {
@@ -158,8 +162,8 @@ class BreachSiteEntity
 
     /**
      * @param string $addedDate
-     *
      * @return BreachSiteEntity
+     * @throws Exception
      */
     public function setAddedDate(string $addedDate): BreachSiteEntity
     {
@@ -181,8 +185,8 @@ class BreachSiteEntity
 
     /**
      * @param string $modifiedDate
-     *
      * @return BreachSiteEntity
+     * @throws Exception
      */
     public function setModifiedDate(string $modifiedDate): BreachSiteEntity
     {
@@ -235,9 +239,9 @@ class BreachSiteEntity
     }
 
     /**
-     * @return \Tightenco\Collect\Support\Collection
+     * @return Collection
      */
-    public function getDataClasses(): \Tightenco\Collect\Support\Collection
+    public function getDataClasses(): Collection
     {
         return $this->dataClasses;
     }
@@ -249,7 +253,7 @@ class BreachSiteEntity
      */
     public function setDataClasses(array $dataClasses): BreachSiteEntity
     {
-        $this->dataClasses = (new \Tightenco\Collect\Support\Collection())->make($dataClasses);
+        $this->dataClasses = (new Collection())->make($dataClasses);
 
         return $this;
     }
@@ -375,9 +379,8 @@ class BreachSiteEntity
     }
 
     /**
-     * Transform data map into entity
-     *
      * @param stdClass $data
+     * @throws Exception
      */
     public function map(stdClass $data)
     {

@@ -1,6 +1,6 @@
 # This file is a template, and might need editing before it works on your project.
 # Select image from https://hub.docker.com/_/php/
-image: 2up/php7.2-cli:latest
+image: docker.2up.io/2up/php7.2-cli:latest
 
 # Select what we should cache between builds
 cache:

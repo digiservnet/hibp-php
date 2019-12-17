@@ -1,5 +1,9 @@
 # HIBP-PHP Changelog
 
+- 4.1.0
+    - Update package dependencies
+    - Internal cody tidy up
+    
 - 4.0.0
     - Update to use HIBP API v3
     - Remove deprecated `range()` and `rangeData()` methods from `PwnedPassword` class.
