@@ -1,48 +1,32 @@
 # This file is a template, and might need editing before it works on your project.
 # Select image from https://hub.docker.com/_/php/
-image: docker.2up.io/2up/php7.2-cli:latest
+image: docker.2up.io/php7.4.2-cli:latest
 
 # Select what we should cache between builds
 cache:
   paths:
-  - vendor/
-
-before_script:
-#- apt-get update -yqq
-#- apt-get install -yqq git libmcrypt-dev libpq-dev libcurl4-gnutls-dev libicu-dev libvpx-dev libjpeg-dev
-#- apt-get install -yqq libpng-dev libxpm-dev zlib1g-dev libfreetype6-dev libxml2-dev libexpat1-dev libbz2-dev
-#- apt-get install -yqq libgmp3-dev libldap2-dev unixodbc-dev libsqlite3-dev libaspell-dev libsnmp-dev libpcre3-dev libtidy-dev
-# Install PHP extensions
-#- docker-php-ext-install mbstring curl json intl gd xml zip bz2 opcache
-## Install & enable Xdebug for code coverage reports
-#- pecl install xdebug
-#- docker-php-ext-enable xdebug
-## Install and run Composer
-#- cd src
-#- curl -sS https://getcomposer.org/installer | php
-#- php composer.phar install
-- apt-get install unzip
-- composer self-update
-- composer update
-
-
-
-# Bring in any services we need http://docs.gitlab.com/ee/ci/docker/using_docker_images.html#what-is-a-service
-# See http://docs.gitlab.com/ce/ci/services/README.html for examples.
-services:
-#  - mysql:5.7
-
-# Set any variables we need
-variables:
-  # Configure mysql environment variables (https://hub.docker.com/r/_/mysql/)
-#  MYSQL_DATABASE: mysql_database
-#  MYSQL_ROOT_PASSWORD: mysql_strong_password
+    - vendor/
 
 # Define pipeline stages
 stages:
+  - prep
   - syntax
   - mess
-  - test
+  - tests
+  - security
+
+composer:
+  stage: prep
+  script:
+    - composer install --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+  artifacts:
+    paths:
+      - vendor/
+    expire_in: 1 days
+    when: always
+  only:
+    refs:
+      - master
 
 phpcs:
   stage: syntax
@@ -62,10 +46,42 @@ phpmd:
   allow_failure: true
 
 php-7.2:
-  stage: test
+  image: docker.2up.io/2up/php7.2-cli:latest
+  stage: tests
   script:
     - echo "$HIBP_API_KEY" > api.key
     - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
+  only:
+    refs:
+      - master
+
+php-7.3:
+  image: docker.2up.io/php7.3.14-cli:latest
+  stage: tests
+  script:
+    - echo "$HIBP_API_KEY" > api.key
+    - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
+  only:
+    refs:
+      - master
+
+php-7.4:
+  image: docker.2up.io/php7.4.2-cli:latest
+  stage: tests
+  script:
+    - echo "$HIBP_API_KEY" > api.key
+    - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
+  only:
+    refs:
+      - master
+
+sensiolabs:
+  stage: security
+  script:
+    - test -d security-checker || git clone https://github.com/sensiolabs/security-checker.git
+    - cd security-checker
+    - composer install
+    - php security-checker security:check ../composer.lock
   only:
     refs:
       - master
