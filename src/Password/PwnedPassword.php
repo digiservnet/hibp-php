@@ -48,7 +48,6 @@ class PwnedPassword implements PwnedPasswordInterface
         return $this->statusCode;
     }
 
-
     /**
      * @param string $hash
      *
@@ -74,6 +73,38 @@ class PwnedPassword implements PwnedPasswordInterface
 
         $pwnedPassword = new PasswordData();
         $match = $pwnedPassword->getRangeData($response, $hash);
+
+        if ($match->collapse()->has($hash)) {
+            return $match->collapse()->get($hash)['count'];
+        }
+
+        return 0;
+    }
+
+    public function paddedRangeFromHash(string $hash): int
+    {
+        $hash = strtoupper($hash);
+        $hashSnippet = substr($hash, 0, 5);
+
+        try {
+            $response = $this->client->request(
+                'GET',
+                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
+                [
+                    'headers' => [
+                        'Add-Padding' => 'true',
+                    ],
+                ]
+            );
+        } catch (RequestException $e) {
+            $this->statusCode = $e->getCode();
+            throw $e;
+        }
+
+        $this->statusCode = $response->getStatusCode();
+
+        $pwnedPassword = new PasswordData();
+        $match = $pwnedPassword->getRangeDataWithoutPadding($response, $hash);
 
         if ($match->collapse()->has($hash)) {
             return $match->collapse()->get($hash)['count'];
