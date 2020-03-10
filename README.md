@@ -84,10 +84,18 @@ $data = $breach->getBreachedAccount('test@example.com', true, 'adobe.com');
 
 ### Get number of times the start of a hash appears in the system matching against a full hash
 ```php
-use Icawebdesign\Hibp\PwnedPassword;
+use Icawebdesign\Hibp\Password;
 
 $pwnedPassword = new PwnedPassword();
 $count = $pwnedPassword->rangeFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+```
+
+### Get number of times the start of a hash appears in the system as above, but with padded values to help prevent fingerprinting
+```php
+use Icawebdesign\Hibp\Password;
+
+$pwnedPassword = new PwnedPassword();
+$hashData = $pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
 ### Get a collection of hash data from a start of a hash and matching against a full hash
@@ -96,6 +104,14 @@ use Icawebdesign\Hibp\PwnedPassword;
 
 $pwnedPassword = new PwnedPassword();
 $hashData = $pwnedPassword->rangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+```
+
+### Get a collection of hash data from a start of a hash and matching against a full hash as above, but with padded values to help prevent fingerprinting
+```php
+use Icawebdesign\Hibp\PwnedPassword;
+
+$pwnedPassword = new PwnedPassword();
+$hashData = $pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
 ## Usage examples for Paste lists
