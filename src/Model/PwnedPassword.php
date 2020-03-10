@@ -69,17 +69,4 @@ class PwnedPassword
             ]);
         });
     }
-
-    public function stripZeroMatchesData(Collection $data, string $hash): Collection
-    {
-        $hash = strtoupper($hash);
-
-        return $data->filter(function ($value) use ($hash) {
-            if (($value['hashSnippet'] === $hash) && (0 === $value['count'])) {
-                throw new PaddingHashCollisionException('Padding hash collision');
-            }
-
-            return $value['count'] > 0;
-        });
-    }
 }

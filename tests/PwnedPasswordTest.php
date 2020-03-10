@@ -87,7 +87,7 @@ class PwnedPasswordTest extends TestCase
         $this->assertSame(200, $this->pwnedPassword->getStatusCode());
         $this->assertGreaterThan(
             0,
-            (new \Icawebdesign\Hibp\Model\PwnedPassword())->stripZeroMatchesData($response, $hash)->last()
+            PwnedPassword::stripZeroMatchesData($response, $hash)->last()
         );
     }
 
@@ -123,7 +123,7 @@ class PwnedPasswordTest extends TestCase
 
         $this->assertGreaterThan(
             0,
-            (new \Icawebdesign\Hibp\Model\PwnedPassword())->stripZeroMatchesData((new Collection($data)), $hash)->last()
+            PwnedPassword::stripZeroMatchesData((new Collection($data)), $hash)->last()
         );
     }
 }

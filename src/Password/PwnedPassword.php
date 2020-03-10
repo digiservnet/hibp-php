@@ -6,6 +6,7 @@ use GuzzleHttp\Client;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
+use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
 use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\Model\PwnedPassword as PasswordData;
 use Tightenco\Collect\Support\Collection;
@@ -174,5 +175,24 @@ class PwnedPassword implements PwnedPasswordInterface
         $this->statusCode = $response->getStatusCode();
 
         return (new PasswordData())->getRangeDataWithPadding($response, $hash)->collapse();
+    }
+
+    /**
+     * @param Collection $data
+     * @param string $hash
+     *
+     * @return Collection
+     */
+    public static function stripZeroMatchesData(Collection $data, string $hash): Collection
+    {
+        $hash = strtoupper($hash);
+
+        return $data->filter(function ($value) use ($hash) {
+            if (($value['hashSnippet'] === $hash) && (0 === $value['count'])) {
+                throw new PaddingHashCollisionException('Padding hash collision');
+            }
+
+            return $value['count'] > 0;
+        });
     }
 }
