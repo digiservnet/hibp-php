@@ -2,6 +2,8 @@
 
 namespace Icawebdesign\Test;
 
+use GuzzleHttp\Exception\RequestException;
+use Icawebdesign\Hibp\Exception\PasteNotFoundException;
 use Icawebdesign\Hibp\Paste\Paste;
 use Icawebdesign\Hibp\Paste\PasteEntity;
 use PHPUnit\Framework\TestCase;
@@ -38,13 +40,12 @@ class PasteTest extends TestCase
     }
 
     /** @test */
-    public function successfulLookupReturnsACollection()
+    public function successfulLookupReturnsACollection(): void
     {
         $this->delay();
         $pastes = $this->paste->lookup('test@example.com');
 
-        $this->assertEquals(200, $this->paste->getStatusCode());
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $pastes);
+        $this->assertSame(200, $this->paste->getStatusCode());
         $this->assertGreaterThan(0, $pastes->count());
 
         /** @var PasteEntity $account */
@@ -59,19 +60,19 @@ class PasteTest extends TestCase
     }
 
     /** @test */
-    public function invalidLookupThrowsException()
+    public function invalidLookupThrowsException(): void
     {
         $this->delay();
-        $this->expectException(\GuzzleHttp\Exception\RequestException::class);
+        $this->expectException(RequestException::class);
 
         $this->paste->lookup('invalid_email_address');
     }
 
     /** @test */
-    public function notFoundLookupThrowsPasteNotFoundException()
+    public function notFoundLookupThrowsPasteNotFoundException(): void
     {
         $this->delay();
-        $this->expectException(\Icawebdesign\Hibp\Exception\PasteNotFoundException::class);
+        $this->expectException(PasteNotFoundException::class);
 
         $this->paste->lookup('unknown-address@example.com');
     }

@@ -11,7 +11,9 @@ namespace Icawebdesign\Test;
 use Icawebdesign\Hibp\Breach\Breach;
 use Icawebdesign\Hibp\Breach\BreachSiteEntity;
 use Icawebdesign\Hibp\Breach\BreachSiteTruncatedEntity;
+use Icawebdesign\Hibp\Exception\BreachNotFoundException;
 use PHPUnit\Framework\TestCase;
+use Tightenco\Collect\Support\Collection;
 
 class BreachTest extends TestCase
 {
@@ -46,20 +48,18 @@ class BreachTest extends TestCase
         $this->delay();
         $breaches = $this->breach->getAllBreachSites();
 
-        $this->assertEquals(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
+        $this->assertSame(200, $this->breach->getStatusCode());
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
     /** @test */
-    public function gettingAllFilteredBreachSitesReturnsACollection(): void
+    public function gettingAllFilteredBreachSitesReturnsAValidCollection(): void
     {
         $this->delay();
         $breaches = $this->breach->getAllBreachSites('adobe.com');
 
-        $this->assertEquals(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
+        $this->assertSame(200, $this->breach->getStatusCode());
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
@@ -70,7 +70,6 @@ class BreachTest extends TestCase
         $this->delay();
         $breachedAccount = $this->breach->getBreach('000webhost');
 
-        $this->assertInstanceOf(BreachSiteEntity::class, $breachedAccount);
         $this->assertNotEmpty($breachedAccount->getTitle());
         $this->assertNotEmpty($breachedAccount->getName());
         $this->assertNotEmpty($breachedAccount->getDomain());
@@ -92,7 +91,7 @@ class BreachTest extends TestCase
     public function unsuccessfulBreachLookupThrowsABreachNotFoundException(): void
     {
         $this->delay();
-        $this->expectException(\Icawebdesign\Hibp\Exception\BreachNotFoundException::class);
+        $this->expectException(BreachNotFoundException::class);
 
         $this->breach->getBreach('&&');
     }
@@ -102,18 +101,17 @@ class BreachTest extends TestCase
     {
         $this->delay();
         $dataClasses = $this->breach->getAllDataClasses();
-        $this->assertEquals(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $dataClasses);
+        $this->assertSame(200, $this->breach->getStatusCode());
+        $this->assertInstanceOf(Collection::class, $dataClasses);
     }
 
     /** @test */
-    public function gettingBreachDataForAccountReturnsACollection(): void
+    public function gettingBreachDataForAccountReturnsAValidCollection(): void
     {
         $this->delay();
         $breaches = $this->breach->getBreachedAccount('test@example.com', false);
 
-        $this->assertEquals(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
+        $this->assertSame(200, $this->breach->getStatusCode());
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
@@ -122,7 +120,7 @@ class BreachTest extends TestCase
     public function gettingBreachDataForAnInvalidAccountThrowsABreachNotFoundException(): void
     {
         $this->delay();
-        $this->expectException(\Icawebdesign\Hibp\Exception\BreachNotFoundException::class);
+        $this->expectException(BreachNotFoundException::class);
         $this->breach->getBreachedAccount('invalid_email_address');
     }
 
@@ -132,8 +130,8 @@ class BreachTest extends TestCase
         $this->delay();
         $breaches = $this->breach->getBreachedAccountTruncated('test@example.com', false);
 
-        $this->assertEquals(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
+        $this->assertSame(200, $this->breach->getStatusCode());
+        $this->assertInstanceOf(Collection::class, $breaches);
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
     }
@@ -148,8 +146,7 @@ class BreachTest extends TestCase
             'adobe.com'
         );
 
-        $this->assertEquals(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
+        $this->assertSame(200, $this->breach->getStatusCode());
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
@@ -164,8 +161,7 @@ class BreachTest extends TestCase
             'adobe.com'
         );
 
-        $this->assertEquals(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(\Tightenco\Collect\Support\Collection::class, $breaches);
+        $this->assertSame(200, $this->breach->getStatusCode());
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
     }

@@ -22,4 +22,8 @@ interface PwnedPasswordInterface
     public function rangeFromHash(string $hash): int;
 
     public function rangeDataFromHash(string $hash): Collection;
+
+    public function paddedRangeFromHash(string $hash): int;
+
+    public function paddedRangeDataFromHash(string $hash): Collection;
 }
