@@ -18,17 +18,17 @@
   "type":        "library",
   "require":     {
     "php": ">=7.2.0",
-    "tightenco/collect": "^6.9",
+    "tightenco/collect": "^7.0",
     "guzzlehttp/guzzle": "^6.5",
     "symfony/yaml": "^4.4",
-    "nesbot/carbon": "^2.27",
+    "nesbot/carbon": "^2.31",
     "ext-json": "*"
   },
   "require-dev": {
     "phpunit/phpunit": "^8.5",
     "squizlabs/php_codesniffer": "^3.5",
-    "phpmd/phpmd": "^2.7",
-    "orchestra/testbench": "^4.4"
+    "phpmd/phpmd": "^2.8",
+    "orchestra/testbench": "^5.0"
   },
   "autoload":    {
     "psr-4": {
