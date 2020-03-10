@@ -132,7 +132,7 @@ class PasteEntity
             return $this;
         }
 
-        $this->date = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $date);
+        $this->date = (new Carbon())->createFromFormat('Y-m-d\TH:i:s\Z', $date);
 
         return $this;
     }

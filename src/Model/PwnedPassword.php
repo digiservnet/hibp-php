@@ -26,13 +26,13 @@ class PwnedPassword
     ): Collection {
         $hash = strtoupper($hash);
         $hashSnippet = substr($hash, 0, 5);
-        $results = Collection::make(explode("\r\n", (string)$response->getBody()));
+        $results = (new Collection())->make(explode("\r\n", (string)$response->getBody()));
 
         return $results->map(function ($hashSuffix) use ($hashSnippet, $hash) {
             [$suffix, $count] = explode(':', $hashSuffix);
             $fullHash = sprintf('%s%s', $hashSnippet, $suffix);
 
-            return Collection::make([
+            return (new Collection())->make([
                 $fullHash => [
                     'hashSnippet' => $fullHash,
                     'count' => (int)$count,
@@ -54,13 +54,13 @@ class PwnedPassword
     ): Collection {
         $hash = strtoupper($hash);
         $hashSnippet = substr($hash, 0, 5);
-        $results = Collection::make(explode("\r\n", (string)$response->getBody()));
+        $results = (new Collection())->make(explode("\r\n", (string)$response->getBody()));
 
         return $results->map(function ($hashSuffix) use ($hashSnippet, $hash) {
             [$suffix, $count] = explode(':', $hashSuffix);
             $fullHash = sprintf('%s%s', $hashSnippet, $suffix);
 
-            return Collection::make([
+            return (new Collection())->make([
                 $fullHash => [
                     'hashSnippet' => $fullHash,
                     'count'       => (int)$count,

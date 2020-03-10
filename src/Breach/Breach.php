@@ -76,7 +76,7 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return Collection::make(json_decode((string)$response->getBody(), false))
+        return (new Collection())->make(json_decode((string)$response->getBody(), false))
             ->map(function ($breach) {
                 return new BreachSiteEntity($breach);
             });
@@ -138,7 +138,7 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return Collection::make(json_decode((string)$response->getBody(), false));
+        return (new Collection())->make(json_decode((string)$response->getBody(), false));
     }
 
     /**
@@ -194,7 +194,7 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return Collection::make(json_decode((string)$response->getBody(), false))
+        return (new Collection())->make(json_decode((string)$response->getBody(), false))
             ->map(function ($breach) {
                 return new BreachSiteEntity($breach);
             });
@@ -240,7 +240,7 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return Collection::make(json_decode((string)$response->getBody(), false))
+        return (new Collection())->make(json_decode((string)$response->getBody(), false))
             ->map(function ($breach) {
                 return new BreachSiteTruncatedEntity($breach);
             });

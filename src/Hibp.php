@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 class Hibp
 {
     /** @var array */
-    private $config;
+    protected $config;
 
     /**
      * Load config file

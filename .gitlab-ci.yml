@@ -1,5 +1,5 @@
 # Default runner image
-image: docker.2up.io/php7.4.2-cli:latest
+image: docker.2up.io/php7.4.3-cli:latest
 
 # Define pipeline stages
 stages:
@@ -67,7 +67,7 @@ php-7.3:
       - master
 
 php-7.4:
-  image: docker.2up.io/php7.4.2-cli:latest
+  image: docker.2up.io/php7.4.3-cli:latest
   stage: tests
   dependencies:
     - composer
