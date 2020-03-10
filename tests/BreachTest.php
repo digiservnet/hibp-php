@@ -6,7 +6,7 @@
  * @since 04/03/2018
  */
 
-namespace Icawebdesign\Test;
+namespace Icawebdesign\Hibp\Tests;
 
 use Icawebdesign\Hibp\Breach\Breach;
 use Icawebdesign\Hibp\Breach\BreachSiteEntity;

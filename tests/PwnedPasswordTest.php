@@ -6,7 +6,7 @@
  * @since 28/02/2018
  */
 
-namespace Icawebdesign\Test;
+namespace Icawebdesign\Hibp\Tests;
 
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
@@ -92,7 +92,7 @@ class PwnedPasswordTest extends TestCase
     }
 
     /** @test */
-    public function invalidRangeThrowsARequestException(): void 
+    public function invalidRangeThrowsARequestException(): void
     {
         $this->expectException(RequestException::class);
 

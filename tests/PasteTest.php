@@ -1,6 +1,6 @@
 <?php
 
-namespace Icawebdesign\Test;
+namespace Icawebdesign\Hibp\Tests;
 
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\PasteNotFoundException;
