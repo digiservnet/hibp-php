@@ -112,6 +112,9 @@ use Icawebdesign\Hibp\PwnedPassword;
 
 $pwnedPassword = new PwnedPassword();
 $hashData = $pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+
+// Strip padded values from results
+$hashData = PwnedPassword::stripZeroMatchesData($hashData, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
 ## Usage examples for Paste lists
