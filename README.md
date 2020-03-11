@@ -156,6 +156,9 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
+### Deprecations
+- PHP 7.2 support will be removed in 5.0 
+
 ### Security
 
 If you discover any security related issues, please email ian@ianh.io instead of using the issue tracker.
