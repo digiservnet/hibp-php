@@ -5,7 +5,7 @@ image: docker.2up.io/php7.4.3-cli:latest
 stages:
   - prep
   - syntax
-  - mess
+#  - mess
   - tests
   - security
 
@@ -33,14 +33,14 @@ phpcs:
     refs:
       - master
 
-phpmd:
-  stage: mess
-  script:
-    - ./vendor/phpmd/phpmd/src/bin/phpmd src/ text _phpmd/rules.xml
-  only:
-    refs:
-      - master
-  allow_failure: true
+#phpmd:
+#  stage: mess
+#  script:
+#    - ./vendor/phpmd/phpmd/src/bin/phpmd src/ text _phpmd/rules.xml
+#  only:
+#    refs:
+#      - master
+#  allow_failure: true
 
 php-7.2:
   image: docker.2up.io/2up/php7.2-cli:latest
