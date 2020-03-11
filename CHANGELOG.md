@@ -1,5 +1,11 @@
 # HIBP-PHP Changelog
 
+- 4.2.0
+    - Add `paddedRangeFromHash()`, `paddedRangeDataFromHash()` and `stripZeroMatchesData` methods to `PwnedPassword` class.
+    - Update package dependencies
+    - Add static analysis to CI pipeline
+    - Various internal code tidying
+
 - 4.1.0
     - Update package dependencies
     - Internal cody tidy up
