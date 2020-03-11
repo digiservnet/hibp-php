@@ -82,8 +82,8 @@ class Paste implements PasteInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return (new Collection())->make(json_decode((string)$response->getBody(), false))
-            ->map(function ($paste) {
+        return Collection::make(json_decode((string)$response->getBody(), false))
+            ->map(static function ($paste) {
                 return new PasteEntity($paste);
             });
     }

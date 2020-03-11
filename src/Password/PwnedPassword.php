@@ -187,7 +187,7 @@ class PwnedPassword implements PwnedPasswordInterface
     {
         $hash = strtoupper($hash);
 
-        return $data->filter(function ($value) use ($hash) {
+        return $data->filter(static function ($value) use ($hash) {
             if (($value['hashSnippet'] === $hash) && (0 === $value['count'])) {
                 throw new PaddingHashCollisionException('Padding hash collision');
             }

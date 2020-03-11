@@ -76,8 +76,8 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return (new Collection())->make(json_decode((string)$response->getBody(), false))
-            ->map(function ($breach) {
+        return Collection::make(json_decode((string)$response->getBody(), false))
+            ->map(static function ($breach) {
                 return new BreachSiteEntity($breach);
             });
     }
@@ -115,7 +115,7 @@ class Breach implements BreachInterface
             }
         }
 
-        return new BreachSiteEntity(json_decode((string)$response->getBody()));
+        return new BreachSiteEntity(json_decode((string)$response->getBody(), false));
     }
 
     /**
@@ -138,7 +138,7 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return (new Collection())->make(json_decode((string)$response->getBody(), false));
+        return Collection::make(json_decode((string)$response->getBody(), false));
     }
 
     /**
@@ -194,8 +194,8 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return (new Collection())->make(json_decode((string)$response->getBody(), false))
-            ->map(function ($breach) {
+        return Collection::make(json_decode((string)$response->getBody(), false))
+            ->map(static function ($breach) {
                 return new BreachSiteEntity($breach);
             });
     }
@@ -240,8 +240,8 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return (new Collection())->make(json_decode((string)$response->getBody(), false))
-            ->map(function ($breach) {
+        return Collection::make(json_decode((string)$response->getBody(), false))
+            ->map(static function ($breach) {
                 return new BreachSiteTruncatedEntity($breach);
             });
     }
