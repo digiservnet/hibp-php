@@ -31,12 +31,6 @@ class BreachTest extends TestCase
         $this->breach = new Breach($this->apiKey);
     }
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        $this->breach = null;
-    }
-
     protected function delay(int $microseconds = 1600000): void
     {
         usleep($microseconds);
@@ -102,7 +96,6 @@ class BreachTest extends TestCase
         $this->delay();
         $dataClasses = $this->breach->getAllDataClasses();
         $this->assertSame(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(Collection::class, $dataClasses);
     }
 
     /** @test */
@@ -131,7 +124,6 @@ class BreachTest extends TestCase
         $breaches = $this->breach->getBreachedAccountTruncated('test@example.com', false);
 
         $this->assertSame(200, $this->breach->getStatusCode());
-        $this->assertInstanceOf(Collection::class, $breaches);
         $this->assertGreaterThan(0, $breaches->count());
         $this->assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
     }

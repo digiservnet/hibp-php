@@ -68,15 +68,12 @@ class Paste implements PasteInterface
             switch ($e->getCode()) {
                 case 400:
                     throw new RequestException($e->getMessage(), $e->getRequest());
-                    break;
 
                 case 404:
                     throw new PasteNotFoundException($e->getMessage());
-                    break;
 
                 default:
                     throw $e;
-                    break;
             }
         }
 

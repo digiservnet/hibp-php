@@ -6,6 +6,7 @@ stages:
   - prep
   - syntax
 #  - mess
+  - static analysis
   - tests
   - security
 
@@ -42,7 +43,7 @@ phpcs:
 #      - master
 #  allow_failure: true
 
-php-7.2:
+php-7.2-tests:
   image: docker.2up.io/2up/php7.2-cli:latest
   stage: tests
   dependencies:
@@ -54,7 +55,19 @@ php-7.2:
     refs:
       - master
 
-php-7.3:
+php-7.2-stan:
+  image: docker.2up.io/2up/php7.2-cli:latest
+  stage: static analysis
+  dependencies:
+    - composer
+  script:
+    - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
+    - vendor/bin/phpstan analyse src tests --level 5
+  only:
+    refs:
+      - master
+
+php-7.3-tests:
   image: docker.2up.io/php7.3.14-cli:latest
   stage: tests
   dependencies:
@@ -66,7 +79,18 @@ php-7.3:
     refs:
       - master
 
-php-7.4:
+php-7.3-stan:
+  image: docker.2up.io/php7.3.14-cli:latest
+  stage: static analysis
+  dependencies:
+    - composer
+  script:
+    - vendor/bin/phpstan analyse src tests --level 5
+  only:
+    refs:
+      - master
+
+php-7.4-tests:
   image: docker.2up.io/php7.4.3-cli:latest
   stage: tests
   dependencies:
@@ -74,6 +98,17 @@ php-7.4:
   script:
     - echo "$HIBP_API_KEY" > api.key
     - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
+  only:
+    refs:
+      - master
+
+php-7.4-stan:
+  image: docker.2up.io/php7.4.3-cli:latest
+  stage: static analysis
+  dependencies:
+    - composer
+  script:
+    - vendor/bin/phpstan analyse src tests --level 5
   only:
     refs:
       - master

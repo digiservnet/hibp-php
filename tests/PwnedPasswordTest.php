@@ -25,12 +25,6 @@ class PwnedPasswordTest extends TestCase
         $this->pwnedPassword = new PwnedPassword();
     }
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        $this->pwnedPassword = null;
-    }
-
     /** @test */
     public function successfulRangeLookupReturnsAPositiveInteger(): void
     {

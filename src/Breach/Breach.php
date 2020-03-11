@@ -53,7 +53,7 @@ class Breach implements BreachInterface
      *
      * @param string $domainFilter
      *
-     * @return Collection
+     * @return Collection<array>php
      * @throws GuzzleException
      */
     public function getAllBreachSites(string $domainFilter = null): Collection
@@ -103,15 +103,12 @@ class Breach implements BreachInterface
             switch ($e->getCode()) {
                 case 404:
                     throw new BreachNotFoundException($e->getMessage());
-                    break;
 
                 case 400:
                     throw new RequestException($e->getMessage(), $e->getRequest());
-                    break;
 
                 default:
                     throw $e;
-                    break;
             }
         }
 
@@ -180,15 +177,12 @@ class Breach implements BreachInterface
             switch ($e->getCode()) {
                 case 404:
                     throw new BreachNotFoundException($e->getMessage());
-                    break;
 
                 case 400:
                     throw new RequestException($e->getMessage(), $e->getRequest());
-                    break;
 
                 default:
                     throw $e;
-                    break;
             }
         }
 
