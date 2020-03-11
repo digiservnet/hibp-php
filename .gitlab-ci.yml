@@ -61,7 +61,6 @@ php-7.2-stan:
   dependencies:
     - composer
   script:
-    - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
     - vendor/bin/phpstan analyse src tests --level 5
   only:
     refs:
