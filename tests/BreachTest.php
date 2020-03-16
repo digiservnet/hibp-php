@@ -17,6 +17,7 @@ use Tightenco\Collect\Support\Collection;
 
 class BreachTest extends TestCase
 {
+    /** @var string */
     protected $apiKey = '';
 
     /** @var Breach */
@@ -27,7 +28,12 @@ class BreachTest extends TestCase
     public function setUp(): void
     {
         parent::setUp();
-        $this->apiKey = file_get_contents(sprintf('%s/../api.key', __DIR__));
+        $apiKey = file_get_contents(sprintf('%s/../api.key', __DIR__));
+
+        if (false !== $apiKey) {
+            $this->apiKey = $apiKey;
+        }
+
         $this->breach = new Breach($this->apiKey);
     }
 

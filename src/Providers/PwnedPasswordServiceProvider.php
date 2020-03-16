@@ -13,12 +13,12 @@ use Illuminate\Support\ServiceProvider;
 
 class PwnedPasswordServiceProvider extends ServiceProvider
 {
-    public function boot()
+    public function boot(): void
     {
         //
     }
 
-    public function register()
+    public function register(): void
     {
         $this->app->bind('password', function () {
             return new PwnedPassword();

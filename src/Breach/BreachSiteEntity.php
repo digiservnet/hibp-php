@@ -382,7 +382,7 @@ class BreachSiteEntity
      * @param stdClass $data
      * @throws Exception
      */
-    public function map(stdClass $data)
+    public function map(stdClass $data): void
     {
         $this
             ->setTitle($data->Title)

@@ -105,7 +105,9 @@ class PasteEntity
      */
     public function setTitle(string $title = null): PasteEntity
     {
-        $this->title = $title;
+        if (null !== $title) {
+            $this->title = $title;
+        }
 
         return $this;
     }
@@ -182,7 +184,7 @@ class PasteEntity
      *
      * @throws Exception
      */
-    public function map(stdClass $data)
+    public function map(stdClass $data): void
     {
         $sourceKey = strtolower($data->Source);
         $sourceLink = $data->Id;

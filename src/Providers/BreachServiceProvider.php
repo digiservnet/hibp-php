@@ -13,14 +13,15 @@ use Illuminate\Support\ServiceProvider;
 
 class BreachServiceProvider extends ServiceProvider
 {
+    /** @var string */
     protected $apiKey = '';
 
-    public function boot()
+    public function boot(): void
     {
         $this->apiKey = env('HIBP_API_KEY');
     }
 
-    public function register()
+    public function register(): void
     {
         $this->app->bind('breach', function () {
             return new Breach($this->apiKey);

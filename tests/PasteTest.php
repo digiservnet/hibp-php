@@ -17,21 +17,22 @@ use PHPUnit\Framework\TestCase;
 
 class PasteTest extends TestCase
 {
+    /** @var string */
     protected $apiKey = '';
 
+    /** @var Paste */
     protected $paste;
 
     public function setUp(): void
     {
         parent::setUp();
-        $this->apiKey = file_get_contents(sprintf('%s/../api.key', __DIR__));
-        $this->paste = new Paste($this->apiKey);
-    }
+        $apiKey = file_get_contents(sprintf('%s/../api.key', __DIR__));
 
-    public function tearDown(): void
-    {
-        parent::tearDown();
-        $this->paste = null;
+        if (false !== $apiKey) {
+            $this->apiKey = $apiKey;
+        }
+
+        $this->paste = new Paste($this->apiKey);
     }
 
     protected function delay(int $microseconds = 1600000): void
