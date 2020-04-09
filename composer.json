@@ -1,6 +1,6 @@
 {
   "name":        "icawebdesign/hibp-php",
-  "version":     "4.2.0",
+  "version":     "4.2.1",
   "description": "PHP library for accessing the Have I Been Pwned API.",
   "keywords":    [
     "hibp",
