@@ -1,7 +1,4 @@
 parameters:
     customRulesetUsed: true
 
-    autoload_files:
-        - %rootDir%/../../../vendor/autoload.php
-
     checkMissingIterableValueType: false
