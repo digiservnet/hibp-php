@@ -1,5 +1,11 @@
 # HIBP-PHP Changelog
 
+- 4.2.2
+    - Update package dependencies to resolve security issue in `symfony/http-kernel` package
+    
+- 4.2.1
+    - Update package dependencies
+    
 - 4.2.0
     - Add `paddedRangeFromHash()`, `paddedRangeDataFromHash()` and `stripZeroMatchesData` methods to `PwnedPassword` class.
     - Update package dependencies
