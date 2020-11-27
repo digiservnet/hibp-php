@@ -9,7 +9,7 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\BreachNotFoundException;
 use Icawebdesign\Hibp\Hibp;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 /**
  * Breach module
@@ -20,13 +20,13 @@ use Tightenco\Collect\Support\Collection;
 class Breach implements BreachInterface
 {
     /** @var Client */
-    protected $client;
+    protected Client $client;
 
     /** @var int */
-    protected $statusCode;
+    protected int $statusCode;
 
     /** @var string */
-    protected $apiRoot;
+    protected string $apiRoot;
 
     public function __construct(string $apiKey)
     {
@@ -51,9 +51,9 @@ class Breach implements BreachInterface
     /**
      * Get all breach sites in system
      *
-     * @param string $domainFilter
+     * @param ?string $domainFilter
      *
-     * @return Collection<array>php
+     * @return Collection
      * @throws GuzzleException
      */
     public function getAllBreachSites(string $domainFilter = null): Collection
@@ -88,7 +88,7 @@ class Breach implements BreachInterface
      * @param string $account
      *
      * @return BreachSiteEntity
-     * @throws Exception
+     * @throws Exception|GuzzleException
      */
     public function getBreach(string $account): BreachSiteEntity
     {
@@ -143,7 +143,7 @@ class Breach implements BreachInterface
      *
      * @param string $emailAddress
      * @param bool $includeUnverified
-     * @param string $domainFilter
+     * @param ?string $domainFilter
      *
      * @return Collection
      * @throws GuzzleException
@@ -199,7 +199,7 @@ class Breach implements BreachInterface
      *
      * @param string $emailAddress
      * @param bool $includeUnverified
-     * @param string $domainFilter
+     * @param ?string $domainFilter
      *
      * @return Collection
      * @throws GuzzleException

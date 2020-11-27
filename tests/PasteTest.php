@@ -18,10 +18,10 @@ use PHPUnit\Framework\TestCase;
 class PasteTest extends TestCase
 {
     /** @var string */
-    protected $apiKey = '';
+    protected string $apiKey = '';
 
     /** @var Paste */
-    protected $paste;
+    protected Paste $paste;
 
     public function setUp(): void
     {
@@ -46,18 +46,18 @@ class PasteTest extends TestCase
         $this->delay();
         $pastes = $this->paste->lookup('test@example.com');
 
-        $this->assertSame(200, $this->paste->getStatusCode());
-        $this->assertGreaterThan(0, $pastes->count());
+        self::assertSame(200, $this->paste->getStatusCode());
+        self::assertGreaterThan(0, $pastes->count());
 
         /** @var PasteEntity $account */
         $account = $pastes->first();
 
-        $this->assertNotEmpty($account->getSource());
-        $this->assertNotEmpty($account->getId());
-        $this->assertIsInt($account->getEmailCount());
-        $this->assertIsString($account->getLink());
-        $this->assertIsInt($account->getEmailCount());
-        $this->assertGreaterThan(0, $account->getEmailCount());
+        self::assertNotEmpty($account->getSource());
+        self::assertNotEmpty($account->getId());
+        self::assertIsInt($account->getEmailCount());
+        self::assertIsString($account->getLink());
+        self::assertIsInt($account->getEmailCount());
+        self::assertGreaterThan(0, $account->getEmailCount());
     }
 
     /** @test */

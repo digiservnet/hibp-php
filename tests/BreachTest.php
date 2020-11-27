@@ -13,15 +13,14 @@ use Icawebdesign\Hibp\Breach\BreachSiteEntity;
 use Icawebdesign\Hibp\Breach\BreachSiteTruncatedEntity;
 use Icawebdesign\Hibp\Exception\BreachNotFoundException;
 use PHPUnit\Framework\TestCase;
-use Tightenco\Collect\Support\Collection;
 
 class BreachTest extends TestCase
 {
     /** @var string */
-    protected $apiKey = '';
+    protected string $apiKey = '';
 
     /** @var Breach */
-    protected $breach;
+    protected Breach $breach;
 
     protected const TOO_MANY_REQUESTS = 429;
 
@@ -48,9 +47,9 @@ class BreachTest extends TestCase
         $this->delay();
         $breaches = $this->breach->getAllBreachSites();
 
-        $this->assertSame(200, $this->breach->getStatusCode());
-        $this->assertGreaterThan(0, $breaches->count());
-        $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+        self::assertSame(200, $this->breach->getStatusCode());
+        self::assertGreaterThan(0, $breaches->count());
+        self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
     /** @test */
@@ -59,9 +58,9 @@ class BreachTest extends TestCase
         $this->delay();
         $breaches = $this->breach->getAllBreachSites('adobe.com');
 
-        $this->assertSame(200, $this->breach->getStatusCode());
-        $this->assertGreaterThan(0, $breaches->count());
-        $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+        self::assertSame(200, $this->breach->getStatusCode());
+        self::assertGreaterThan(0, $breaches->count());
+        self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
     /** @test */
@@ -70,21 +69,21 @@ class BreachTest extends TestCase
         $this->delay();
         $breachedAccount = $this->breach->getBreach('000webhost');
 
-        $this->assertNotEmpty($breachedAccount->getTitle());
-        $this->assertNotEmpty($breachedAccount->getName());
-        $this->assertNotEmpty($breachedAccount->getDomain());
-        $this->assertNotEmpty($breachedAccount->getBreachDate());
-        $this->assertNotEmpty($breachedAccount->getAddedDate());
-        $this->assertNotEmpty($breachedAccount->getModifiedDate());
-        $this->assertNotEmpty($breachedAccount->getPwnCount());
-        $this->assertNotEmpty($breachedAccount->getDescription());
-        $this->assertNotEmpty($breachedAccount->getDataClasses());
-        $this->assertIsBool($breachedAccount->isVerified());
-        $this->assertIsBool($breachedAccount->isFabricated());
-        $this->assertIsBool($breachedAccount->isSensitive());
-        $this->assertIsBool($breachedAccount->isRetired());
-        $this->assertIsBool($breachedAccount->isSpamList());
-        $this->assertNotEmpty($breachedAccount->getLogoPath());
+        self::assertNotEmpty($breachedAccount->getTitle());
+        self::assertNotEmpty($breachedAccount->getName());
+        self::assertNotEmpty($breachedAccount->getDomain());
+        self::assertNotEmpty($breachedAccount->getBreachDate());
+        self::assertNotEmpty($breachedAccount->getAddedDate());
+        self::assertNotEmpty($breachedAccount->getModifiedDate());
+        self::assertNotEmpty($breachedAccount->getPwnCount());
+        self::assertNotEmpty($breachedAccount->getDescription());
+        self::assertNotEmpty($breachedAccount->getDataClasses());
+        self::assertIsBool($breachedAccount->isVerified());
+        self::assertIsBool($breachedAccount->isFabricated());
+        self::assertIsBool($breachedAccount->isSensitive());
+        self::assertIsBool($breachedAccount->isRetired());
+        self::assertIsBool($breachedAccount->isSpamList());
+        self::assertNotEmpty($breachedAccount->getLogoPath());
     }
 
     /** @test */
@@ -101,7 +100,7 @@ class BreachTest extends TestCase
     {
         $this->delay();
         $dataClasses = $this->breach->getAllDataClasses();
-        $this->assertSame(200, $this->breach->getStatusCode());
+        self::assertSame(200, $this->breach->getStatusCode());
     }
 
     /** @test */
@@ -110,9 +109,9 @@ class BreachTest extends TestCase
         $this->delay();
         $breaches = $this->breach->getBreachedAccount('test@example.com', false);
 
-        $this->assertSame(200, $this->breach->getStatusCode());
-        $this->assertGreaterThan(0, $breaches->count());
-        $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+        self::assertSame(200, $this->breach->getStatusCode());
+        self::assertGreaterThan(0, $breaches->count());
+        self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
     /** @test */
@@ -129,9 +128,9 @@ class BreachTest extends TestCase
         $this->delay();
         $breaches = $this->breach->getBreachedAccountTruncated('test@example.com', false);
 
-        $this->assertSame(200, $this->breach->getStatusCode());
-        $this->assertGreaterThan(0, $breaches->count());
-        $this->assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
+        self::assertSame(200, $this->breach->getStatusCode());
+        self::assertGreaterThan(0, $breaches->count());
+        self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
     }
 
     /** @test */
@@ -144,9 +143,9 @@ class BreachTest extends TestCase
             'adobe.com'
         );
 
-        $this->assertSame(200, $this->breach->getStatusCode());
-        $this->assertGreaterThan(0, $breaches->count());
-        $this->assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+        self::assertSame(200, $this->breach->getStatusCode());
+        self::assertGreaterThan(0, $breaches->count());
+        self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
     /** @test */
@@ -159,8 +158,8 @@ class BreachTest extends TestCase
             'adobe.com'
         );
 
-        $this->assertSame(200, $this->breach->getStatusCode());
-        $this->assertGreaterThan(0, $breaches->count());
-        $this->assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
+        self::assertSame(200, $this->breach->getStatusCode());
+        self::assertGreaterThan(0, $breaches->count());
+        self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
     }
 }

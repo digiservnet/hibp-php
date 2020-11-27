@@ -8,8 +8,8 @@
 
 namespace Icawebdesign\Hibp\Model;
 
+use Illuminate\Support\Collection;
 use Psr\Http\Message\ResponseInterface;
-use Tightenco\Collect\Support\Collection;
 
 class PwnedPassword
 {

@@ -14,18 +14,18 @@ use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\PasteNotFoundException;
 use Icawebdesign\Hibp\Hibp;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 class Paste implements PasteInterface
 {
     /** @var Client */
-    protected $client;
+    protected Client $client;
 
     /** @var int */
-    protected $statusCode;
+    protected int $statusCode;
 
     /** @var string */
-    protected $apiRoot;
+    protected string $apiRoot;
 
     public function __construct(string $apiKey)
     {

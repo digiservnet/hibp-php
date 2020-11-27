@@ -2,6 +2,7 @@
 
 namespace Icawebdesign\Hibp\Exception;
 
+use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 use function get_class;
 
@@ -22,7 +23,7 @@ class PasteNotFoundException extends RuntimeException
         parent::__construct($message, $code);
     }
 
-    public function __toString()
+    public function __toString(): string
     {
         return sprintf(
             "%s %s in %s(%s)\n%s",

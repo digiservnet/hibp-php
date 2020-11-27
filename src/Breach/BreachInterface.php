@@ -8,7 +8,7 @@
 
 namespace Icawebdesign\Hibp\Breach;
 
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 interface BreachInterface
 {
@@ -25,7 +25,7 @@ interface BreachInterface
     public function getStatusCode(): int;
 
     /**
-     * @param string $domainFilter
+     * @param ?string $domainFilter
      * @return Collection
      */
     public function getAllBreachSites(string $domainFilter = null): Collection;
@@ -45,7 +45,7 @@ interface BreachInterface
     /**
      * @param string $emailAddress
      * @param bool $includeUnverified
-     * @param string $domainFilter
+     * @param ?string $domainFilter
      *
      * @return Collection
      *
@@ -58,16 +58,16 @@ interface BreachInterface
     ): Collection;
 
     /**
-     * @param string $emailAccount
+     * @param string $emailAddress
      * @param bool $includeUnverified
-     * @param string $domainFilter
+     * @param ?string $domainFilter
      *
      * @return Collection
      *
      * @SuppressWarnings(PHPMD.BooleanArgumentFlag)
      */
     public function getBreachedAccountTruncated(
-        string $emailAccount,
+        string $emailAddress,
         bool $includeUnverified = false,
         string $domainFilter = null
     ): Collection;

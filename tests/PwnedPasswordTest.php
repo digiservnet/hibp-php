@@ -11,13 +11,13 @@ namespace Icawebdesign\Hibp\Tests;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
 use Icawebdesign\Hibp\Password\PwnedPassword;
+use Illuminate\Support\Collection;
 use PHPUnit\Framework\TestCase;
-use Tightenco\Collect\Support\Collection;
 
 class PwnedPasswordTest extends TestCase
 {
     /** @var PwnedPassword */
-    protected $pwnedPassword;
+    protected PwnedPassword $pwnedPassword;
 
     public function setUp(): void
     {
@@ -30,9 +30,9 @@ class PwnedPasswordTest extends TestCase
     {
         $response = $this->pwnedPassword->rangeFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
 
-        $this->assertSame(200, $this->pwnedPassword->getStatusCode());
-        $this->assertIsInt($response);
-        $this->assertGreaterThan(0, $response);
+        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        self::assertIsInt($response);
+        self::assertGreaterThan(0, $response);
     }
 
     /** @test */
@@ -40,9 +40,9 @@ class PwnedPasswordTest extends TestCase
     {
         $response = $this->pwnedPassword->paddedRangeFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
 
-        $this->assertSame(200, $this->pwnedPassword->getStatusCode());
-        $this->assertIsInt($response);
-        $this->assertGreaterThan(0, $response);
+        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        self::assertIsInt($response);
+        self::assertGreaterThan(0, $response);
     }
 
     /** @test */
@@ -50,8 +50,8 @@ class PwnedPasswordTest extends TestCase
     {
         $response = $this->pwnedPassword->rangeFromHash('0000000000000000000000000000000000000000');
 
-        $this->assertSame(200, $this->pwnedPassword->getStatusCode());
-        $this->assertEquals(0, $response);
+        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        self::assertEquals(0, $response);
     }
 
     /** @test */
@@ -59,8 +59,8 @@ class PwnedPasswordTest extends TestCase
     {
         $response = $this->pwnedPassword->rangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 
-        $this->assertSame(200, $this->pwnedPassword->getStatusCode());
-        $this->assertGreaterThan(0, $response->last()['count']);
+        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        self::assertGreaterThan(0, $response->last()['count']);
     }
 
     /** @test */
@@ -68,8 +68,8 @@ class PwnedPasswordTest extends TestCase
     {
         $response = $this->pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 
-        $this->assertSame(200, $this->pwnedPassword->getStatusCode());
-        $this->assertSame(0, $response->last()['count']);
+        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        self::assertSame(0, $response->last()['count']);
     }
 
     /** @test */
@@ -78,8 +78,8 @@ class PwnedPasswordTest extends TestCase
         $hash = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8';
         $response = $this->pwnedPassword->paddedRangeDataFromHash($hash);
 
-        $this->assertSame(200, $this->pwnedPassword->getStatusCode());
-        $this->assertGreaterThan(
+        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        self::assertGreaterThan(
             0,
             PwnedPassword::stripZeroMatchesData($response, $hash)->last()
         );
@@ -109,13 +109,13 @@ class PwnedPasswordTest extends TestCase
         $hash = '5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8';
         $response = $this->pwnedPassword->paddedRangeDataFromHash($hash);
 
-        $this->assertSame(200, $this->pwnedPassword->getStatusCode());
+        self::assertSame(200, $this->pwnedPassword->getStatusCode());
 
         $data[$hash] = $response->first();
         $data[$hash]['hashSnippet'] = $hash;
         $data[$hash]['count'] = 0;
 
-        $this->assertGreaterThan(
+        self::assertGreaterThan(
             0,
             PwnedPassword::stripZeroMatchesData((new Collection($data)), $hash)->last()
         );

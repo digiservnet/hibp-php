@@ -20,7 +20,7 @@ class PwnedPasswordServiceProvider extends ServiceProvider
 
     public function register(): void
     {
-        $this->app->bind('password', function () {
+        $this->app->bind('password', static function () {
             return new PwnedPassword();
         });
     }

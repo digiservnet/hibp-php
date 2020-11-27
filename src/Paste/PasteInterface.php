@@ -8,7 +8,7 @@
 
 namespace Icawebdesign\Hibp\Paste;
 
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 interface PasteInterface
 {

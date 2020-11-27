@@ -10,55 +10,56 @@ namespace Icawebdesign\Hibp\Breach;
 
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Support\Collection;
+use RuntimeException;
 use stdClass;
-use Tightenco\Collect\Support\Collection;
 
 class BreachSiteEntity
 {
     /** @var string */
-    protected $title;
+    protected string $title;
 
     /** @var string */
-    protected $name;
+    protected string $name;
 
     /** @var string */
-    protected $domain;
+    protected string $domain;
 
     /** @var Carbon */
-    protected $breachDate;
+    protected Carbon $breachDate;
 
     /** @var Carbon */
-    protected $addedDate;
+    protected Carbon $addedDate;
 
     /** @var Carbon */
-    protected $modifiedDate;
+    protected Carbon $modifiedDate;
 
     /** @var int */
-    protected $pwnCount;
+    protected int $pwnCount;
 
     /** @var string */
-    protected $description;
+    protected string $description;
 
     /** @var Collection */
-    protected $dataClasses;
+    protected Collection $dataClasses;
 
     /** @var bool */
-    protected $verified;
+    protected bool $verified;
 
     /** @var bool */
-    protected $fabricated;
+    protected bool $fabricated;
 
     /** @var bool */
-    protected $sensitive;
+    protected bool $sensitive;
 
     /** @var bool */
-    protected $retired;
+    protected bool $retired;
 
     /** @var bool */
-    protected $spamList;
+    protected bool $spamList;
 
     /** @var string */
-    protected $logoPath;
+    protected string $logoPath;
 
     /**
      * BreachSiteEntity constructor.
@@ -69,7 +70,11 @@ class BreachSiteEntity
      */
     public function __construct(stdClass $data = null)
     {
-        $this->map($data);
+        if (null !== $data) {
+            $this->map($data);
+        } else {
+            throw new RuntimeException('Invalid breachsite data');
+        }
     }
 
     /**

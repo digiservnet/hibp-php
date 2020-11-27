@@ -13,7 +13,7 @@ use stdClass;
 class BreachSiteTruncatedEntity
 {
     /** @var string */
-    protected $name;
+    protected string $name;
 
     /**
      * BreachSiteTruncatedEntity constructor.

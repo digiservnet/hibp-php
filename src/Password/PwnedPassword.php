@@ -9,7 +9,7 @@ use GuzzleHttp\Psr7\Request;
 use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
 use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\Model\PwnedPassword as PasswordData;
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 /**
  * PwnedPassword module
@@ -20,13 +20,13 @@ use Tightenco\Collect\Support\Collection;
 class PwnedPassword implements PwnedPasswordInterface
 {
     /** @var Client */
-    protected $client;
+    protected Client $client;
 
     /** @var int */
-    protected $statusCode;
+    protected int $statusCode;
 
     /** @var string */
-    protected $apiRoot;
+    protected string $apiRoot;
 
     public function __construct()
     {
@@ -73,8 +73,7 @@ class PwnedPassword implements PwnedPasswordInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        $pwnedPassword = new PasswordData();
-        $match = $pwnedPassword->getRangeData($response, $hash);
+        $match = (new PasswordData())->getRangeData($response, $hash);
 
         if ($match->collapse()->has($hash)) {
             return $match->collapse()->get($hash)['count'];

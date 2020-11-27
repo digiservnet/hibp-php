@@ -8,7 +8,7 @@
 
 namespace Icawebdesign\Hibp\Password;
 
-use Tightenco\Collect\Support\Collection;
+use Illuminate\Support\Collection;
 
 interface PwnedPasswordInterface
 {

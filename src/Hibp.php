@@ -14,7 +14,7 @@ use Symfony\Component\Yaml\Yaml;
 class Hibp
 {
     /** @var array */
-    protected $config;
+    protected array $config;
 
     /**
      * Load config file
@@ -24,8 +24,7 @@ class Hibp
      */
     public function loadConfig(): array
     {
-        $yaml = new Yaml();
-        $this->config = $yaml->parseFile(sprintf('%s/config/config.yml', __DIR__));
+        $this->config = Yaml::parseFile(sprintf('%s/config/config.yml', __DIR__));
 
         return $this->config;
     }

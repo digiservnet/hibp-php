@@ -14,7 +14,7 @@ use Illuminate\Support\ServiceProvider;
 class BreachServiceProvider extends ServiceProvider
 {
     /** @var string */
-    protected $apiKey = '';
+    protected string $apiKey = '';
 
     public function boot(): void
     {
