@@ -2,7 +2,6 @@
 
 namespace Icawebdesign\Hibp\Exception;
 
-use JetBrains\PhpStorm\Pure;
 use RuntimeException;
 use function get_class;
 
