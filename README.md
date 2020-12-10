@@ -73,6 +73,8 @@ $data = $breach->getBreachedAccount('test@example.com', true);
 
 We can also filter results back to a specific breached domain by adding a domain as the 3rd param
 
+The `PwnedPasswd` methods can now take a second param of an `array` to specify [GuzzleHttp request options](https://docs.guzzlephp.org/en/stable/request-options.html).
+
 ```php
 use Icawebdesign\Hibp\Breach;
 
@@ -167,6 +169,9 @@ If you discover any security related issues, please email ian@ianh.io instead of
 
 - [Ian.H](https://github.com/icawebdesign)
 - [All Contributors](../../contributors)
+
+Thank you to [Artem Fomenko](https://github.com/ArtemFo) for being the first external contributor to the package 
+providing request options for `Guzzle` for the `PwnedPasswd` methods.
 
 ## License
 
