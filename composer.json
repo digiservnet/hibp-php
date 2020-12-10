@@ -19,7 +19,7 @@
     "php": ">=7.2.5",
     "tightenco/collect": "^7.0",
     "guzzlehttp/guzzle": "^6.5",
-    "symfony/yaml": "^4.4",
+    "symfony/yaml": "^4.4|^5.2",
     "nesbot/carbon": "^2.31",
     "ext-json": "*"
   },
