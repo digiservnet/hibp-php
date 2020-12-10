@@ -52,11 +52,12 @@ class PwnedPassword implements PwnedPasswordInterface
 
     /**
      * @param string $hash
+     * @param array $options
      *
      * @return int
      * @throws GuzzleException
      */
-    public function rangeFromHash(string $hash): int
+    public function rangeFromHash(string $hash, array $options = []): int
     {
         $hash = strtoupper($hash);
         $hashSnippet = substr($hash, 0, 5);
@@ -64,7 +65,8 @@ class PwnedPassword implements PwnedPasswordInterface
         try {
             $response = $this->client->request(
                 'GET',
-                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet)
+                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
+                $options
             );
         } catch (RequestException $e) {
             $this->statusCode = $e->getCode();
@@ -84,24 +86,29 @@ class PwnedPassword implements PwnedPasswordInterface
 
     /**
      * @param string $hash
+     * @param array $options
      *
      * @return int
      * @throws GuzzleException
      */
-    public function paddedRangeFromHash(string $hash): int
+    public function paddedRangeFromHash(string $hash, array $options = []): int
     {
         $hash = strtoupper($hash);
         $hashSnippet = substr($hash, 0, 5);
+
+        if (array_key_exists('headers', $options)) {
+            $headers = $options['headers'];
+            $headers['Add-Padding'] = 'true';
+            $options['headers'] = $headers;
+        } else {
+            $options['headers'] = ['Add-Padding' => 'true'];
+        }
 
         try {
             $response = $this->client->request(
                 'GET',
                 sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
-                [
-                    'headers' => [
-                        'Add-Padding' => 'true',
-                    ],
-                ]
+                $options
             );
         } catch (RequestException $e) {
             $this->statusCode = $e->getCode();
@@ -121,11 +128,12 @@ class PwnedPassword implements PwnedPasswordInterface
 
     /**
      * @param string $hash
+     * @param array $options
      *
      * @return Collection
      * @throws GuzzleException
      */
-    public function rangeDataFromHash(string $hash): Collection
+    public function rangeDataFromHash(string $hash, array $options = []): Collection
     {
         $hash = strtoupper($hash);
         $hashSnippet =substr($hash, 0, 5);
@@ -133,7 +141,8 @@ class PwnedPassword implements PwnedPasswordInterface
         try {
             $response = $this->client->request(
                 'GET',
-                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet)
+                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
+                $options
             );
         } catch (RequestException $e) {
             $this->statusCode = $e->getCode();
@@ -147,21 +156,21 @@ class PwnedPassword implements PwnedPasswordInterface
 
     /**
      * @param string $hash
+     * @param array $options
      *
      * @return Collection
      * @throws GuzzleException
      */
-    public function paddedRangeDataFromHash(string $hash): Collection
+    public function paddedRangeDataFromHash(string $hash, array $options = []): Collection
     {
         $hash = strtoupper($hash);
         $hashSnippet =substr($hash, 0, 5);
+        $options['Add-Padding'] = 'true';
 
         $request = new Request(
             'GET',
             sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
-            [
-                'Add-Padding' => 'true',
-            ]
+            $options
         );
 
         try {
