@@ -9,22 +9,22 @@
 namespace Icawebdesign\Hibp\Providers;
 
 use Icawebdesign\Hibp\Breach\Breach;
+use Icawebdesign\Hibp\HibpHttp;
 use Illuminate\Support\ServiceProvider;
 
 class BreachServiceProvider extends ServiceProvider
 {
-    /** @var string */
-    protected string $apiKey = '';
+    protected HibpHttp $hibpHttp;
 
     public function boot(): void
     {
-        $this->apiKey = env('HIBP_API_KEY');
+        $this->hibpHttp = new HibpHttp(env('HIBP_API_KEY'));
     }
 
     public function register(): void
     {
         $this->app->bind('breach', function () {
-            return new Breach($this->apiKey);
+            return new Breach($this->hibpHttp);
         });
     }
 }

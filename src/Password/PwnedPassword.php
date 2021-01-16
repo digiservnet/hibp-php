@@ -3,11 +3,13 @@
 namespace Icawebdesign\Hibp\Password;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
 use Icawebdesign\Hibp\Hibp;
+use Icawebdesign\Hibp\HibpHttp;
 use Icawebdesign\Hibp\Model\PwnedPassword as PasswordData;
 use Illuminate\Support\Collection;
 
@@ -19,8 +21,8 @@ use Illuminate\Support\Collection;
  */
 class PwnedPassword implements PwnedPasswordInterface
 {
-    /** @var Client */
-    protected Client $client;
+    /** @var ClientInterface */
+    protected ClientInterface $client;
 
     /** @var int */
     protected int $statusCode;
@@ -28,16 +30,12 @@ class PwnedPassword implements PwnedPasswordInterface
     /** @var string */
     protected string $apiRoot;
 
-    public function __construct()
+    public function __construct(HibpHttp $hibpHttp)
     {
         $config = (new Hibp())->loadConfig();
 
         $this->apiRoot = $config['pwned_passwords']['api_root'];
-        $this->client = new Client([
-            'headers' => [
-                'User-Agent' => $config['global']['user_agent'],
-            ],
-        ]);
+        $this->client = $hibpHttp->client();
     }
 
     /**
@@ -164,8 +162,7 @@ class PwnedPassword implements PwnedPasswordInterface
     public function paddedRangeDataFromHash(string $hash, array $options = []): Collection
     {
         $hash = strtoupper($hash);
-        $hashSnippet =substr($hash, 0, 5);
-        $options['Add-Padding'] = 'true';
+        $hashSnippet = substr($hash, 0, 5);
 
         $request = new Request(
             'GET',

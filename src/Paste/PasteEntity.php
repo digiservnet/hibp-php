@@ -23,7 +23,7 @@ class PasteEntity
     /** @var string */
     protected string $title;
 
-    /** @var Carbon|null */
+    /** @var ?Carbon */
     protected ?Carbon $date;
 
     /** @var int */
@@ -133,7 +133,9 @@ class PasteEntity
             return $this;
         }
 
-        $this->date = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $date);
+        $pasteDate = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $date);
+
+        $this->date = (false !== $pasteDate) ? $pasteDate : null;
 
         return $this;
     }
@@ -190,6 +192,10 @@ class PasteEntity
 
         if (array_key_exists($sourceKey, $this->pasteSites)) {
             $sourceLink = $this->pasteSites[$sourceKey] . $data->Id;
+        }
+
+        if (!property_exists($data, 'Title')) {
+            $data->Title = '';
         }
 
         $this

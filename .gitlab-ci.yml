@@ -59,7 +59,7 @@ php-7.4-stan:
   dependencies:
     - composer
   script:
-    - vendor/bin/phpstan analyse -l 6 --memory-limit=256M src tests
+    - vendor/bin/phpstan analyse -l 8 --memory-limit=256M src tests
   rules:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
 
@@ -80,7 +80,7 @@ php-8.0-stan:
   dependencies:
     - composer
   script:
-    - vendor/bin/phpstan analyse -l 6 --memory-limit=256M src tests
+    - vendor/bin/phpstan analyse -l 8 --memory-limit=256M src tests
   rules:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
 

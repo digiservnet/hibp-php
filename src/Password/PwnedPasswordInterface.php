@@ -8,15 +8,13 @@
 
 namespace Icawebdesign\Hibp\Password;
 
+use Icawebdesign\Hibp\HibpHttp;
 use Illuminate\Support\Collection;
 
 interface PwnedPasswordInterface
 {
-    public function __construct();
+    public function __construct(HibpHttp $hibpHttp);
 
-    /**
-     * @return int
-     */
     public function getStatusCode(): int;
 
     public function rangeFromHash(string $hash, array $options): int;

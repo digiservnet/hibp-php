@@ -172,10 +172,12 @@ class BreachSiteEntity
      */
     public function setAddedDate(string $addedDate): BreachSiteEntity
     {
-        $this->addedDate = Carbon::createFromFormat(
+        $date = Carbon::createFromFormat(
             'Y-m-d\TH:i:s\Z',
             $addedDate
         );
+
+        $this->addedDate = (false !== $date) ? $date : Carbon::now();
 
         return $this;
     }
@@ -195,10 +197,12 @@ class BreachSiteEntity
      */
     public function setModifiedDate(string $modifiedDate): BreachSiteEntity
     {
-        $this->modifiedDate = Carbon::createFromFormat(
+        $date = Carbon::createFromFormat(
             'Y-m-d\TH:i:s\Z',
             $modifiedDate
         );
+
+        $this->modifiedDate = (false !== $date) ? $date : Carbon::now();
 
         return $this;
     }

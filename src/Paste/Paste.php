@@ -9,17 +9,19 @@
 namespace Icawebdesign\Hibp\Paste;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\PasteNotFoundException;
 use Icawebdesign\Hibp\Hibp;
+use Icawebdesign\Hibp\HibpHttp;
 use Illuminate\Support\Collection;
 
 class Paste implements PasteInterface
 {
-    /** @var Client */
-    protected Client $client;
+    /** @var ClientInterface */
+    protected ClientInterface $client;
 
     /** @var int */
     protected int $statusCode;
@@ -27,16 +29,11 @@ class Paste implements PasteInterface
     /** @var string */
     protected string $apiRoot;
 
-    public function __construct(string $apiKey)
+    public function __construct(HibpHttp $hibpHttp)
     {
         $config = (new Hibp())->loadConfig();
         $this->apiRoot = sprintf('%s/v%d', $config['hibp']['api_root'], $config['hibp']['api_version']);
-        $this->client = new Client([
-            'headers' => [
-                'User-Agent' => $config['global']['user_agent'],
-                'hibp-api-key' => $apiKey,
-            ],
-        ]);
+        $this->client = $hibpHttp->client();
     }
 
     /**
