@@ -3,12 +3,13 @@
 namespace Icawebdesign\Hibp;
 
 use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 
 class HibpHttp
 {
-    protected Client $client;
+    protected ClientInterface $client;
 
-    public function __construct(string $apiKey = null, Client $client = null)
+    public function __construct(string $apiKey = null, ClientInterface $client = null)
     {
         if (null !== $client) {
             $this->client = $client;
