@@ -27,8 +27,9 @@ interface PasteInterface
 
     /**
      * @param string $emailAddress
+     * @param array $options
      *
      * @return Collection
      */
-    public function lookup(string $emailAddress): Collection;
+    public function lookup(string $emailAddress, array $options = []): Collection;
 }

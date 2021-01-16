@@ -48,16 +48,18 @@ class Paste implements PasteInterface
      * Check for any pastes containing specified email address
      *
      * @param string $emailAddress
+     * @param array $options
      *
      * @return Collection
      * @throws GuzzleException
      */
-    public function lookup(string $emailAddress): Collection
+    public function lookup(string $emailAddress, array $options = []): Collection
     {
         try {
             $response = $this->client->request(
                 'GET',
-                sprintf('%s/pasteaccount/%s', $this->apiRoot, urlencode($emailAddress))
+                sprintf('%s/pasteaccount/%s', $this->apiRoot, urlencode($emailAddress)),
+                $options
             );
         } catch (ClientException $e) {
             $this->statusCode = $e->getCode();

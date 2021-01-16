@@ -134,7 +134,7 @@ class PwnedPassword implements PwnedPasswordInterface
     public function rangeDataFromHash(string $hash, array $options = []): Collection
     {
         $hash = strtoupper($hash);
-        $hashSnippet =substr($hash, 0, 5);
+        $hashSnippet = substr($hash, 0, 5);
 
         try {
             $response = $this->client->request(
