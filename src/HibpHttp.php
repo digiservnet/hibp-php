@@ -18,12 +18,15 @@ class HibpHttp
         }
 
         $config = (new Hibp())->loadConfig();
-        $this->client = new Client([
-            'headers' => [
-                'User-Agent' => $config['global']['user_agent'],
-                'hibp-api-key' => $apiKey,
-            ],
-        ]);
+        $headers = [
+            'User-Agent' => $config['global']['user_agent'],
+        ];
+
+        if (null !== $apiKey) {
+            $headers['hibp-api-key'] = $apiKey;
+        }
+
+        $this->client = new Client([$headers]);
     }
 
     public function client(): ClientInterface

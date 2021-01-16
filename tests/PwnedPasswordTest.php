@@ -8,8 +8,12 @@
 
 namespace Icawebdesign\Hibp\Tests;
 
+use GuzzleHttp\Client;
 use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
+use Icawebdesign\Hibp\HibpHttp;
 use Icawebdesign\Hibp\Password\PwnedPassword;
 use Illuminate\Support\Collection;
 use Mockery;
@@ -19,12 +23,6 @@ class PwnedPasswordTest extends TestCase
 {
     /** @var PwnedPassword */
     protected PwnedPassword $pwnedPassword;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $this->pwnedPassword = new PwnedPassword();
-    }
 
     protected function tearDown(): void
     {
@@ -36,57 +34,95 @@ class PwnedPasswordTest extends TestCase
     /** @test */
     public function successfulRangeLookupReturnsAPositiveInteger(): void
     {
-        $response = $this->pwnedPassword->rangeFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
+        $list = self::mockPasswordList();
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], $list),
+        ]);
 
-        self::assertSame(200, $this->pwnedPassword->getStatusCode());
-        self::assertIsInt($response);
-        self::assertGreaterThan(0, $response);
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $count = $pwnedPassword->rangeFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
+
+        self::assertSame(200, $pwnedPassword->getStatusCode());
+        self::assertIsInt($count);
+        self::assertSame(3861493, $count);
     }
 
     /** @test */
     public function successfulRangeWithPaddingReturnsAPositiveInteger(): void
     {
-        $response = $this->pwnedPassword->paddedRangeFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockPasswordList()),
+        ]);
 
-        self::assertSame(200, $this->pwnedPassword->getStatusCode());
-        self::assertIsInt($response);
-        self::assertGreaterThan(0, $response);
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $count = $pwnedPassword->paddedRangeFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
+
+        self::assertSame(200, $pwnedPassword->getStatusCode());
+        self::assertIsInt($count);
+        self::assertSame(3861493, $count);
     }
 
     /** @test */
     public function failedRangeLookupReturnsZero(): void
     {
-        $response = $this->pwnedPassword->rangeFromHash('0000000000000000000000000000000000000000');
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockPasswordList()),
+        ]);
 
-        self::assertSame(200, $this->pwnedPassword->getStatusCode());
-        self::assertEquals(0, $response);
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $count = $pwnedPassword->rangeFromHash('0000000000000000000000000000000000000000');
+
+        self::assertSame(200, $pwnedPassword->getStatusCode());
+        self::assertEquals(0, $count);
     }
 
     /** @test */
     public function successfulRangeDataLookupReturnsAValidCollection(): void
     {
-        $response = $this->pwnedPassword->rangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockPasswordList()),
+        ]);
 
-        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $response = $pwnedPassword->rangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+
+        self::assertSame(200, $pwnedPassword->getStatusCode());
         self::assertGreaterThan(0, $response->last()['count']);
     }
 
     /** @test */
     public function successfulPaddedRangeDataLookupReturnsAValidCollectionWithZeroCountElements(): void
     {
-        $response = $this->pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'send' => new Response(200, [], self::mockPasswordList()),
+        ]);
 
-        self::assertSame(200, $this->pwnedPassword->getStatusCode());
-        self::assertSame(0, $response->last()['count']);
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $response = $pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+
+        self::assertSame(200, $pwnedPassword->getStatusCode());
+        self::assertSame(5, $response->last()['count']);
     }
 
     /** @test */
     public function strippedSuccessfulPaddedRangeReturnsAValidCollectionWithoutZeroCountElements(): void
     {
         $hash = '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8';
-        $response = $this->pwnedPassword->paddedRangeDataFromHash($hash);
 
-        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'send' => new Response(200, [], self::mockPasswordList()),
+        ]);
+
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $response = $pwnedPassword->paddedRangeDataFromHash($hash);
+
+        self::assertSame(200, $pwnedPassword->getStatusCode());
         self::assertGreaterThan(
             0,
             PwnedPassword::stripZeroMatchesData($response, $hash)->last()
@@ -98,7 +134,14 @@ class PwnedPasswordTest extends TestCase
     {
         $this->expectException(RequestException::class);
 
-        $this->pwnedPassword->rangeFromHash('&&');
+        $request = Mockery::mock(Request::class);
+
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('request')
+            ->andThrow(new RequestException('', $request));
+
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $pwnedPassword->rangeFromHash('&&');
     }
 
     /** @test */
@@ -106,7 +149,14 @@ class PwnedPasswordTest extends TestCase
     {
         $this->expectException(RequestException::class);
 
-        $this->pwnedPassword->rangeDataFromHash('&&');
+        $request = Mockery::mock(Request::class);
+
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('request')
+            ->andThrow(new RequestException('', $request));
+
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $pwnedPassword->rangeDataFromHash('&&');
     }
 
     /** @test */
@@ -115,17 +165,19 @@ class PwnedPasswordTest extends TestCase
         $this->expectException(PaddingHashCollisionException::class);
 
         $hash = '5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8';
-        $response = $this->pwnedPassword->paddedRangeDataFromHash($hash);
 
-        self::assertSame(200, $this->pwnedPassword->getStatusCode());
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('request')
+            ->andThrow(new PaddingHashCollisionException(''));
 
-        $data[$hash] = $response->first();
-        $data[$hash]['hashSnippet'] = $hash;
-        $data[$hash]['count'] = 0;
+        $pwnedPassword = new PwnedPassword(new HibpHttp(null, $client));
+        $response = $pwnedPassword->paddedRangeDataFromHash($hash);
+    }
 
-        self::assertGreaterThan(
-            0,
-            PwnedPassword::stripZeroMatchesData((new Collection($data)), $hash)->last()
-        );
+    private static function mockPasswordList(): string
+    {
+        $data = file_get_contents(sprintf('%s/_responses/passwords/password_results.txt', __DIR__));
+
+        return (false !== $data) ? trim($data) : '';
     }
 }
