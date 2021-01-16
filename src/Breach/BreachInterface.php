@@ -8,6 +8,7 @@
 
 namespace Icawebdesign\Hibp\Breach;
 
+use Icawebdesign\Hibp\HibpHttp;
 use Illuminate\Support\Collection;
 
 interface BreachInterface
@@ -15,9 +16,9 @@ interface BreachInterface
     /**
      * BreachInterface constructor.
      *
-     * @param string $apiKey
+     * @param HibpHttp $client
      */
-    public function __construct(string $apiKey);
+    public function __construct(HibpHttp $client);
 
     /**
      * @return int

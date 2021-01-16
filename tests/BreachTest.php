@@ -8,10 +8,16 @@
 
 namespace Icawebdesign\Hibp\Tests;
 
+use GuzzleHttp\Client;
+use GuzzleHttp\Exception\RequestException;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Icawebdesign\Hibp\Breach\Breach;
 use Icawebdesign\Hibp\Breach\BreachSiteEntity;
 use Icawebdesign\Hibp\Breach\BreachSiteTruncatedEntity;
 use Icawebdesign\Hibp\Exception\BreachNotFoundException;
+use Icawebdesign\Hibp\HibpHttp;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class BreachTest extends TestCase
@@ -32,8 +38,13 @@ class BreachTest extends TestCase
         if (false !== $apiKey) {
             $this->apiKey = $apiKey;
         }
+    }
 
-        $this->breach = new Breach($this->apiKey);
+    public function tearDown(): void
+    {
+        Mockery::close();
+
+        parent::tearDown();
     }
 
     protected function delay(int $microseconds = 1600000): void
@@ -44,21 +55,46 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingAllBreachSitesReturnsACollection(): void
     {
-        $this->delay();
-        $breaches = $this->breach->getAllBreachSites();
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockBreachList()),
+        ]);
 
-        self::assertSame(200, $this->breach->getStatusCode());
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breaches = $breach->getAllBreachSites();
+
+        self::assertSame(200, $breach->getStatusCode());
         self::assertGreaterThan(0, $breaches->count());
         self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
     /** @test */
+    public function gettingAllBreachSitesWithInvalidRequestThrowsRequestException(): void
+    {
+        $this->expectException(RequestException::class);
+
+        $request = Mockery::mock(Request::class);
+
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('request')
+            ->andThrow(new RequestException('', $request));
+
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breach->getAllBreachSites();
+    }
+
+    /** @test */
     public function gettingAllFilteredBreachSitesReturnsAValidCollection(): void
     {
-        $this->delay();
-        $breaches = $this->breach->getAllBreachSites('adobe.com');
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockBreachList()),
+        ]);
 
-        self::assertSame(200, $this->breach->getStatusCode());
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breaches = $breach->getAllBreachSites('adobe.com');
+
+        self::assertSame(200, $breach->getStatusCode());
         self::assertGreaterThan(0, $breaches->count());
         self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
@@ -66,8 +102,13 @@ class BreachTest extends TestCase
     /** @test */
     public function successfulBreachLookupReturnsABreachSiteEntity(): void
     {
-        $this->delay();
-        $breachedAccount = $this->breach->getBreach('000webhost');
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockSingleAccount()),
+        ]);
+
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breachedAccount = $breach->getBreach('000webhost');
 
         self::assertNotEmpty($breachedAccount->getTitle());
         self::assertNotEmpty($breachedAccount->getName());
@@ -89,27 +130,44 @@ class BreachTest extends TestCase
     /** @test */
     public function unsuccessfulBreachLookupThrowsABreachNotFoundException(): void
     {
-        $this->delay();
         $this->expectException(BreachNotFoundException::class);
 
-        $this->breach->getBreach('&&');
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('request')
+            ->andThrow(new BreachNotFoundException());
+
+        $breach = new Breach(new HibpHttp(null, $client));
+
+        $breach->getBreach('&&');
     }
 
     /** @test */
     public function gettingAllDataclassesReturnsACollection(): void
     {
-        $this->delay();
-        $dataClasses = $this->breach->getAllDataClasses();
-        self::assertSame(200, $this->breach->getStatusCode());
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockDataClasses()),
+        ]);
+
+        $breach = new Breach(new HibpHttp(null, $client));
+        $dataClasses = $breach->getAllDataClasses();
+
+        self::assertSame(200, $breach->getStatusCode());
+        self::assertSame('Account balances', $dataClasses->first());
     }
 
     /** @test */
     public function gettingBreachDataForAccountReturnsAValidCollection(): void
     {
-        $this->delay();
-        $breaches = $this->breach->getBreachedAccount('test@example.com', false);
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockBreachList()),
+        ]);
 
-        self::assertSame(200, $this->breach->getStatusCode());
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breaches = $breach->getBreachedAccount('test@example.com', false);
+
+        self::assertSame(200, $breach->getStatusCode());
         self::assertGreaterThan(0, $breaches->count());
         self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
@@ -117,18 +175,28 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingBreachDataForAnInvalidAccountThrowsABreachNotFoundException(): void
     {
-        $this->delay();
         $this->expectException(BreachNotFoundException::class);
-        $this->breach->getBreachedAccount('invalid_email_address');
+
+        $client = Mockery::mock(Client::class);
+        $client->shouldReceive('request')
+            ->andThrow(new BreachNotFoundException());
+
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breach->getBreachedAccount('invalid_email_address');
     }
 
     /** @test */
     public function gettingTruncatedBreachedAccountsReturnsACollectionOfBreachSiteTruncatedEntities(): void
     {
-        $this->delay();
-        $breaches = $this->breach->getBreachedAccountTruncated('test@example.com', false);
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockBreachList()),
+        ]);
 
-        self::assertSame(200, $this->breach->getStatusCode());
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breaches = $breach->getBreachedAccountTruncated('test@example.com', false);
+
+        self::assertSame(200, $breach->getStatusCode());
         self::assertGreaterThan(0, $breaches->count());
         self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
     }
@@ -136,14 +204,19 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingFilteredBreachedAccountReturnsACollectionOfBreachSiteEntities(): void
     {
-        $this->delay();
-        $breaches = $this->breach->getBreachedAccount(
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockBreachList()),
+        ]);
+
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breaches = $breach->getBreachedAccount(
             'test@example.com',
             true,
             'adobe.com'
         );
 
-        self::assertSame(200, $this->breach->getStatusCode());
+        self::assertSame(200, $breach->getStatusCode());
         self::assertGreaterThan(0, $breaches->count());
         self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
@@ -151,15 +224,38 @@ class BreachTest extends TestCase
     /** @test */
     public function gettingFilteredTruncatedBreachedAccountsReturnsACollectionOfBreachSiteTruncatedEntities(): void
     {
-        $this->delay();
-        $breaches = $this->breach->getBreachedAccountTruncated(
+        $client = Mockery::mock(Client::class);
+        $client->allows([
+            'request' => new Response(200, [], self::mockBreachList()),
+        ]);
+
+        $breach = new Breach(new HibpHttp(null, $client));
+        $breaches = $breach->getBreachedAccountTruncated(
             'test@example.com',
             false,
             'adobe.com'
         );
 
-        self::assertSame(200, $this->breach->getStatusCode());
+        $breachEntity = $breaches->first();
+
+        self::assertSame(200, $breach->getStatusCode());
         self::assertGreaterThan(0, $breaches->count());
-        self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
+        self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breachEntity);
+        self::assertSame('000webhost', $breachEntity->getName());
+    }
+
+    private static function mockBreachList(): string
+    {
+        return file_get_contents(sprintf('%s/_responses/breaches/breaches.json', __DIR__));
+    }
+
+    private static function mockSingleAccount(): string
+    {
+        return file_get_contents(sprintf('%s/_responses/breaches/single_account_breach.json', __DIR__));
+    }
+
+    private static function mockDataClasses(): string
+    {
+        return file_get_contents(sprintf('%s/_responses/breaches/dataclasses.json', __DIR__));
     }
 }
