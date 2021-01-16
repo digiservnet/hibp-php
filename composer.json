@@ -60,6 +60,6 @@
     },
     "scripts": {
         "test": "vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text",
-        "stan": "vendor/bin/phpstan analyse -l 6 --memory-limit=256M src tests"
+        "stan": "vendor/bin/phpstan analyse -l 8 --memory-limit=256M src tests"
     }
 }

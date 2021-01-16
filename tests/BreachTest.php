@@ -246,16 +246,22 @@ class BreachTest extends TestCase
 
     private static function mockBreachList(): string
     {
-        return file_get_contents(sprintf('%s/_responses/breaches/breaches.json', __DIR__));
+        $data = file_get_contents(sprintf('%s/_responses/breaches/breaches.json', __DIR__));
+
+        return (false !== $data) ? $data : '[]';
     }
 
     private static function mockSingleAccount(): string
     {
-        return file_get_contents(sprintf('%s/_responses/breaches/single_account_breach.json', __DIR__));
+        $data = file_get_contents(sprintf('%s/_responses/breaches/single_account_breach.json', __DIR__));
+
+        return (false !== $data) ? $data : '{}';
     }
 
     private static function mockDataClasses(): string
     {
-        return file_get_contents(sprintf('%s/_responses/breaches/dataclasses.json', __DIR__));
+        $data = file_get_contents(sprintf('%s/_responses/breaches/dataclasses.json', __DIR__));
+
+        return (false !== $data) ? $data : '[]';
     }
 }
