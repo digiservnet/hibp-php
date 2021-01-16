@@ -26,7 +26,7 @@ class HibpHttp
         ]);
     }
 
-    public function client(): Client
+    public function client(): ClientInterface
     {
         return $this->client;
     }

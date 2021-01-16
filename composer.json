@@ -31,7 +31,8 @@
         "orchestra/testbench": "^6.4",
         "phpstan/phpstan": "^0.12",
         "phpstan/phpstan-phpunit": "^0.12",
-        "phpunit/phpunit": "^9.5"
+        "phpunit/phpunit": "^9.5",
+        "phpstan/phpstan-mockery": "^0.12.11"
     },
     "autoload": {
         "psr-4": {
@@ -56,5 +57,9 @@
                 "PwnedPassword": "Icawebdesign\\Hibp\\Facades\\PwnedPassword"
             }
         }
+    },
+    "scripts": {
+        "test": "vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text",
+        "stan": "vendor/bin/phpstan analyse -l 6 --memory-limit=256M src tests"
     }
 }

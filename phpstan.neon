@@ -1,4 +1,6 @@
 parameters:
     customRulesetUsed: true
-
     checkMissingIterableValueType: false
+includes:
+    - vendor/phpstan/phpstan-mockery/extension.neon
+    - vendor/phpstan/phpstan-phpunit/extension.neon

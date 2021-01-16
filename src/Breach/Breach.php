@@ -3,7 +3,7 @@
 namespace Icawebdesign\Hibp\Breach;
 
 use Exception;
-use GuzzleHttp\Client;
+use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
@@ -20,8 +20,8 @@ use Illuminate\Support\Collection;
  */
 class Breach implements BreachInterface
 {
-    /** @var Client */
-    protected Client $client;
+    /** @var ClientInterface */
+    protected ClientInterface $client;
 
     /** @var int */
     protected int $statusCode;
