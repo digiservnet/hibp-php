@@ -22,17 +22,15 @@ composer:
   cache:
     paths:
       - vendor/
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
 
 phpcs:
   stage: syntax
   script:
     - ./vendor/bin/phpcs --error-severity=1 --warning-severity=8 --extensions=php
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
 
 #phpmd:
 #  stage: mess
@@ -51,9 +49,8 @@ php-7.2-tests:
   script:
     - echo "$HIBP_API_KEY" > api.key
     - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
 
 php-7.2-stan:
   image: docker.2up.io/2up/php7.2-cli:latest
@@ -62,9 +59,8 @@ php-7.2-stan:
     - composer
   script:
     - vendor/bin/phpstan analyse -l 6 --memory-limit=256M src tests
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
 
 php-7.3-tests:
   image: docker.2up.io/php7.3.14-cli:latest
@@ -74,9 +70,8 @@ php-7.3-tests:
   script:
     - echo "$HIBP_API_KEY" > api.key
     - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
 
 php-7.3-stan:
   image: docker.2up.io/php7.3.14-cli:latest
@@ -85,9 +80,8 @@ php-7.3-stan:
     - composer
   script:
     - vendor/bin/phpstan analyse -l 6 --memory-limit=256M src tests
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
 
 php-7.4-tests:
   image: docker.2up.io/php7.4.3-cli:latest
@@ -97,9 +91,8 @@ php-7.4-tests:
   script:
     - echo "$HIBP_API_KEY" > api.key
     - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
 
 php-7.4-stan:
   image: docker.2up.io/php7.4.3-cli:latest
@@ -108,9 +101,8 @@ php-7.4-stan:
     - composer
   script:
     - vendor/bin/phpstan analyse -l 6 --memory-limit=256M src tests
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
 
 sensiolabs:
   stage: security
@@ -122,6 +114,5 @@ sensiolabs:
   cache:
     paths:
       - security-checker/
-  only:
-    refs:
-      - master
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php4")'
