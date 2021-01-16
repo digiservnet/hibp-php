@@ -8,6 +8,7 @@
 
 namespace Icawebdesign\Hibp\Paste;
 
+use Icawebdesign\Hibp\HibpHttp;
 use Illuminate\Support\Collection;
 
 interface PasteInterface
@@ -15,9 +16,9 @@ interface PasteInterface
     /**
      * PasteInterface constructor.
      *
-     * @param string $apiKey
+     * @param HibpHttp $hibpHttp
      */
-    public function __construct(string $apiKey);
+    public function __construct(HibpHttp $hibpHttp);
 
     /**
      * @return int

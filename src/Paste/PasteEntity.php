@@ -194,6 +194,10 @@ class PasteEntity
             $sourceLink = $this->pasteSites[$sourceKey] . $data->Id;
         }
 
+        if (!property_exists($data, 'Title')) {
+            $data->Title = '';
+        }
+
         $this
             ->setSource($data->Source)
             ->setId($data->Id)

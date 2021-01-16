@@ -12,6 +12,7 @@ use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
 use Icawebdesign\Hibp\Password\PwnedPassword;
 use Illuminate\Support\Collection;
+use Mockery;
 use PHPUnit\Framework\TestCase;
 
 class PwnedPasswordTest extends TestCase
@@ -23,6 +24,13 @@ class PwnedPasswordTest extends TestCase
     {
         parent::setUp();
         $this->pwnedPassword = new PwnedPassword();
+    }
+
+    protected function tearDown(): void
+    {
+        Mockery::close();
+
+        parent::tearDown();
     }
 
     /** @test */

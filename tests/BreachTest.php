@@ -47,11 +47,6 @@ class BreachTest extends TestCase
         parent::tearDown();
     }
 
-    protected function delay(int $microseconds = 1600000): void
-    {
-        usleep($microseconds);
-    }
-
     /** @test */
     public function gettingAllBreachSitesReturnsACollection(): void
     {
