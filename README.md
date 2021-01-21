@@ -8,6 +8,8 @@ HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://hav
 
 The HIBP API now requires an [API Key](https://haveibeenpwned.com/API/Key) that needs to be purchased at the HIBP site for any lookups that use an email address. This currently means that if you're only using this package for lookups from the PwnedPassword section of the API, then an API key isn't required.
 
+Version `5.x` has dropped support for older PHP versions (`< 7.4`). If you still need a version of this package to run on an older PHP version, then please use the `icawebdesign/hibp-php:^4` tag, though the `4.x` branch will no longer receive updates. 
+
 ## Requirements
 
 - PHP 7.4+
@@ -166,7 +168,7 @@ use Icawebdesign\Hibp\Facades\PwnedPassword;
 $count = PwnedPassword::rangeFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
-### Changelog
+## Changelog
 
 Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recently.
 
@@ -174,7 +176,7 @@ Please see [CHANGELOG](CHANGELOG.md) for more information what has changed recen
 
 Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
-### Security
+## Security
 
 If you discover any security related issues, please email ian@ianh.io instead of using the issue tracker.
 
