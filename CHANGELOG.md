@@ -1,5 +1,11 @@
 # HIBP-PHP Changelog
 
+- 4.4.0 - 2020-01-21
+    - Add options array to `Breaches` and `Pastes` methods to allow use of GuzzleHttp Client options
+
+- 4.3.0
+    - Add options array to `PwnedPasswords` methods to allow use of GuzzleHttp Client options
+
 - 4.2.2
     - Update package dependencies to resolve security issue in `symfony/http-kernel` package
     

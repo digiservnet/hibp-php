@@ -25,27 +25,32 @@ interface BreachInterface
     public function getStatusCode(): int;
 
     /**
-     * @param string $domainFilter
+     * @param ?string $domainFilter
+     * @param array $options
      * @return Collection
      */
-    public function getAllBreachSites(string $domainFilter = null): Collection;
+    public function getAllBreachSites(string $domainFilter = null, array $options = []): Collection;
 
     /**
      * @param string $account
+     * @param array $options
      *
      * @return BreachSiteEntity
      */
-    public function getBreach(string $account): BreachSiteEntity;
+    public function getBreach(string $account, array $options = []): BreachSiteEntity;
 
     /**
+     * @param array $options
+     *
      * @return Collection
      */
-    public function getAllDataClasses(): Collection;
+    public function getAllDataClasses(array $options = []): Collection;
 
     /**
      * @param string $emailAddress
      * @param bool $includeUnverified
-     * @param string $domainFilter
+     * @param ?string $domainFilter
+     * @param array $options
      *
      * @return Collection
      *
@@ -54,13 +59,15 @@ interface BreachInterface
     public function getBreachedAccount(
         string $emailAddress,
         bool $includeUnverified = false,
-        string $domainFilter = null
+        string $domainFilter = null,
+        array $options = []
     ): Collection;
 
     /**
      * @param string $emailAccount
      * @param bool $includeUnverified
-     * @param string $domainFilter
+     * @param ?string $domainFilter
+     * @param array $options
      *
      * @return Collection
      *
@@ -69,6 +76,7 @@ interface BreachInterface
     public function getBreachedAccountTruncated(
         string $emailAccount,
         bool $includeUnverified = false,
-        string $domainFilter = null
+        string $domainFilter = null,
+        array $options = []
     ): Collection;
 }
