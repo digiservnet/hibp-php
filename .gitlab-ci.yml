@@ -53,7 +53,7 @@ php-7.4-tests:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
 
 php-7.4-stan:
-  image: docker.2up.io/php-cli:7.4.14
+  image: docker.2up.io/php7-cli:7.4.14
   stage: static analysis
   dependencies:
     - composer
