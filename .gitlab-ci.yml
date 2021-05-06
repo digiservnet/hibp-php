@@ -1,5 +1,5 @@
 # Default runner image
-image: docker.2up.io/php7-cli:7.4.10
+image: docker.2up.io/php7-cli:7.4.14
 
 # Define pipeline stages
 stages:
@@ -8,7 +8,6 @@ stages:
 #  - mess
   - static analysis
   - tests
-  - security
 
 composer:
   stage: prep
@@ -43,7 +42,7 @@ phpcs:
 #  allow_failure: true
 
 php-7.4-tests:
-  image: docker.2up.io/php7.4.3-cli:latest
+  image: docker.2up.io/php7-cli:7.4.14
   stage: tests
   dependencies:
     - composer
@@ -54,7 +53,7 @@ php-7.4-tests:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
 
 php-7.4-stan:
-  image: docker.2up.io/php7.4.3-cli:latest
+  image: docker.2up.io/php-cli:7.4.14
   stage: static analysis
   dependencies:
     - composer
@@ -64,7 +63,7 @@ php-7.4-stan:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
 
 php-8.0-tests:
-  image: docker.2up.io/php8-cli:8.0.0rc
+  image: docker.2up.io/php8-cli:8.0.5
   stage: tests
   dependencies:
     - composer
@@ -75,24 +74,11 @@ php-8.0-tests:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
 
 php-8.0-stan:
-  image: docker.2up.io/php8-cli:8.0.0rc
+  image: docker.2up.io/php8-cli:8.0.5
   stage: static analysis
   dependencies:
     - composer
   script:
     - vendor/bin/phpstan analyse -l 8 --memory-limit=256M src tests
-  rules:
-    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
-
-sensiolabs:
-  stage: security
-  script:
-    - test -d security-checker || git clone https://github.com/sensiolabs/security-checker.git
-    - cd security-checker
-    - composer install
-    - php security-checker security:check ../composer.lock
-  cache:
-    paths:
-      - security-checker/
   rules:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
