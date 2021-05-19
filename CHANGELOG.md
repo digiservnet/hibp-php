@@ -1,11 +1,19 @@
 # HIBP-PHP Changelog
-## *5.0.1* - 2020-01-21
+## *5.0.4* - 2021-05-07
+
+### Update
+- Updated dependencies to fix a security issue
+
+## *5.0.2* & *5.0.3*
+No code changes
+
+## *5.0.1* - 2021-01-21
 
 ### Update
 - Updated Changelog format to be clearer on releases and items per release
 - Updated dependencies
 
-## *5.0.0* - 2020-01-16
+## *5.0.0* - 2021-01-16
 
 ### Added
 
