@@ -1,4 +1,10 @@
 # HIBP-PHP Changelog
+## *5.0.5* - 2021-07-01
+
+### Update
+- Updated dependencies to fix a security issue  
+(https://github.com/advisories/GHSA-9f46-5r25-5wfm)
+
 ## *5.0.4* - 2021-05-07
 
 ### Update
