@@ -1,4 +1,9 @@
 # HIBP-PHP Changelog
+## *5.0.6^ - 2021-11-13
+
+### Update
+- Update dependencies
+
 ## *5.0.5* - 2021-07-01
 
 ### Update
