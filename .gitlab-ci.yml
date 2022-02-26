@@ -63,7 +63,7 @@ php-7.4-stan:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
 
 php-8.0-tests:
-  image: docker.2up.io/php8-cli:8.0.5
+  image: digiserv/php8-cli:8.0.13
   stage: tests
   dependencies:
     - composer
@@ -74,7 +74,28 @@ php-8.0-tests:
     - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
 
 php-8.0-stan:
-  image: docker.2up.io/php8-cli:8.0.5
+  image: digiserv/php8-cli:8.0.13
+  stage: static analysis
+  dependencies:
+    - composer
+  script:
+    - vendor/bin/phpstan analyse -l 8 --memory-limit=256M src tests
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
+
+php-8.1-tests:
+  image: digiserv/php8-cli:8.1.3
+  stage: tests
+  dependencies:
+    - composer
+  script:
+    - echo "$HIBP_API_KEY" > api.key
+    - vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text
+  rules:
+    - if: '($CI_COMMIT_BRANCH == "master" || $CI_COMMIT_BRANCH == "hibp-php5")'
+
+php-8.1-stan:
+  image: digiserv/php8-cli:8.1.3
   stage: static analysis
   dependencies:
     - composer
