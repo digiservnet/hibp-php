@@ -1,5 +1,10 @@
 # HIBP-PHP Changelog
-## *5.0.6^ - 2021-11-13
+## *5.1.0* - 2022-02-25
+
+# Update
+- Update dependencies and add dependency versions for Laravel 9
+
+## *5.0.6* - 2021-11-13
 
 ### Update
 - Update dependencies
