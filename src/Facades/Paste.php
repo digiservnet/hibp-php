@@ -2,7 +2,7 @@
 /**
  * Paste facade
  *
- * @author Ian <ian@ianh.io>
+ * @author Ian <ian.h@digiserv.net>
  * @since 20/03/2019
  */
 

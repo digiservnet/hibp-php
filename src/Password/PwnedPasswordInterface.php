@@ -2,7 +2,7 @@
 /**
  * PwnedPassword interface
  *
- * @author Ian <ian@ianh.io>
+ * @author Ian <ian.h@digiserv.net>
  * @since 27/02/2018
  */
 

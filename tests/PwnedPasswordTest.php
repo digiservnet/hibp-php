@@ -2,7 +2,7 @@
 /**
  * PwnedPassword tests
  *
- * @author Ian <ian@ianh.io>
+ * @author Ian <ian.h@digiserv.net>
  * @since 28/02/2018
  */
 

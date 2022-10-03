@@ -178,7 +178,7 @@ Please see [CONTRIBUTING](CONTRIBUTING.md) for details.
 
 ## Security
 
-If you discover any security related issues, please email ian@ianh.io instead of using the issue tracker.
+If you discover any security related issues, please email ian.h@digiserv.net instead of using the issue tracker.
 
 ## Credits
 

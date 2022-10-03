@@ -2,7 +2,7 @@
 /**
  * Global utility class
  *
- * @author Ian <ian@ianh.io>
+ * @author Ian <ian.h@digiserv.net>
  * @since 08/03/2018
  */
 

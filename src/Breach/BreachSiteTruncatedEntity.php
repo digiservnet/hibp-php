@@ -2,7 +2,7 @@
 /**
  * Truncated data entity for breached accounts
  *
- * @author Ian <ian@ianh.io>
+ * @author Ian <ian.h@digiserv.net>
  * @since 22/03/2019
  */
 

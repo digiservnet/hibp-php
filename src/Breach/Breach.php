@@ -15,7 +15,7 @@ use Illuminate\Support\Collection;
 /**
  * Breach module
  *
- * @author Ian <ian@ianh.io>
+ * @author Ian <ian.h@digiserv.net>
  * @since 04/03/2018
  */
 class Breach implements BreachInterface

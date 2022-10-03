@@ -16,7 +16,7 @@ use Illuminate\Support\Collection;
 /**
  * PwnedPassword module
  *
- * @author Ian <ian@ianh.io>
+ * @author Ian <ian.h@digiserv.net>
  * @since 27/02/2018
  */
 class PwnedPassword implements PwnedPasswordInterface

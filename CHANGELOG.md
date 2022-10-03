@@ -1,4 +1,7 @@
 # HIBP-PHP Changelog
+## *5.1.1* - 2022-10-03
+- Update contact info
+
 ## *5.1.0* - 2022-02-25
 
 # Update

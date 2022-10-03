@@ -2,7 +2,7 @@
 /**
  * Paste
  *
- * @author Ian <ian@ianh.io>
+ * @author Ian <ian.h@digiserv.net>
  * @since 05/03/2018
  */
 
