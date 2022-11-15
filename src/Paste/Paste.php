@@ -1,47 +1,31 @@
 <?php
-/**
- * Paste
- *
- * @author Ian <ian.h@digiserv.net>
- * @since 05/03/2018
- */
 
 namespace Icawebdesign\Hibp\Paste;
 
-use GuzzleHttp\Client;
+use stdClass;
 use GuzzleHttp\ClientInterface;
+use Icawebdesign\Hibp\HibpHttp;
+use Illuminate\Support\Collection;
+use Icawebdesign\Hibp\Traits\HibpConfig;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\PasteNotFoundException;
-use Icawebdesign\Hibp\Hibp;
-use Icawebdesign\Hibp\HibpHttp;
-use Illuminate\Support\Collection;
 
 class Paste implements PasteInterface
 {
-    /** @var ClientInterface */
+    use HibpConfig;
+
     protected ClientInterface $client;
 
-    /** @var int */
-    protected int $statusCode;
+    public int $statusCode;
 
-    /** @var string */
     protected string $apiRoot;
 
     public function __construct(HibpHttp $hibpHttp)
     {
-        $config = (new Hibp())->loadConfig();
-        $this->apiRoot = sprintf('%s/v%d', $config['hibp']['api_root'], $config['hibp']['api_version']);
+        $this->apiRoot = "{$this->hibp['api_root']}/v/{$this->hibp['api_version']}";
         $this->client = $hibpHttp->client();
-    }
-
-    /**
-     * @return int
-     */
-    public function getStatusCode(): int
-    {
-        return $this->statusCode;
     }
 
     /**
@@ -61,26 +45,19 @@ class Paste implements PasteInterface
                 sprintf('%s/pasteaccount/%s', $this->apiRoot, urlencode($emailAddress)),
                 $options
             );
-        } catch (ClientException $e) {
-            $this->statusCode = $e->getCode();
+        } catch (ClientException $exception) {
+            $this->statusCode = $exception->getCode();
 
-            switch ($e->getCode()) {
-                case 400:
-                    throw new RequestException($e->getMessage(), $e->getRequest());
-
-                case 404:
-                    throw new PasteNotFoundException($e->getMessage());
-
-                default:
-                    throw $e;
-            }
+            throw match ($exception->getCode()) {
+                404 => new PasteNotFoundException($exception->getMessage()),
+                400 => new RequestException($exception->getMessage(), $exception->getRequest()),
+                default => $exception,
+            };
         }
 
         $this->statusCode = $response->getStatusCode();
 
-        return Collection::make(json_decode((string)$response->getBody(), false))
-            ->map(static function ($paste) {
-                return new PasteEntity($paste);
-            });
+        return Collection::make(json_decode((string)$response->getBody(), associative: false))
+            ->map(static fn (stdClass $paste): PasteEntity => new PasteEntity($paste));
     }
 }

@@ -13,23 +13,7 @@ use Illuminate\Support\Collection;
 
 interface PasteInterface
 {
-    /**
-     * PasteInterface constructor.
-     *
-     * @param HibpHttp $hibpHttp
-     */
     public function __construct(HibpHttp $hibpHttp);
 
-    /**
-     * @return int
-     */
-    public function getStatusCode(): int;
-
-    /**
-     * @param string $emailAddress
-     * @param array $options
-     *
-     * @return Collection
-     */
     public function lookup(string $emailAddress, array $options = []): Collection;
 }

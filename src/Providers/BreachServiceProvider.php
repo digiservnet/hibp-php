@@ -1,24 +1,21 @@
 <?php
-/**
- * Breach Service Provider
- *
- * @author Ian <ian.h@digiserv.net>
- * @since 20/03/2019
- */
 
 namespace Icawebdesign\Hibp\Providers;
 
-use Icawebdesign\Hibp\Breach\Breach;
 use Icawebdesign\Hibp\HibpHttp;
+use Icawebdesign\Hibp\Breach\Breach;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 class BreachServiceProvider extends ServiceProvider
 {
     protected HibpHttp $hibpHttp;
 
     public function boot(): void
     {
-        $this->hibpHttp = new HibpHttp(env('HIBP_API_KEY'));
+        $this->hibpHttp = new HibpHttp(getenv('HIBP_API_KEY'));
     }
 
     public function register(): void

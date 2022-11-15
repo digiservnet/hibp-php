@@ -4,7 +4,7 @@
 
 ## *5.1.0* - 2022-02-25
 
-# Update
+### Update
 - Update dependencies and add dependency versions for Laravel 9
 
 ## *5.0.6* - 2021-11-13

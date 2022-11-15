@@ -2,41 +2,27 @@
 
 namespace Icawebdesign\Hibp\Tests;
 
+use Mockery;
 use GuzzleHttp\Client;
-use GuzzleHttp\Exception\RequestException;
 use GuzzleHttp\Psr7\Request;
 use GuzzleHttp\Psr7\Response;
-use Icawebdesign\Hibp\Exception\PasteNotFoundException;
 use Icawebdesign\Hibp\HibpHttp;
+use PHPUnit\Framework\TestCase;
 use Icawebdesign\Hibp\Paste\Paste;
 use Icawebdesign\Hibp\Paste\PasteEntity;
-use Mockery;
-use PHPUnit\Framework\TestCase;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use Icawebdesign\Hibp\Exception\PasteNotFoundException;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
-/**
- * Paste tests
- *
- * @author Ian <ian.h@digiserv.net>
- * @since 05/03/2018
- */
+use function sprintf;
+use function file_get_contents;
 
 class PasteTest extends TestCase
 {
-    /** @var string */
     protected string $apiKey = '';
 
-    /** @var Paste */
     protected Paste $paste;
-
-    public function setUp(): void
-    {
-        parent::setUp();
-        $apiKey = file_get_contents(sprintf('%s/../api.key', __DIR__));
-
-        if (false !== $apiKey) {
-            $this->apiKey = $apiKey;
-        }
-    }
 
     protected function tearDown(): void
     {
@@ -46,56 +32,120 @@ class PasteTest extends TestCase
     }
 
     /** @test */
-    public function successfulLookupReturnsACollection(): void
+    public function successful_lookup_returns_a_collection(): void
     {
         $client = Mockery::mock(Client::class);
-        $client->allows([
-            'request' => new Response(200, [], self::mockAllPastes()),
-        ]);
+        $client
+            ->expects('request')
+            ->once()
+            ->andReturn(new Response(HttpResponse::HTTP_OK, [], self::mockAllPastes()));
 
-        $paste = new Paste(new HibpHttp(null, $client));
-        $pastes = $paste->lookup('test@example.com');
+        $paste = new Paste(new HibpHttp(client: $client));
+        $pastes = $paste->lookup(emailAddress: 'test@example.com');
 
-        self::assertSame(200, $paste->getStatusCode());
-        self::assertGreaterThan(0, $pastes->count());
+        self::assertSame(HttpResponse::HTTP_OK, $paste->statusCode);
+        self::assertCount(3, $pastes);
 
         /** @var PasteEntity $account */
         $account = $pastes->first();
 
-        self::assertNotEmpty($account->getSource());
-        self::assertNotEmpty($account->getId());
-        self::assertIsInt($account->getEmailCount());
-        self::assertIsString($account->getLink());
-        self::assertIsInt($account->getEmailCount());
-        self::assertGreaterThan(0, $account->getEmailCount());
+        self::assertNotEmpty($account->source);
+        self::assertNotEmpty($account->id);
+        self::assertIsInt($account->emailCount);
+        self::assertIsString($account->link);
+        self::assertSame(139, $account->emailCount);
     }
 
     /** @test */
-    public function invalidLookupThrowsException(): void
+    public function invalid_lookup_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
 
-        $request = Mockery::mock(Request::class);
+        $mockedResponse = Mockery::mock(Response::class);
+        $mockedResponse
+            ->expects('getStatusCode')
+            ->once()
+            ->andReturn(HttpResponse::HTTP_BAD_REQUEST);
 
         $client = Mockery::mock(Client::class);
-        $client->shouldReceive('request')
-            ->andThrow(new RequestException('', $request));
+        $client
+            ->expects('request')
+            ->once()
+            ->andThrow(new ClientException(
+                message: '',
+                request: Mockery::mock(Request::class),
+                response: $mockedResponse,
+            ));
 
-        $paste = new Paste(new HibpHttp(null, $client));
-        $paste->lookup('invalid_email_address');
+        $paste = new Paste(new HibpHttp(client: $client));
+        $paste->lookup(emailAddress: 'invalid_email_address');
     }
 
     /** @test */
-    public function notFoundLookupThrowsPasteNotFoundException(): void
+    public function invalid_lookup_throws_a_client_exception(): void
+    {
+        $this->expectException(ClientException::class);
+
+        $mockedResponse = Mockery::mock(Response::class);
+        $mockedResponse
+            ->expects('getStatusCode')
+            ->once()
+            ->andReturn(0);
+
+        $client = Mockery::mock(Client::class);
+        $client
+            ->expects('request')
+            ->once()
+            ->andThrow(new ClientException(
+                message: '',
+                request: Mockery::mock(Request::class),
+                response: $mockedResponse,
+            ));
+
+        $paste = new Paste(new HibpHttp(client: $client));
+        $paste->lookup(emailAddress: 'invalid_email_address');
+    }
+
+    /** @test */
+    public function unknown_lookup_throws_a_request_exception(): void
+    {
+        $this->expectException(PasteNotFoundException::class);
+
+        $mockedResponse = Mockery::mock(Response::class);
+        $mockedResponse
+            ->expects('getStatusCode')
+            ->once()
+            ->andReturn(HttpResponse::HTTP_NOT_FOUND);
+
+        $client = Mockery::mock(Client::class);
+        $client
+            ->expects('request')
+            ->once()
+            ->andThrow(new ClientException(
+                message: '',
+                request: Mockery::mock(Request::class),
+                response: $mockedResponse,
+            ));
+
+        $paste = new Paste(new HibpHttp(client: $client));
+        $paste->lookup(emailAddress: 'invalid_email_address');
+    }
+
+    /** @test */
+    public function not_found_lookup_throws_paste_not_found_exception(): void
     {
         $this->expectException(PasteNotFoundException::class);
 
         $client = Mockery::mock(Client::class);
-        $client->shouldReceive('request')
-            ->andThrow(new PasteNotFoundException(''));
+        $client
+            ->expects('request')
+            ->once()
+            ->andThrow(new PasteNotFoundException(
+                message: 'message',
+            ));
 
-        $paste = new Paste(new HibpHttp(null, $client));
-        $paste->lookup('unknown-address@example.com');
+        $paste = new Paste(new HibpHttp(client: $client));
+        $paste->lookup(emailAddress: 'unknown-address@example.com');
     }
 
     private static function mockAllPastes(): string

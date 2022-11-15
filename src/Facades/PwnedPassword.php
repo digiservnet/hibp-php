@@ -1,15 +1,12 @@
 <?php
-/**
- * PwnedPassword facade
- *
- * @author Ian <ian.h@digiserv.net>
- * @since 20/03/2019
- */
 
 namespace Icawebdesign\Hibp\Facades;
 
 use Illuminate\Support\Facades\Facade;
 
+/**
+ * @codeCoverageIgnore
+ */
 class PwnedPassword extends Facade
 {
     protected static function getFacadeAccessor(): string

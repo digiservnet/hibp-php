@@ -1,17 +1,13 @@
 <?php
-/**
- * PwnedPassword Service Provider
- *
- * @author Ian <ian.h@digiserv.net>
- * @since 20/03/2019
- */
-
 namespace Icawebdesign\Hibp\Providers;
 
 use Icawebdesign\Hibp\HibpHttp;
 use Icawebdesign\Hibp\Password\PwnedPassword;
 use Illuminate\Support\ServiceProvider;
 
+/**
+ * @codeCoverageIgnore
+ */
 class PwnedPasswordServiceProvider extends ServiceProvider
 {
     protected HibpHttp $hibpHttp;

@@ -2,50 +2,31 @@
 
 namespace Icawebdesign\Hibp\Password;
 
-use GuzzleHttp\Client;
+use Exception;
 use GuzzleHttp\ClientInterface;
-use GuzzleHttp\Exception\GuzzleException;
-use GuzzleHttp\Exception\RequestException;
-use GuzzleHttp\Psr7\Request;
-use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
-use Icawebdesign\Hibp\Hibp;
 use Icawebdesign\Hibp\HibpHttp;
-use Icawebdesign\Hibp\Model\PwnedPassword as PasswordData;
 use Illuminate\Support\Collection;
+use Icawebdesign\Hibp\Traits\HibpConfig;
+use GuzzleHttp\Exception\GuzzleException;
+use GuzzleHttp\Exception\ClientException;
+use GuzzleHttp\Exception\RequestException;
+use Icawebdesign\Hibp\Model\PwnedPassword as PasswordData;
+use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
 
-/**
- * PwnedPassword module
- *
- * @author Ian <ian.h@digiserv.net>
- * @since 27/02/2018
- */
 class PwnedPassword implements PwnedPasswordInterface
 {
-    /** @var ClientInterface */
+    use HibpConfig;
+
     protected ClientInterface $client;
 
-    /** @var int */
-    protected int $statusCode;
+    public int $statusCode;
 
-    /** @var string */
     protected string $apiRoot;
 
     public function __construct(HibpHttp $hibpHttp)
     {
-        $config = (new Hibp())->loadConfig();
-
-        $this->apiRoot = $config['pwned_passwords']['api_root'];
+        $this->apiRoot = $this->pwnedPasswords['api_root'];
         $this->client = $hibpHttp->client();
-    }
-
-    /**
-     * Return the last response status code
-     *
-     * @return int
-     */
-    public function getStatusCode(): int
-    {
-        return $this->statusCode;
     }
 
     /**
@@ -58,17 +39,21 @@ class PwnedPassword implements PwnedPasswordInterface
     public function rangeFromHash(string $hash, array $options = []): int
     {
         $hash = strtoupper($hash);
-        $hashSnippet = substr($hash, 0, 5);
+        $hashSnippet = substr($hash, offset: 0, length: 5);
 
         try {
             $response = $this->client->request(
                 'GET',
-                sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
+                "{$this->apiRoot}/range/{$hashSnippet}",
                 $options
             );
-        } catch (RequestException $e) {
-            $this->statusCode = $e->getCode();
-            throw $e;
+        } catch (ClientException $exception) {
+            $this->statusCode = $exception->getCode();
+
+            throw match($exception->getCode()) {
+                400 => new RequestException($exception->getMessage(), $exception->getRequest()),
+                default => $exception,
+            };
         }
 
         $this->statusCode = $response->getStatusCode();
@@ -108,9 +93,13 @@ class PwnedPassword implements PwnedPasswordInterface
                 sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
                 $options
             );
-        } catch (RequestException $e) {
-            $this->statusCode = $e->getCode();
-            throw $e;
+        } catch (ClientException $exception) {
+            $this->statusCode = $exception->getCode();
+
+            throw match ($exception->getCode()) {
+                400 => new RequestException($exception->getMessage(), $exception->getRequest()),
+                default => $exception,
+            };
         }
 
         $this->statusCode = $response->getStatusCode();
@@ -142,9 +131,13 @@ class PwnedPassword implements PwnedPasswordInterface
                 sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
                 $options
             );
-        } catch (RequestException $e) {
-            $this->statusCode = $e->getCode();
-            throw $e;
+        } catch (ClientException $exception) {
+            $this->statusCode = $exception->getCode();
+
+            throw match ($exception->getCode()) {
+                400 => new RequestException($exception->getMessage(), $exception->getRequest()),
+                default => $exception,
+            };
         }
 
         $this->statusCode = $response->getStatusCode();
@@ -157,24 +150,28 @@ class PwnedPassword implements PwnedPasswordInterface
      * @param array $options
      *
      * @return Collection
-     * @throws GuzzleException
+     * @throws GuzzleException|Exception
      */
     public function paddedRangeDataFromHash(string $hash, array $options = []): Collection
     {
         $hash = strtoupper($hash);
         $hashSnippet = substr($hash, 0, 5);
 
-        $request = new Request(
-            'GET',
-            sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
-            $options
-        );
+        $uri = "{$this->apiRoot}/range/{$hashSnippet}";
 
         try {
-            $response = $this->client->send($request);
-        } catch (RequestException $e) {
-            $this->statusCode = $e->getCode();
-            throw $e;
+            $response = $this->client->request(
+                'GET',
+                $uri,
+                $options,
+            );
+        } catch (ClientException $exception) {
+            $this->statusCode = $exception->getCode();
+
+            throw match ($exception->getCode()) {
+                400 => new RequestException($exception->getMessage(), $exception->getRequest()),
+                default => $exception,
+            };
         }
 
         $this->statusCode = $response->getStatusCode();

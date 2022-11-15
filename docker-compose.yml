@@ -1,0 +1,18 @@
+version: "3.9"
+
+services:
+  php81:
+    container_name: php81
+    image: digiserv/php8-cli:8.1.13-alpine
+    volumes:
+      - ./:/opt/project
+    entrypoint: /bin/sh
+    tty: true
+
+  php82:
+    container_name: php82
+    image: digiserv/php8-cli:8.2.0-alpine
+    volumes:
+      - ./:/opt/project
+    entrypoint: /bin/sh
+    tty: true
