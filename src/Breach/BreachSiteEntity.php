@@ -37,6 +37,8 @@ class BreachSiteEntity
 
     public readonly bool $spamList;
 
+    public readonly bool $malware;
+
     public readonly string $logoPath;
 
     public function __construct(stdClass $data = null)
@@ -74,6 +76,7 @@ class BreachSiteEntity
         $this->sensitive = $data->IsSensitive;
         $this->retired = $data->IsRetired;
         $this->spamList = $data->IsSpamList;
+        $this->malware = $data->IsMalware;
         $this->logoPath = $data->LogoPath;
     }
 }

@@ -19,7 +19,8 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   },
   {
     "Name": "126",
@@ -39,7 +40,8 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   },
   {
     "Name": "17Media",
@@ -62,7 +64,8 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   },
   {
     "Name": "17173",
@@ -83,7 +86,8 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   },
   {
     "Name": "2844Breaches",
@@ -103,7 +107,8 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   },
   {
     "Name": "2fast4u",
@@ -124,7 +129,8 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   },
   {
     "Name": "500px",
@@ -149,7 +155,8 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   },
   {
     "Name": "7k7k",
@@ -170,6 +177,7 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   }
 ]

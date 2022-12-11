@@ -113,6 +113,7 @@ class BreachTest extends TestCase
         self::assertIsBool($breach->sensitive);
         self::assertIsBool($breach->retired);
         self::assertIsBool($breach->spamList);
+        self::assertIsBool($breach->malware);
         self::assertNotEmpty($breach->logoPath);
     }
 
