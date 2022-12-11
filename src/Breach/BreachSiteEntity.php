@@ -47,21 +47,6 @@ class BreachSiteEntity
             throw new RuntimeException('Invalid BreachSite data');
         }
 
-        $this->map($data);
-    }
-
-    protected function dateStringToCarbon(string $date): Carbon
-    {
-        $dateObject = Carbon::createFromFormat(
-            'Y-m-d\TH:i:s\Z',
-            $date,
-        );
-
-        return (false !== $dateObject) ? $dateObject : Carbon::now();
-    }
-
-    public function map(stdClass $data): void
-    {
         $this->title = $data->Title;
         $this->name = $data->Name;
         $this->domain = $data->Domain;
@@ -78,5 +63,15 @@ class BreachSiteEntity
         $this->spamList = $data->IsSpamList;
         $this->malware = $data->IsMalware;
         $this->logoPath = $data->LogoPath;
+    }
+
+    protected function dateStringToCarbon(string $date): Carbon
+    {
+        $dateObject = Carbon::createFromFormat(
+            'Y-m-d\TH:i:s\Z',
+            $date,
+        );
+
+        return (false !== $dateObject) ? $dateObject : Carbon::now();
     }
 }

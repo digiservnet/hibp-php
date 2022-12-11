@@ -25,22 +25,6 @@ class PasteEntity
 
     public function __construct(stdClass $data)
     {
-        $this->map($data);
-    }
-
-    public function dateStringToCarbon(?string $date = null): ?Carbon
-    {
-        if (null === $date) {
-            return null;
-        }
-
-        $pasteDate = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $date);
-
-        return (false !== $pasteDate) ? $pasteDate : null;
-    }
-
-    public function map(stdClass $data): void
-    {
         $sourceKey = strtolower($data->Source);
         $sourceLink = $data->Id;
 
@@ -54,5 +38,16 @@ class PasteEntity
         $this->date = $this->dateStringToCarbon($data->Date ?? null);
         $this->emailCount = $data->EmailCount;
         $this->link = $sourceLink;
+    }
+
+    public function dateStringToCarbon(?string $date = null): ?Carbon
+    {
+        if (null === $date) {
+            return null;
+        }
+
+        $pasteDate = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $date);
+
+        return (false !== $pasteDate) ? $pasteDate : null;
     }
 }

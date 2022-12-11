@@ -15,7 +15,7 @@ class PasteServiceProvider extends ServiceProvider
 
     public function boot(): void
     {
-        $this->hibpHttp = new HibpHttp(getenv('HIBP_API_KEY'));
+        $this->hibpHttp = new HibpHttp(getenv('HIBP_API_KEY') ?: null);
     }
 
     public function register(): void
