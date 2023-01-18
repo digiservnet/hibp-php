@@ -1,4 +1,5 @@
 parameters:
+    level: 8
     customRulesetUsed: true
     checkMissingIterableValueType: false
     checkGenericClassInNonGenericObjectType: false

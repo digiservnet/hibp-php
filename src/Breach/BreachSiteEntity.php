@@ -41,7 +41,7 @@ class BreachSiteEntity
 
     public readonly string $logoPath;
 
-    public function __construct(stdClass $data = null)
+    public function __construct(?stdClass $data = null)
     {
         if (null === $data) {
             throw new RuntimeException('Invalid BreachSite data');

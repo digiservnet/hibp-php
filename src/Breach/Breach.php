@@ -108,7 +108,7 @@ class Breach implements BreachInterface
      * @param array $options
      *
      * @return Collection
-     * @throws GuzzleException
+     * @throws GuzzleException|JsonException
      */
     public function getAllDataClasses(array $options = []): Collection
     {
@@ -125,7 +125,9 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        return Collection::make(json_decode((string)$response->getBody(), associative: false));
+        $data = json_decode((string)$response->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
+
+        return Collection::make($data);
     }
 
     /**
