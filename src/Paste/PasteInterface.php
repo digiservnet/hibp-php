@@ -1,10 +1,4 @@
 <?php
-/**
- * Paste interface
- *
- * @author Ian <ian.h@digiserv.net>
- * @since 05/03/2018
- */
 
 namespace Icawebdesign\Hibp\Paste;
 

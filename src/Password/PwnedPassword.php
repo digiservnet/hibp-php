@@ -18,9 +18,7 @@ class PwnedPassword implements PwnedPasswordInterface
     use HibpConfig;
 
     protected ClientInterface $client;
-
     public int $statusCode;
-
     protected string $apiRoot;
 
     public function __construct(HibpHttp $hibpHttp)
@@ -45,12 +43,12 @@ class PwnedPassword implements PwnedPasswordInterface
             $response = $this->client->request(
                 'GET',
                 "{$this->apiRoot}/range/{$hashSnippet}",
-                $options
+                $options,
             );
         } catch (ClientException $exception) {
             $this->statusCode = $exception->getCode();
 
-            throw match($exception->getCode()) {
+            throw match ($exception->getCode()) {
                 400 => new RequestException($exception->getMessage(), $exception->getRequest()),
                 default => $exception,
             };
@@ -91,7 +89,7 @@ class PwnedPassword implements PwnedPasswordInterface
             $response = $this->client->request(
                 'GET',
                 sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
-                $options
+                $options,
             );
         } catch (ClientException $exception) {
             $this->statusCode = $exception->getCode();
@@ -129,7 +127,7 @@ class PwnedPassword implements PwnedPasswordInterface
             $response = $this->client->request(
                 'GET',
                 sprintf('%s/range/%s', $this->apiRoot, $hashSnippet),
-                $options
+                $options,
             );
         } catch (ClientException $exception) {
             $this->statusCode = $exception->getCode();

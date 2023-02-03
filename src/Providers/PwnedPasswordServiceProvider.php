@@ -1,9 +1,10 @@
 <?php
+
 namespace Icawebdesign\Hibp\Providers;
 
 use Icawebdesign\Hibp\HibpHttp;
-use Icawebdesign\Hibp\Password\PwnedPassword;
 use Illuminate\Support\ServiceProvider;
+use Icawebdesign\Hibp\Password\PwnedPassword;
 
 /**
  * @codeCoverageIgnore
