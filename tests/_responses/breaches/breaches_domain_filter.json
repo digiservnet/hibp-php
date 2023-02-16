@@ -19,6 +19,7 @@
     "IsFabricated": false,
     "IsSensitive": false,
     "IsRetired": false,
-    "IsSpamList": false
+    "IsSpamList": false,
+    "IsMalware": false
   }
 ]

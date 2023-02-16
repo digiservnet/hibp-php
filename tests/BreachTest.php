@@ -119,6 +119,7 @@ class BreachTest extends TestCase
         self::assertIsBool($breachedAccount->isSensitive());
         self::assertIsBool($breachedAccount->isRetired());
         self::assertIsBool($breachedAccount->isSpamList());
+        self::assertIsBool($breachedAccount->isMalware());
         self::assertNotEmpty($breachedAccount->getLogoPath());
     }
 
@@ -201,7 +202,7 @@ class BreachTest extends TestCase
     {
         $client = Mockery::mock(Client::class);
         $client->allows([
-            'request' => new Response(200, [], self::mockBreachList()),
+            'request' => new Response(200, [], self::mockBreachFilteredList()),
         ]);
 
         $breach = new Breach(new HibpHttp(null, $client));
@@ -211,9 +212,12 @@ class BreachTest extends TestCase
             'adobe.com'
         );
 
+        $breachEntity = $breaches->first();
+
         self::assertSame(200, $breach->getStatusCode());
-        self::assertGreaterThan(0, $breaches->count());
-        self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+        self::assertCount(1, $breaches);
+        self::assertInstanceOf(BreachSiteEntity::class, $breachEntity);
+        self::assertSame('adobe.com', $breachEntity->getDomain());
     }
 
     /** @test */
@@ -221,7 +225,7 @@ class BreachTest extends TestCase
     {
         $client = Mockery::mock(Client::class);
         $client->allows([
-            'request' => new Response(200, [], self::mockBreachList()),
+            'request' => new Response(200, [], self::mockBreachFilteredList()),
         ]);
 
         $breach = new Breach(new HibpHttp(null, $client));
@@ -234,14 +238,21 @@ class BreachTest extends TestCase
         $breachEntity = $breaches->first();
 
         self::assertSame(200, $breach->getStatusCode());
-        self::assertGreaterThan(0, $breaches->count());
+        self::assertCount(1, $breaches);
         self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breachEntity);
-        self::assertSame('000webhost', $breachEntity->getName());
+        self::assertSame('Adobe', $breachEntity->getName());
     }
 
     private static function mockBreachList(): string
     {
         $data = file_get_contents(sprintf('%s/_responses/breaches/breaches.json', __DIR__));
+
+        return (false !== $data) ? $data : '[]';
+    }
+
+    private static function mockBreachFilteredList(): string
+    {
+        $data = file_get_contents(sprintf('%s/_responses/breaches/breaches_domain_filter.json', __DIR__));
 
         return (false !== $data) ? $data : '[]';
     }

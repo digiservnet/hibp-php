@@ -1,4 +1,8 @@
 # HIBP-PHP Changelog
+## *5.2.0* - 2023-02-16
+
+- Add malware flag to BreachSiteEntity
+
 ## *5.1.1* - 2022-10-03
 - Update contact info
 

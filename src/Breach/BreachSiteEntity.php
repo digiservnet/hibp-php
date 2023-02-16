@@ -58,6 +58,8 @@ class BreachSiteEntity
     /** @var bool */
     protected bool $spamList;
 
+    protected bool $malware;
+
     /** @var string */
     protected string $logoPath;
 
@@ -355,6 +357,11 @@ class BreachSiteEntity
         return $this->spamList;
     }
 
+    public function isMalware(): bool
+    {
+        return $this->malware;
+    }
+
     /**
      * @param bool $spamList
      *
@@ -363,6 +370,13 @@ class BreachSiteEntity
     public function setSpamList(bool $spamList): BreachSiteEntity
     {
         $this->spamList = $spamList;
+
+        return $this;
+    }
+
+    public function setMailware(bool $malware): BreachSiteEntity
+    {
+        $this->malware = $malware;
 
         return $this;
     }
@@ -408,6 +422,7 @@ class BreachSiteEntity
             ->setSensitive($data->IsSensitive)
             ->setRetired($data->IsRetired)
             ->setSpamList($data->IsSpamList)
+            ->setMailware($data->IsMalware)
             ->setLogoPath($data->LogoPath);
     }
 }
