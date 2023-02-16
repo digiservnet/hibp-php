@@ -4,6 +4,11 @@
 - Refactor for minimum PHP 8.1 version
 - Update dependencies and add dependency versions for Laravel 10
 - Add more examples to [README](README.md) and include response type info
+- All properties on entity objects are now public
+
+## *5.2.0* - 2023-02-16
+
+- Add malware flag to BreachSiteEntity
 
 ## *5.1.1* - 2022-10-03
 
