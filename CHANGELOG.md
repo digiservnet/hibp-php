@@ -1,4 +1,8 @@
 # HIBP-PHP Changelog
+## *6.0.1* - 2023-02-16
+
+- Update [README](README.md) about ReadOnly properties.
+
 ## *6.0.0* - 2023-02-16
 
 - Refactor for minimum PHP 8.1 version
