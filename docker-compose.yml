@@ -3,7 +3,7 @@ version: "3.9"
 services:
   php81:
     container_name: php81
-    image: digiserv/php8-cli:8.1.14-alpine
+    image: digiserv/php8-cli:8.1.15-alpine
     volumes:
       - ./:/opt/project
     entrypoint: /bin/sh
@@ -11,7 +11,7 @@ services:
 
   php82:
     container_name: php82
-    image: digiserv/php8-cli:8.2.1-alpine
+    image: digiserv/php8-cli:8.2.2-alpine
     volumes:
       - ./:/opt/project
     entrypoint: /bin/sh

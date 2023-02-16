@@ -1,5 +1,13 @@
 # HIBP-PHP Changelog
+## *6.0.0* - 2023-02-16
+
+- Refactor for minimum PHP 8.1 version
+- Update dependencies and add dependency versions for Laravel 10
+- Add more examples to [README](README.md) and include response type info
+
 ## *5.1.1* - 2022-10-03
+
+### Update
 - Update contact info
 
 ## *5.1.0* - 2022-02-25

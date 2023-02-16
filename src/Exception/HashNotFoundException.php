@@ -2,6 +2,8 @@
 
 namespace Icawebdesign\Hibp\Exception;
 
-class HashNotFoundException extends \RuntimeException
+use RuntimeException;
+
+class HashNotFoundException extends RuntimeException
 {
 }

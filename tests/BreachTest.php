@@ -451,7 +451,7 @@ class BreachTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andReturn(new Response(HttpResponse::HTTP_OK, [], self::mockBreachList()));
+            ->andReturn(new Response(HttpResponse::HTTP_OK, [], self::mockBreachFilteredList()));
 
         $breach = new Breach(new HibpHttp(client: $client));
         $breaches = $breach->getBreachedAccount(
@@ -460,9 +460,12 @@ class BreachTest extends TestCase
             domainFilter: 'adobe.com',
         );
 
+        $breachEntity = $breaches->first();
+
         self::assertSame(HttpResponse::HTTP_OK, $breach->statusCode);
-        self::assertCount(8, $breaches);
-        self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
+        self::assertCount(1, $breaches);
+        self::assertInstanceOf(BreachSiteEntity::class, $breachEntity);
+        self::assertSame('adobe.com', $breachEntity->domain);
     }
 
     /** @test */
@@ -472,7 +475,7 @@ class BreachTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andReturn(new Response(HttpResponse::HTTP_OK, [], self::mockBreachList()));
+            ->andReturn(new Response(HttpResponse::HTTP_OK, [], self::mockBreachFilteredList()));
 
         $breach = new Breach(new HibpHttp(client: $client));
         $breaches = $breach->getBreachedAccountTruncated(
@@ -483,9 +486,9 @@ class BreachTest extends TestCase
         $breachEntity = $breaches->first();
 
         self::assertSame(HttpResponse::HTTP_OK, $breach->statusCode);
-        self::assertCount(8, $breaches);
+        self::assertCount(1, $breaches);
         self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breachEntity);
-        self::assertSame('000webhost', $breachEntity->name);
+        self::assertSame('Adobe', $breachEntity->name);
     }
 
     private static function mockBreachList(): string
@@ -505,6 +508,13 @@ class BreachTest extends TestCase
     private static function mockDataClasses(): string
     {
         $data = file_get_contents(sprintf('%s/_responses/breaches/dataclasses.json', __DIR__));
+
+        return (false !== $data) ? $data : '[]';
+    }
+
+    private static function mockBreachFilteredList(): string
+    {
+        $data = file_get_contents(sprintf('%s/_responses/breaches/breaches_domain_filter.json', __DIR__));
 
         return (false !== $data) ? $data : '[]';
     }

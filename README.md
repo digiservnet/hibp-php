@@ -8,15 +8,17 @@ HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://hav
 
 The HIBP API now requires an [API Key](https://haveibeenpwned.com/API/Key) that needs to be purchased at the HIBP site for any lookups that use an email address. This currently means that if you're only using this package for lookups from the PwnedPassword section of the API, then an API key isn't required.
 
-Version `5.x` has dropped support for older PHP versions (`< 7.4`). If you still need a version of this package to run on an older PHP version, then please use the `icawebdesign/hibp-php:^4` tag, though the `4.x` branch will no longer receive updates. 
+Version `5.x` has dropped support for older PHP versions (`< 7.4`). If you still need a version of this package to run on an older PHP version, then please use the `icawebdesign/hibp-php:^4.0` tag, though the `4.x` branch will no longer receive updates. 
+
+Version `6.x` now requires PHP `8.1+`. If you need to support previous versions of PHP, please use the `icawebdesign/hibp-php:^5.0` tag. This version however, will only receive security fixes.
 
 ## Requirements
 
-- PHP 7.4+
+- PHP 8.1+
 
 ## Installation
 ```bash
-composer require icawebdesign/hibp-php
+composer require icawebdesign/hibp-php:"^6.0"
 ```
 
 ## Usage examples for Breach Sites data
@@ -30,6 +32,8 @@ $breach = new Breach(new HibpHttp($apiKey));
 $breachSites = $breach->getAllBreachSites();
 ```
 
+This will return a `Collection` of `BreachSiteEntity` objects.
+
 Or we can filter for a domain the breach was listed in:
 
 ```php
@@ -40,6 +44,8 @@ $breach = new Breach(new HibpHttp($apiKey));
 $breachSites = $breach->getAllBreachSites('adobe.com');
 ```
 
+This will return a `Collection` of `BreachSiteEntity` objects.
+
 ### Get single breach site
 ```php
 use Icawebdesign\Hibp\Breach\Breach;
@@ -49,6 +55,8 @@ $breach = new Breach(new HibpHttp($apiKey));
 $breachSite = $breach->getBreach('adobe');
 ```
 
+This will return a single `BreachSiteEntity`.
+
 ### Get list of data classes for breach sites
 ```php
 use Icawebdesign\Hibp\Breach\Breach;
@@ -56,6 +64,17 @@ use Icawebdesign\Hibp\HibpHttp;
 
 $breach = new Breach(new HibpHttp($apiKey));
 $dataClasses = $breach->getAllDataClasses();
+```
+
+This will return an `array` of Data Classes, eg;
+```php
+[
+  "Account balances",
+  "Address book contacts",
+  "Age groups",
+  "Ages",
+  ...
+]
 ```
 
 ### Get data for a breached email account
@@ -74,22 +93,28 @@ use Icawebdesign\Hibp\Breach\Breach;
 use Icawebdesign\Hibp\HibpHttp;
 
 $breach = new Breach(new HibpHttp($apiKey));
-$data = $breach->getBreachedAccount('test@example.com', true);
+$data = $breach->getBreachedAccount('test@example.com', includeUnverified: true);
 ```
 
 We can also filter results back to a specific breached domain by adding a domain as the 3rd param
-
-The `PwnedPasswd` methods can now take a second param of an `array` to specify [GuzzleHttp request options](https://docs.guzzlephp.org/en/stable/request-options.html).
 
 ```php
 use Icawebdesign\Hibp\Breach\Breach;
 use Icawebdesign\Hibp\HibpHttp;
 
 $breach = new Breach(new HibpHttp($apiKey));
-$data = $breach->getBreachedAccount('test@example.com', true, 'adobe.com');
+$data = $breach->getBreachedAccount(
+    'test@example.com', 
+    includeUnverified: true,
+    domainFilter: 'adobe.com', 
+);
 ```
 
+These calls will return a `Collection` of `BreachSiteEntity` objects.
+
 ## Usage examples for Pwned Passwords
+
+The `PwnedPasswd` methods can now take a second param of an `array` to specify [GuzzleHttp request options](https://docs.guzzlephp.org/en/stable/request-options.html).
 
 ### Get number of times the start of a hash appears in the system matching against a full hash
 ```php
@@ -100,6 +125,8 @@ $pwnedPassword = new PwnedPassword(new HibpHttp($apiKey));
 $count = $pwnedPassword->rangeFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
+This will return an `int` of the count.
+
 ### Get number of times the start of a hash appears in the system as above, but with padded values to help prevent fingerprinting
 ```php
 use Icawebdesign\Hibp\Password\PwnedPassword;
@@ -109,6 +136,8 @@ $pwnedPassword = new PwnedPassword(new HibpHttp($apiKey));
 $hashData = $pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
+This will return a `Collection` of `PwnedPassword` model objects.
+
 ### Get a collection of hash data from a start of a hash and matching against a full hash
 ```php
 use Icawebdesign\Hibp\Password\PwnedPassword;
@@ -117,6 +146,8 @@ use Icawebdesign\Hibp\HibpHttp;
 $pwnedPassword = new PwnedPassword(new HibpHttp($apiKey));
 $hashData = $pwnedPassword->rangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
+
+This will return a `Collection` of `PwnedPassword` model objects.
 
 ### Get a collection of hash data from a start of a hash and matching against a full hash as above, but with padded values to help prevent fingerprinting
 ```php
@@ -130,6 +161,8 @@ $hashData = $pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf
 $hashData = PwnedPassword::stripZeroMatchesData($hashData, '5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
+This will return a `Collection` of `PwnedPassword` model objects.
+
 ## Usage examples for Paste lists
 
 ### Get a collection of pastes that a specified email account has appeared in
@@ -140,6 +173,8 @@ use Icawebdesign\Hibp\HibpHttp;
 $paste = new Paste(new HibpHttp($apiKey));
 $data = $paste->lookup('test@example.com');
 ```
+
+This will return a `Collection` of `PasteEntity` objects.
 
 ## Laravel specifics
 If using the package within a Laravel application, you can use the provided facades.
