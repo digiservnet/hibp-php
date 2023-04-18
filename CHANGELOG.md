@@ -1,4 +1,8 @@
 # HIBP-PHP Changelog
+## *5.3.0* - 2023-04-18
+
+- Fix request headers not being sent correctly
+
 ## *5.2.0* - 2023-02-16
 
 - Add malware flag to BreachSiteEntity
