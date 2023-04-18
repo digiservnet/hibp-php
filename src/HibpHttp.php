@@ -26,7 +26,9 @@ class HibpHttp
             $headers['hibp-api-key'] = $apiKey;
         }
 
-        $this->client = new Client([$headers]);
+        $this->client = new Client([
+            'headers' => $headers
+        ]);
     }
 
     public function client(): ClientInterface
