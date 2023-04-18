@@ -1,4 +1,12 @@
 # HIBP-PHP Changelog
+## *6.1.0* - 2023-04-18
+
+- Fix request headers not being sent correctly.
+
+## *5.3.0* - 2023-04-18
+
+- Fix request headers not being sent correctly.
+
 ## *6.0.1* - 2023-02-16
 
 - Update [README](README.md) about ReadOnly properties.
