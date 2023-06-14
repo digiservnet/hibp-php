@@ -3,8 +3,8 @@
 ## [Unreleased]
 
 ### Added
-- Add option to return NTLM hashes instead of SHA1 hashes
-- Add Codecov coverage report
+- Add option to return NTLM hashes instead of SHA1 hashes.
+- Add [Codecov coverage reporting](https://app.codecov.io/gh/digiservnet/hibp-php).
 
 ### Changed
 - Minor update to Changelog formatting

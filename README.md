@@ -2,6 +2,7 @@
 
 [![Latest Stable Version](https://poser.pugx.org/icawebdesign/hibp-php/version)](https://packagist.org/packages/icawebdesign/hibp-php)
 [![Total Downloads](https://poser.pugx.org/icawebdesign/hibp-php/downloads)](https://packagist.org/packages/icawebdesign/hibp-php)
+[![codecov](https://codecov.io/gh/digiservnet/hibp-php/branch/develop/graph/badge.svg?token=H7GAEEFXLP)](https://codecov.io/gh/digiservnet/hibp-php)
 [![License](https://poser.pugx.org/icawebdesign/hibp-php/license)](https://packagist.org/packages/icawebdesign/hibp-php)
 
 HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and Pwned Passwords APIs (currently v3).
@@ -130,6 +131,15 @@ $count = $pwnedPassword->rangeFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8
 
 This will return an `int` of the count.
 
+You can also check against `NTLM` hashes:
+```php
+use Icawebdesign\Hibp\Password\PwnedPassword;
+use Icawebdesign\Hibp\HibpHttp;
+
+$pwnedPassword = new PwnedPassword(new HibpHttp($apiKey));
+$count = $pwnedPassword->ntlmRangeFromHash('8846F7EAEE8FB117AD06BDD830B7586C');
+```
+
 ### Get number of times the start of a hash appears in the system as above, but with padded values to help prevent fingerprinting
 ```php
 use Icawebdesign\Hibp\Password\PwnedPassword;
@@ -137,6 +147,15 @@ use Icawebdesign\Hibp\HibpHttp;
 
 $pwnedPassword = new PwnedPassword(new HibpHttp($apiKey));
 $hashData = $pwnedPassword->paddedRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
+```
+
+You can also check against `NTLM` hashes:
+```php
+use Icawebdesign\Hibp\Password\PwnedPassword;
+use Icawebdesign\Hibp\HibpHttp;
+
+$pwnedPassword = new PwnedPassword(new HibpHttp($apiKey));
+$hashData = $pwnedPassword->paddedNtlmRangeDataFromHash('5baa61e4c9b93f3f0682250b6cf8331b7ee68fd8');
 ```
 
 This will return a `Collection` of `PwnedPassword` model objects.
