@@ -1,0 +1,38 @@
+on:
+  push:
+    branches:
+      - develop
+
+name: Run test suites & static analysis
+
+jobs:
+  tests:
+    name: Unit / Feature tests & static analysis
+    runs-on: ubuntu-22.04
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v3
+
+      - name: Set up PHP
+        uses: shivammathur/setup-php@v2
+        with:
+          php-version: '8.1'
+
+      - name: Run composer
+        run: |
+          composer install -n --prefer-dist --no-ansi --no-interaction --no-progress --no-scripts
+
+      - name: Run tests
+        run: composer test:coverage:clover
+
+      - name: Run static analysis
+        run: composer stan
+
+      - name: Upload coverage reports to Codecov
+        uses: codecov/codecov-action@v3
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
+          files: ./coverage.xml
+          fail_ci_if_error: true
+          verbose: true

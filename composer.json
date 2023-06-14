@@ -59,7 +59,9 @@
         }
     },
     "scripts": {
-        "test": "vendor/bin/phpunit --configuration phpunit.xml.dist --colors=never --coverage-text",
+        "test": "XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --testdox",
+        "test:coverage": "XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --testdox --coverage-html coverage",
+        "test:coverage:clover": "XDEBUG_MODE=coverage vendor/bin/phpunit --configuration phpunit.xml.dist --testdox --coverage-clover coverage.xml",
         "stan": "vendor/bin/phpstan analyse -c phpstan.neon --memory-limit=256M src tests"
     }
 }
