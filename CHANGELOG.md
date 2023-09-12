@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [6.3.0] - 2023-10-28
+
+### Added
+- Add `subscriptionFree` property to `BreachEntity`.
+- Add `latestBreach()` method.
+
 ## [6.2.0] - 2023-06-20
 
 ### Added

@@ -20,6 +20,7 @@
     "IsSensitive": false,
     "IsRetired": false,
     "IsSpamList": false,
+    "IsSubscriptionFree": false,
     "IsMalware": false
   }
 ]

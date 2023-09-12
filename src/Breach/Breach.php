@@ -13,9 +13,7 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\BreachNotFoundException;
-
 use function trim;
-
 use const JSON_THROW_ON_ERROR;
 
 class Breach implements BreachInterface
@@ -46,10 +44,7 @@ class Breach implements BreachInterface
     public function getAllBreachSites(?string $domainFilter = null, array $options = []): Collection
     {
         $uri = "{$this->apiRoot}/breaches";
-
-        if ($this->hasDomainFilter($domainFilter)) {
-            $uri = sprintf('%s?domain=%s', $uri, urlencode($domainFilter));
-        }
+        $uri = $this->filterDomain($uri, $domainFilter);
 
         try {
             $response = $this->client->request(
@@ -154,9 +149,7 @@ class Breach implements BreachInterface
             $includeUnverified,
         );
 
-        if ($this->hasDomainFilter($domainFilter)) {
-            $uri = sprintf('%s&domain=%s', $uri, urlencode($domainFilter));
-        }
+        $uri = $this->filterDomain($uri, $domainFilter);
 
         try {
             $response = $this->client->request(
@@ -206,9 +199,7 @@ class Breach implements BreachInterface
             $includeUnverified ? 'true' : 'false',
         );
 
-        if ($this->hasDomainFilter($domainFilter)) {
-            $uri = sprintf('%s&domain=%s', $uri, urlencode($domainFilter));
-        }
+        $uri = $this->filterDomain($uri, $domainFilter);
 
         try {
             $response = $this->client->request(
@@ -237,5 +228,43 @@ class Breach implements BreachInterface
     private function hasDomainFilter(?string $domainFilter): bool
     {
         return (null !== $domainFilter) && ('' !== trim($domainFilter));
+    }
+
+    private function filterDomain(string $uri, ?string $domainFilter): string
+    {
+        if ($this->hasDomainFilter($domainFilter)) {
+            $uri = sprintf('%s?domain=%s', $uri, urlencode($domainFilter));
+        }
+
+        return $uri;
+    }
+
+    /**
+     * @param array $options
+     * @return BreachSiteEntity
+     * @throws GuzzleException
+     * @throws Exception|GuzzleException|JsonException
+     */
+    public function getLatestBreach(array $options = []): BreachSiteEntity
+    {
+        try {
+            $response = $this->client->request(
+                'GET',
+                "{$this->apiRoot}/latestbreach",
+                $options,
+            );
+        } catch (ClientException $exception) {
+            $this->statusCode = $exception->getCode();
+
+            throw match ($exception->getCode()) {
+                404 => new BreachNotFoundException($exception->getMessage()),
+                400 => new RequestException($exception->getMessage(), $exception->getRequest()),
+                default => $exception,
+            };
+        }
+
+        $data = json_decode((string)$response->getBody(), associative: false, flags: JSON_THROW_ON_ERROR);
+
+        return new BreachSiteEntity($data);
     }
 }
