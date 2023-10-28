@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [6.3.1] - 2023-10-28
+
+### Added
+- Add PHP 8.3 to `composer.json`.
+
 ## [6.3.0] - 2023-10-28
 
 ### Added
