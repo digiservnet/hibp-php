@@ -114,6 +114,7 @@ class BreachTest extends TestCase
         self::assertIsBool($breach->retired);
         self::assertIsBool($breach->spamList);
         self::assertIsBool($breach->malware);
+        self::assertIsBool($breach->subscriptionFree);
         self::assertNotEmpty($breach->logoPath);
     }
 
@@ -489,6 +490,123 @@ class BreachTest extends TestCase
         self::assertCount(1, $breaches);
         self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breachEntity);
         self::assertSame('Adobe', $breachEntity->name);
+        self::assertSame('Adobe', $breachEntity->title);
+    }
+
+    /** @test */
+    public function invalid_truncated_breach_data_throws_runtime_exception(): void
+    {
+        $this->expectException(RuntimeException::class);
+
+        new BreachSiteTruncatedEntity(data: null);
+    }
+
+    /** @test */
+    public function it_can_get_the_latest_breach(): void
+    {
+        $client = Mockery::mock(Client::class);
+        $client
+            ->expects('request')
+            ->once()
+            ->andReturn(new Response(HttpResponse::HTTP_OK, [], self::mockSingleAccount()));
+
+        $breach = (new Breach(new HibpHttp(client: $client)))->getLatestBreach();
+
+        self::assertNotEmpty($breach->title);
+        self::assertNotEmpty($breach->name);
+        self::assertNotEmpty($breach->domain);
+        self::assertNotEmpty($breach->breachDate);
+        self::assertNotEmpty($breach->addedDate);
+        self::assertNotEmpty($breach->modifiedDate);
+        self::assertNotEmpty($breach->pwnCount);
+        self::assertNotEmpty($breach->description);
+        self::assertNotEmpty($breach->dataClasses);
+        self::assertIsBool($breach->verified);
+        self::assertIsBool($breach->fabricated);
+        self::assertIsBool($breach->sensitive);
+        self::assertIsBool($breach->retired);
+        self::assertIsBool($breach->spamList);
+        self::assertIsBool($breach->malware);
+        self::assertIsBool($breach->subscriptionFree);
+        self::assertNotEmpty($breach->logoPath);
+    }
+
+    /** @test */
+    public function invalid_latest_breach_lookup_throws_a_guzzle_client_exception(): void
+    {
+        $this->expectException(ClientException::class);
+
+        $mockedResponse = Mockery::mock(Response::class);
+        $mockedResponse
+            ->expects('getStatusCode')
+            ->once()
+            ->andReturn(0);
+
+        $client = Mockery::mock(Client::class);
+        $client
+            ->expects('request')
+            ->once()
+            ->andThrow(
+                new ClientException(
+                    message: 'message',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
+
+        (new Breach(new HibpHttp(client: $client)))->getLatestBreach();
+    }
+
+    /** @test */
+    public function unsuccessful_latest_breach_lookup_throws_a_breach_not_found_exception(): void
+    {
+        $this->expectException(BreachNotFoundException::class);
+
+        $mockedResponse = Mockery::mock(Response::class);
+        $mockedResponse
+            ->expects('getStatusCode')
+            ->once()
+            ->andReturn(HttpResponse::HTTP_NOT_FOUND);
+
+        $client = Mockery::mock(Client::class);
+        $client
+            ->expects('request')
+            ->once()
+            ->andThrow(
+                new ClientException(
+                    message: 'message',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
+
+        (new Breach(new HibpHttp(client: $client)))->getLatestBreach();
+    }
+
+    /** @test */
+    public function invalid_request_for_getting_latest_breach_data_throws_a_request_exception(): void
+    {
+        $this->expectException(RequestException::class);
+
+        $mockedResponse = Mockery::mock(Response::class);
+        $mockedResponse
+            ->expects('getStatusCode')
+            ->once()
+            ->andReturn(HttpResponse::HTTP_BAD_REQUEST);
+
+        $client = Mockery::mock(Client::class);
+        $client
+            ->expects('request')
+            ->once()
+            ->andThrow(
+                new ClientException(
+                    message: 'message',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
+
+        (new Breach(new HibpHttp(client: $client)))->getLatestBreach();
     }
 
     private static function mockBreachList(): string

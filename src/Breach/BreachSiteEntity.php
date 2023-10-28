@@ -41,6 +41,8 @@ class BreachSiteEntity
 
     public readonly string $logoPath;
 
+    public readonly bool $subscriptionFree;
+
     public function __construct(?stdClass $data = null)
     {
         if (null === $data) {
@@ -62,6 +64,7 @@ class BreachSiteEntity
         $this->retired = $data->IsRetired;
         $this->spamList = $data->IsSpamList;
         $this->malware = $data->IsMalware;
+        $this->subscriptionFree = $data->IsSubscriptionFree;
         $this->logoPath = $data->LogoPath;
     }
 
