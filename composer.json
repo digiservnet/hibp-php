@@ -22,7 +22,7 @@
         "symfony/yaml": "^5.4||^6.1",
         "nesbot/carbon": "^2.63",
         "ext-json": "*",
-        "illuminate/collections": "^8.0||^9.43||^10.0",
+        "illuminate/collections": "^8.0||^9.43||^10.0||^11.0",
         "psr/http-message": "^1.0",
         "guzzlehttp/psr7": "^2.4"
     },
