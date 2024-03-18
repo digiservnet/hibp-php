@@ -2,6 +2,11 @@
 
 ## [Unreleased]
 
+## [6.4.1] - 2024-03-18
+
+### Changed
+- Update CI pipeline
+
 ## [6.4.0] - 2024-03-18
 
 ### Changed
