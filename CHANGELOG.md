@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [6.4.0] - 2024-03-18
+
+### Changed
+- Update Illuminate/Collections for Laravel 11 - [[Jonas Drieghe](https://github.com/digiservnet/hibp-php/commits?author=jdrieghe)]
+- Update dependencies
+
 ## [6.3.1] - 2023-10-28
 
 ### Added

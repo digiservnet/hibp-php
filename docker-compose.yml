@@ -19,9 +19,9 @@ services:
 
   php83:
     container_name: php83
-    image: digiserv/php8-cli:8.3.0RC4-alpine
+    image: digiserv/php8-cli:8.3.3-alpine
     volumes:
       - ./:/opt/project
     entrypoint: /bin/sh
     tty: true
-  
+
