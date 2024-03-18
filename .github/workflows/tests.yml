@@ -1,7 +1,7 @@
 on:
   push:
     branches:
-      - develop
+      - main
 
 name: Run test suites & static analysis
 
@@ -12,7 +12,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Set up PHP
         uses: shivammathur/setup-php@v2
