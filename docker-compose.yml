@@ -1,25 +1,23 @@
-version: "3.9"
-
 services:
-  php81:
-    container_name: php81
+  hibp-php-php81:
+    container_name: hibp-php-php81
     image: digiserv/php8-cli:8.1.20-alpine
     volumes:
       - ./:/opt/project
     entrypoint: /bin/sh
     tty: true
 
-  php82:
-    container_name: php82
+  hibp-php-php82:
+    container_name: hibp-php-php82
     image: digiserv/php8-cli:8.2.11-alpine
     volumes:
       - ./:/opt/project
     entrypoint: /bin/sh
     tty: true
 
-  php83:
-    container_name: php83
-    image: digiserv/php8-cli:8.3.3-alpine
+  hibp-php-php83:
+    container_name: hibp-php-php83
+    image: digiserv/php8-cli:8.3.12-bookworm
     volumes:
       - ./:/opt/project
     entrypoint: /bin/sh
