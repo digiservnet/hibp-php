@@ -6,6 +6,7 @@ use stdClass;
 use Carbon\Carbon;
 use RuntimeException;
 use Illuminate\Support\Collection;
+use Icawebdesign\Hibp\Exception\InvalidBreachSiteDataException;
 
 class BreachSiteEntity
 {
@@ -45,8 +46,8 @@ class BreachSiteEntity
 
     public function __construct(?stdClass $data = null)
     {
-        if (null === $data) {
-            throw new RuntimeException('Invalid BreachSite data');
+        if ($data === null) {
+            throw new InvalidBreachSiteDataException();
         }
 
         $this->title = $data->Title;
@@ -75,6 +76,8 @@ class BreachSiteEntity
             $date,
         );
 
-        return (false !== $dateObject) ? $dateObject : Carbon::now();
+        $x = Carbon::now();
+
+        return $dateObject ?? Carbon::now();
     }
 }

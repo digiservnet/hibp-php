@@ -10,6 +10,7 @@ use GuzzleHttp\Psr7\Response;
 use Icawebdesign\Hibp\HibpHttp;
 use PHPUnit\Framework\TestCase;
 use Icawebdesign\Hibp\Breach\Breach;
+use PHPUnit\Framework\Attributes\Test;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Breach\BreachSiteEntity;
@@ -32,7 +33,7 @@ class BreachTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function getting_all_breach_sites_returns_a_collection(): void
     {
         $client = Mockery::mock(Client::class);
@@ -49,7 +50,7 @@ class BreachTest extends TestCase
         self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
-    /** @test */
+    #[Test]
     public function getting_all_breach_sites_with_invalid_request_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -71,7 +72,7 @@ class BreachTest extends TestCase
         $breach->getAllBreachSites();
     }
 
-    /** @test */
+    #[Test]
     public function getting_all_filtered_breach_sites_returns_a_valid_collection(): void
     {
         $client = Mockery::mock(Client::class);
@@ -88,7 +89,7 @@ class BreachTest extends TestCase
         self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
-    /** @test */
+    #[Test]
     public function successful_breach_lookup_returns_a_breach_site_entity(): void
     {
         $client = Mockery::mock(Client::class);
@@ -118,7 +119,7 @@ class BreachTest extends TestCase
         self::assertNotEmpty($breach->logoPath);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_breach_data_throws_runtime_exception(): void
     {
         $this->expectException(RuntimeException::class);
@@ -126,7 +127,7 @@ class BreachTest extends TestCase
         new BreachSiteEntity(data: null);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_breach_lookup_throws_a_guzzle_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -152,7 +153,7 @@ class BreachTest extends TestCase
         (new Breach(new HibpHttp(client: $client)))->getBreach(account: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function unsuccessful_breach_lookup_throws_a_breach_not_found_exception(): void
     {
         $this->expectException(BreachNotFoundException::class);
@@ -179,7 +180,7 @@ class BreachTest extends TestCase
         $breach->getBreach(account: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_lookup_request_throws_a_breach_not_found_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -206,7 +207,7 @@ class BreachTest extends TestCase
         $breach->getBreach(account: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function getting_all_dataclasses_returns_a_collection(): void
     {
         $client = Mockery::mock(Client::class);
@@ -222,7 +223,7 @@ class BreachTest extends TestCase
         self::assertSame('Account balances', $dataClasses->first());
     }
 
-    /** @test */
+    #[Test]
     public function invalid_request_for_dataclasses_throws_a_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -249,7 +250,7 @@ class BreachTest extends TestCase
         $breach->getAllDataClasses();
     }
 
-    /** @test */
+    #[Test]
     public function getting_breach_data_for_account_returns_a_valid_collection(): void
     {
         $client = Mockery::mock(Client::class);
@@ -266,7 +267,7 @@ class BreachTest extends TestCase
         self::assertInstanceOf(BreachSiteEntity::class, $breaches->first());
     }
 
-    /** @test */
+    #[Test]
     public function getting_breach_data_for_an_invalid_account_throws_a_breach_not_found_exception(): void
     {
         $this->expectException(BreachNotFoundException::class);
@@ -293,7 +294,7 @@ class BreachTest extends TestCase
         $breach->getBreachedAccount(emailAddress: 'invalid_email_address');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_request_for_getting_breach_data_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -320,7 +321,7 @@ class BreachTest extends TestCase
         $breach->getBreachedAccount(emailAddress: 'invalid_email_address');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_lookup_for_getting_breach_data_throws_a_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -347,7 +348,7 @@ class BreachTest extends TestCase
         $breach->getBreachedAccount(emailAddress: 'invalid_email_address');
     }
 
-    /** @test */
+    #[Test]
     public function getting_truncated_breached_accounts_returns_a_collection_of_breach_site_truncated_entities(): void
     {
         $client = Mockery::mock(Client::class);
@@ -364,7 +365,7 @@ class BreachTest extends TestCase
         self::assertInstanceOf(BreachSiteTruncatedEntity::class, $breaches->first());
     }
 
-    /** @test */
+    #[Test]
     public function getting_missing_truncated_breached_accounts_throws_breach_not_found_exception(): void
     {
         $this->expectException(BreachNotFoundException::class);
@@ -391,7 +392,7 @@ class BreachTest extends TestCase
         $breach->getBreachedAccountTruncated(emailAddress: 'test@example.com');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_request_for_truncated_breached_accounts_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -418,7 +419,7 @@ class BreachTest extends TestCase
         $breach->getBreachedAccountTruncated(emailAddress: 'test@example.com');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_lookup_for_truncated_breached_accounts_throws_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -445,7 +446,7 @@ class BreachTest extends TestCase
         $breach->getBreachedAccountTruncated(emailAddress: 'test@example.com');
     }
 
-    /** @test */
+    #[Test]
     public function getting_filtered_breached_account_returns_a_collection_of_breach_site_entities(): void
     {
         $client = Mockery::mock(Client::class);
@@ -469,7 +470,7 @@ class BreachTest extends TestCase
         self::assertSame('adobe.com', $breachEntity->domain);
     }
 
-    /** @test */
+    #[Test]
     public function getting_filtered_truncated_breached_accounts_returns_a_collection_of_breach_site_truncated_entities(): void
     {
         $client = Mockery::mock(Client::class);
@@ -493,7 +494,7 @@ class BreachTest extends TestCase
         self::assertSame('Adobe', $breachEntity->title);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_truncated_breach_data_throws_runtime_exception(): void
     {
         $this->expectException(RuntimeException::class);
@@ -501,7 +502,7 @@ class BreachTest extends TestCase
         new BreachSiteTruncatedEntity(data: null);
     }
 
-    /** @test */
+    #[Test]
     public function it_can_get_the_latest_breach(): void
     {
         $client = Mockery::mock(Client::class);
@@ -531,7 +532,7 @@ class BreachTest extends TestCase
         self::assertNotEmpty($breach->logoPath);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_latest_breach_lookup_throws_a_guzzle_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -557,7 +558,7 @@ class BreachTest extends TestCase
         (new Breach(new HibpHttp(client: $client)))->getLatestBreach();
     }
 
-    /** @test */
+    #[Test]
     public function unsuccessful_latest_breach_lookup_throws_a_breach_not_found_exception(): void
     {
         $this->expectException(BreachNotFoundException::class);
@@ -583,7 +584,7 @@ class BreachTest extends TestCase
         (new Breach(new HibpHttp(client: $client)))->getLatestBreach();
     }
 
-    /** @test */
+    #[Test]
     public function invalid_request_for_getting_latest_breach_data_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);

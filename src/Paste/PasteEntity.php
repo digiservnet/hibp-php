@@ -42,12 +42,10 @@ class PasteEntity
 
     public function dateStringToCarbon(?string $date = null): ?Carbon
     {
-        if (null === $date) {
+        if ($date === null) {
             return null;
         }
 
-        $pasteDate = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $date);
-
-        return (false !== $pasteDate) ? $pasteDate : null;
+        return Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $date);
     }
 }

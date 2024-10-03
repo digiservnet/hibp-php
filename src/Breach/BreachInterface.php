@@ -9,7 +9,7 @@ interface BreachInterface
 {
     public function __construct(HibpHttp $client);
 
-    public function getAllBreachSites(string $domainFilter = null, array $options = []): Collection;
+    public function getAllBreachSites(?string $domainFilter = null, array $options = []): Collection;
 
     public function getBreach(string $account, array $options = []): BreachSiteEntity;
 
@@ -18,14 +18,16 @@ interface BreachInterface
     public function getBreachedAccount(
         string $emailAddress,
         bool $includeUnverified = false,
-        string $domainFilter = null,
+        ?string $domainFilter = null,
         array $options = []
     ): Collection;
 
     public function getBreachedAccountTruncated(
         string $emailAddress,
         bool $includeUnverified = false,
-        string $domainFilter = null,
+        ?string $domainFilter = null,
         array $options = []
     ): Collection;
+
+    public function getLatestBreach(array $options = []): BreachSiteEntity;
 }

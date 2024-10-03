@@ -6,10 +6,11 @@ use Mockery;
 use GuzzleHttp\Client;
 use PHPUnit\Framework\TestCase;
 use Icawebdesign\Hibp\HibpHttp;
+use PHPUnit\Framework\Attributes\Test;
 
 class HibpHttpTest extends TestCase
 {
-    /** @test */
+    #[Test]
     public function can_create_a_client(): void
     {
         $client = new HibpHttp();
@@ -17,7 +18,7 @@ class HibpHttpTest extends TestCase
         self::assertInstanceOf(HibpHttp::class, $client);
     }
 
-    /** @test */
+    #[Test]
     public function can_create_a_client_with_api_key(): void
     {
         $client = new HibpHttp('THE_API_KEY');
@@ -25,7 +26,7 @@ class HibpHttpTest extends TestCase
         self::assertInstanceOf(HibpHttp::class, $client);
     }
 
-    /** @test */
+    #[Test]
     public function can_use_instance_of_an_http_client_to_create_a_client(): void
     {
         $httpClient = Mockery::mock(Client::class);

@@ -1,5 +1,7 @@
 <?php
 
+declare(strict_types=1);
+
 namespace Icawebdesign\Hibp\Breach;
 
 use stdClass;
@@ -13,17 +15,19 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\BreachNotFoundException;
+
+use Icawebdesign\Hibp\Exception\InvalidBreachSiteDataException;
+
 use function trim;
+
 use const JSON_THROW_ON_ERROR;
 
 class Breach implements BreachInterface
 {
     use HibpConfig;
 
-    protected ClientInterface $client;
-
     public int $statusCode;
-
+    protected ClientInterface $client;
     protected string $apiRoot;
 
     public function __construct(HibpHttp $hibpHttp)
@@ -42,7 +46,7 @@ class Breach implements BreachInterface
      * @throws GuzzleException|JsonException
      */
     public function getAllBreachSites(?string $domainFilter = null, array $options = []): Collection
-    {
+    {m
         $uri = "{$this->apiRoot}/breaches";
         $uri = $this->filterDomain($uri, $domainFilter);
 
@@ -59,10 +63,28 @@ class Breach implements BreachInterface
 
         $this->statusCode = $response->getStatusCode();
 
-        $data = json_decode((string)$response->getBody(), associative: false, flags: JSON_THROW_ON_ERROR);
+        try {
+            $data = json_decode((string)$response->getBody(), associative: false, flags: JSON_THROW_ON_ERROR);
+        } catch (JsonException $exception) {
+            throw new InvalidBreachSiteDataException();
+        }
 
         return Collection::make($data)
             ->map(static fn (stdClass $breach): BreachSiteEntity => new BreachSiteEntity($breach));
+    }
+
+    private function filterDomain(string $uri, ?string $domainFilter): string
+    {
+        if ($this->hasDomainFilter($domainFilter)) {
+            $uri = sprintf('%s?domain=%s', $uri, urlencode($domainFilter));
+        }
+
+        return $uri;
+    }
+
+    private function hasDomainFilter(?string $domainFilter): bool
+    {
+        return (null !== $domainFilter) && ('' !== trim($domainFilter));
     }
 
     /**
@@ -225,22 +247,9 @@ class Breach implements BreachInterface
             ->map(static fn (stdClass $breach): BreachSiteTruncatedEntity => new BreachSiteTruncatedEntity($breach));
     }
 
-    private function hasDomainFilter(?string $domainFilter): bool
-    {
-        return (null !== $domainFilter) && ('' !== trim($domainFilter));
-    }
-
-    private function filterDomain(string $uri, ?string $domainFilter): string
-    {
-        if ($this->hasDomainFilter($domainFilter)) {
-            $uri = sprintf('%s?domain=%s', $uri, urlencode($domainFilter));
-        }
-
-        return $uri;
-    }
-
     /**
      * @param array $options
+     *
      * @return BreachSiteEntity
      * @throws GuzzleException
      * @throws Exception|GuzzleException|JsonException

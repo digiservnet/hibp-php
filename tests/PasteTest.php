@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Response;
 use Icawebdesign\Hibp\HibpHttp;
 use PHPUnit\Framework\TestCase;
 use Icawebdesign\Hibp\Paste\Paste;
+use PHPUnit\Framework\Attributes\Test;
 use Icawebdesign\Hibp\Paste\PasteEntity;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
@@ -31,7 +32,7 @@ class PasteTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function successful_lookup_returns_a_collection(): void
     {
         $client = Mockery::mock(Client::class);
@@ -56,7 +57,7 @@ class PasteTest extends TestCase
         self::assertSame(139, $account->emailCount);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_lookup_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -81,7 +82,7 @@ class PasteTest extends TestCase
         $paste->lookup(emailAddress: 'invalid_email_address');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_lookup_throws_a_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -106,7 +107,7 @@ class PasteTest extends TestCase
         $paste->lookup(emailAddress: 'invalid_email_address');
     }
 
-    /** @test */
+    #[Test]
     public function unknown_lookup_throws_a_request_exception(): void
     {
         $this->expectException(PasteNotFoundException::class);
@@ -131,7 +132,7 @@ class PasteTest extends TestCase
         $paste->lookup(emailAddress: 'invalid_email_address');
     }
 
-    /** @test */
+    #[Test]
     public function not_found_lookup_throws_paste_not_found_exception(): void
     {
         $this->expectException(PasteNotFoundException::class);

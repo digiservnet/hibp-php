@@ -9,6 +9,7 @@ use GuzzleHttp\Psr7\Response;
 use Icawebdesign\Hibp\HibpHttp;
 use PHPUnit\Framework\TestCase;
 use Illuminate\Support\Collection;
+use PHPUnit\Framework\Attributes\Test;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Password\PwnedPassword;
@@ -26,7 +27,7 @@ class PwnedPasswordTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function successful_range_lookup_returns_a_positive_integer(): void
     {
         $list = self::mockPasswordListSha1();
@@ -45,7 +46,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(3861493, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_ntlm_range_lookup_returns_a_positive_integer(): void
     {
         $list = self::mockPasswordListNtlm();
@@ -64,7 +65,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(9659365, $count);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -89,7 +90,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->rangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_ntlm_range_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -114,7 +115,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->ntlmRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_lookup_throws_a_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -139,7 +140,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->rangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_ntlm_range_lookup_throws_a_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -164,7 +165,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->ntlmRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function successful_range_with_padding_returns_a_positive_integer(): void
     {
         $client = Mockery::mock(Client::class);
@@ -181,7 +182,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(3861493, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_ntlm_range_with_padding_returns_a_positive_integer(): void
     {
         $client = Mockery::mock(Client::class);
@@ -198,7 +199,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(9659365, $count);
     }
 
-    /** @test */
+    #[Test]
     public function failed_range_with_padding_returns_zero(): void
     {
         $client = Mockery::mock(Client::class);
@@ -215,7 +216,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(0, $count);
     }
 
-    /** @test */
+    #[Test]
     public function failed_ntlm_range_with_padding_returns_zero(): void
     {
         $client = Mockery::mock(Client::class);
@@ -232,7 +233,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(0, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_range_with_padding_and_padding_header_returns_a_positive_integer(): void
     {
         $client = Mockery::mock(Client::class);
@@ -256,7 +257,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(3861493, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_ntlm_range_with_padding_and_padding_header_returns_a_positive_integer(): void
     {
         $client = Mockery::mock(Client::class);
@@ -280,7 +281,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(9659365, $count);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_request_with_padding_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -305,7 +306,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->paddedRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_ntlm_range_request_with_padding_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -330,7 +331,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->paddedNtlmRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_with_padding_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -355,7 +356,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->paddedRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_ntlm_range_with_padding_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -380,7 +381,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->paddedNtlmRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function failed_range_lookup_returns_zero(): void
     {
         $client = Mockery::mock(Client::class);
@@ -395,7 +396,7 @@ class PwnedPasswordTest extends TestCase
         self::assertEquals(0, $count);
     }
 
-    /** @test */
+    #[Test]
     public function failed_ntlm_range_lookup_returns_zero(): void
     {
         $client = Mockery::mock(Client::class);
@@ -410,7 +411,7 @@ class PwnedPasswordTest extends TestCase
         self::assertEquals(0, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_range_data_lookup_returns_a_valid_collection(): void
     {
         $client = Mockery::mock(Client::class);
@@ -425,7 +426,7 @@ class PwnedPasswordTest extends TestCase
         self::assertGreaterThan(0, $response->last()['count']);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_data_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -450,7 +451,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->rangeDataFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_data_lookup_throws_a_request_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -475,7 +476,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->rangeDataFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
     }
 
-    /** @test */
+    #[Test]
     public function successful_padded_range_data_lookup_returns_a_valid_collection_with_zero_count_elements(): void
     {
         $client = Mockery::mock(Client::class);
@@ -491,7 +492,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(5, $response->last()['count']);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_padded_range_data_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -516,7 +517,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->paddedRangeDataFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_padded_range_data_lookup_throws_a_request_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -541,7 +542,7 @@ class PwnedPasswordTest extends TestCase
         $pwnedPassword->paddedRangeDataFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
     }
 
-    /** @test */
+    #[Test]
     public function stripped_successful_padded_range_returns_a_valid_collection_without_zero_count_elements(): void
     {
         $hash = self::generateSha1Hash('password');
@@ -562,7 +563,7 @@ class PwnedPasswordTest extends TestCase
         );
     }
 
-    /** @test */
+    #[Test]
     public function stripping_zero_matches_from_response_with_provided_hash_throws_padding_hash_collision_exception(): void
     {
         $this->expectException(PaddingHashCollisionException::class);

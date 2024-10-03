@@ -12,7 +12,7 @@ class HibpHttp
 
     protected ClientInterface $client;
 
-    public function __construct(string $apiKey = null, ClientInterface $client = null)
+    public function __construct(?string $apiKey = null, ?ClientInterface $client = null)
     {
         $headers = [
             'User-Agent' => $this->userAgent,
