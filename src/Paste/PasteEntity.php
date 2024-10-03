@@ -4,6 +4,7 @@ namespace Icawebdesign\Hibp\Paste;
 
 use stdClass;
 use Carbon\Carbon;
+use Carbon\Exceptions\InvalidFormatException;
 
 class PasteEntity
 {
@@ -21,6 +22,9 @@ class PasteEntity
 
     public array $pasteSites = [
         'pastebin' => 'https://pastebin.com/',
+        'pastie' => 'http://pastie.org/',
+        'ghostbin' => 'https://ghostbin.site/',
+        'justpaste' => 'https://justpasteit.org/',
     ];
 
     public function __construct(stdClass $data)
@@ -46,8 +50,15 @@ class PasteEntity
             return null;
         }
 
-        $pasteDate = Carbon::createFromFormat('Y-m-d\TH:i:s\Z', $date);
+        try {
+            $pasteDate = Carbon::createFromFormat(
+                'Y-m-d\TH:i:s\Z',
+                $date
+            );
+        } catch (InvalidFormatException) {
+            $pasteDate = null;
+        }
 
-        return (false !== $pasteDate) ? $pasteDate : null;
+        return $pasteDate;
     }
 }

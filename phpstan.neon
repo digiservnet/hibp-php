@@ -1,10 +1,10 @@
 parameters:
     level: 8
     customRulesetUsed: true
-    checkMissingIterableValueType: false
-    checkGenericClassInNonGenericObjectType: false
 
     ignoreErrors:
+        - identifier: missingType.iterableValue
+        - identifier: missingType.generics
         -
             message: '#Parameter \#1 \$string of function urlencode expects string, string\|null given\.#'
             path: src/Breach/Breach.php

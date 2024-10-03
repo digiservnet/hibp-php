@@ -2,6 +2,9 @@
 
 ## [Unreleased]
 
+- Add additional Paste sources for link generation
+- Add subscription status endpoint
+
 ## [6.4.1] - 2024-03-18
 
 ### Changed
