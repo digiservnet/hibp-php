@@ -4,6 +4,7 @@
 
 - Add additional Paste sources for link generation
 - Add subscription status endpoint
+- Fix date object creation for Breach Site Entities
 
 ## [6.4.1] - 2024-03-18
 

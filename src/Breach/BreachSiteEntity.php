@@ -6,6 +6,7 @@ use stdClass;
 use Carbon\Carbon;
 use RuntimeException;
 use Illuminate\Support\Collection;
+use Carbon\Exceptions\InvalidFormatException;
 
 class BreachSiteEntity
 {
@@ -70,11 +71,19 @@ class BreachSiteEntity
 
     protected function dateStringToCarbon(string $date): Carbon
     {
-        $dateObject = Carbon::createFromFormat(
-            'Y-m-d\TH:i:s\Z',
-            $date,
-        );
+        try {
+            $dateObject = Carbon::createFromFormat(
+                'Y-m-d\TH:i:s\Z',
+                $date,
+            );
+        } catch (InvalidFormatException) {
+            $dateObject = Carbon::now();
+        }
 
-        return (false !== $dateObject) ? $dateObject : Carbon::now();
+        if ($dateObject === null) {
+            $dateObject = Carbon::now();
+        }
+
+        return $dateObject;
     }
 }
