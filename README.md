@@ -23,7 +23,7 @@ composer require icawebdesign/hibp-php:"^6.0"
 ```
 
 ## ReadOnly properties
-Now that we're targetting  a minimum of PHP `8.1`, this gives us the ability to utilise ReadOnly properties in objects. With this, entity getters have been removed and properties can now be accessed directly on the object.
+Now that we're targeting a minimum of PHP `8.1`, this gives us the ability to utilise ReadOnly properties in objects. With this, entity getters have been removed and properties can now be accessed directly on the object.
 
 ## Usage examples for Breach Sites data
 
