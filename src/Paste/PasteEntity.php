@@ -39,7 +39,7 @@ class PasteEntity
         $this->source = $data->Source;
         $this->id = $data->Id;
         $this->title = $data->Title ?? '';
-        $this->date = $this->dateStringToCarbon($data->Date ?? null);
+        $this->date = $this->dateStringToCarbon($data->Date);
         $this->emailCount = $data->EmailCount;
         $this->link = $sourceLink;
     }
@@ -50,15 +50,9 @@ class PasteEntity
             return null;
         }
 
-        try {
-            $pasteDate = Carbon::createFromFormat(
-                'Y-m-d\TH:i:s\Z',
-                $date
-            );
-        } catch (InvalidFormatException) {
-            $pasteDate = null;
-        }
-
-        return $pasteDate;
+        return Carbon::createFromFormat(
+            'Y-m-d\TH:i:s\Z',
+            $date
+        );
     }
 }

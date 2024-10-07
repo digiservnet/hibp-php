@@ -6,7 +6,6 @@ use stdClass;
 use Carbon\Carbon;
 use RuntimeException;
 use Illuminate\Support\Collection;
-use Carbon\Exceptions\InvalidFormatException;
 
 class BreachSiteEntity
 {
@@ -54,8 +53,8 @@ class BreachSiteEntity
         $this->name = $data->Name;
         $this->domain = $data->Domain;
         $this->breachDate = new Carbon($data->BreachDate);
-        $this->addedDate = $this->dateStringToCarbon($data->AddedDate);
-        $this->modifiedDate = $this->dateStringToCarbon($data->ModifiedDate);
+        $this->addedDate = new Carbon($data->AddedDate);
+        $this->modifiedDate = new Carbon($data->ModifiedDate);
         $this->pwnCount = $data->PwnCount;
         $this->description = $data->Description;
         $this->dataClasses = Collection::make($data->DataClasses);
@@ -67,23 +66,5 @@ class BreachSiteEntity
         $this->malware = $data->IsMalware;
         $this->subscriptionFree = $data->IsSubscriptionFree;
         $this->logoPath = $data->LogoPath;
-    }
-
-    protected function dateStringToCarbon(string $date): Carbon
-    {
-        try {
-            $dateObject = Carbon::createFromFormat(
-                'Y-m-d\TH:i:s\Z',
-                $date,
-            );
-        } catch (InvalidFormatException) {
-            $dateObject = Carbon::now();
-        }
-
-        if ($dateObject === null) {
-            $dateObject = Carbon::now();
-        }
-
-        return $dateObject;
     }
 }
