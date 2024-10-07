@@ -50,9 +50,6 @@ class PasteEntity
             return null;
         }
 
-        return Carbon::createFromFormat(
-            'Y-m-d\TH:i:s\Z',
-            $date
-        );
+        return new Carbon($date);
     }
 }

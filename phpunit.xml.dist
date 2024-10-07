@@ -24,7 +24,7 @@
     </logging>
     <source>
         <include>
-            <directory>src/</directory>
+            <directory>src</directory>
         </include>
     </source>
 </phpunit>

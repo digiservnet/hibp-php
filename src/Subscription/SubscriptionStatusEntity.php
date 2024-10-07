@@ -15,7 +15,7 @@ class SubscriptionStatusEntity
 
     public readonly Carbon $expires;
 
-    public readonly int $requestsPerSecond;
+    public readonly int $requestsPerMinute;
 
     public readonly int $domainSearchMaxBreachedAccounts;
 
@@ -34,7 +34,7 @@ class SubscriptionStatusEntity
         $this->tier = $tier;
         $this->description = $data->Description;
         $this->expires = Carbon::parse($data->SubscribedUntil);
-        $this->requestsPerSecond = $data->Rpm;
+        $this->requestsPerMinute = $data->Rpm;
         $this->domainSearchMaxBreachedAccounts = $data->DomainSearchMaxBreachedAccounts;
     }
 }

@@ -2,6 +2,10 @@
 
 ## [Unreleased]
 
+
+
+## [6.5.0] - 2024-10-07
+
 - Add additional Paste sources for link generation
 - Add subscription status endpoint
 - Fix date object creation for Breach Site Entities

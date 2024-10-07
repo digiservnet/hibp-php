@@ -198,6 +198,20 @@ $data = $paste->lookup('test@example.com');
 
 This will return a `Collection` of `PasteEntity` objects.
 
+## Subscription Status
+
+### Get the current subscription status for an API Key
+
+```php
+use Icawebdesign\Hibp\HibpHttp;
+use Icawebdesign\Hibp\Subscription\Subscription;
+
+$subscription = new Subscription(new HibpHttp($apiKey));
+$status = $subscription->status();
+```
+
+This will return a `SubscriptionStatusEntity` object.
+
 ## Laravel specifics
 If using the package within a Laravel application, you can use the provided facades.
 First, you need to add your HIBP API key to your `.env` file, or your preferred method for adding values to your server environment variables.
