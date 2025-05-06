@@ -19,13 +19,13 @@ interface BreachInterface
         string $emailAddress,
         bool $includeUnverified = false,
         string $domainFilter = null,
-        array $options = []
+        array $options = [],
     ): Collection;
 
     public function getBreachedAccountTruncated(
         string $emailAddress,
         bool $includeUnverified = false,
         string $domainFilter = null,
-        array $options = []
+        array $options = [],
     ): Collection;
 }
