@@ -24,24 +24,53 @@ class StealerLog implements StealerLogInterface
         $this->client = $hibpHttp->client();
     }
 
-    public function getStealerLogsByEmail(string $emailAddress, array $options = []): Collection
+    public function getStealerLogsByEmailAddress(string $emailAddress, array $options = []): Collection
     {
         $uri = "{$this->apiRoot}/stealerlogsbyemail/{$emailAddress}";
 
-        try {
-            $response = $this->client->request(
-                'GET',
-                $uri,
-                $options,
-            );
-        } catch (RequestException $exception) {
-            $this->statusCode = $exception->getCode();
-            throw $exception;
-        }
+        $response = $this->client->request(
+            'GET',
+            $uri,
+            $options,
+        );
 
         $this->statusCode = $response->getStatusCode();
 
         $data = json_decode((string)$response->getBody(), associative: false, flags: JSON_THROW_ON_ERROR);
+
+        return Collection::make($data);
+    }
+
+    public function getStealerLogsByWebsiteDomain(string $domain, array $options = []): Collection
+    {
+        $uri = "{$this->apiRoot}/stealerlogsbywebsitedomain/{$domain}";
+
+        $response = $this->client->request(
+            'GET',
+            $uri,
+            $options,
+        );
+
+        $this->statusCode = $response->getStatusCode();
+
+        $data = json_decode((string)$response->getBody(), associative: false, flags: JSON_THROW_ON_ERROR);
+
+        return Collection::make($data);
+    }
+
+    public function getStealerLogsByEmailDomain(string $domain, array $options = []): Collection
+    {
+        $uri = "{$this->apiRoot}/stealerlogsbyemaildomain/{$domain}";
+
+        $response = $this->client->request(
+            'GET',
+            $uri,
+            $options,
+        );
+
+        $this->statusCode = $response->getStatusCode();
+
+        $data = json_decode((string)$response->getBody(), associative: true, flags: JSON_THROW_ON_ERROR);
 
         return Collection::make($data);
     }

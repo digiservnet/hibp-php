@@ -5,6 +5,8 @@ namespace Icawebdesign\Hibp\Providers;
 use Icawebdesign\Hibp\HibpHttp;
 use Carbon\Laravel\ServiceProvider;
 
+use Icawebdesign\Hibp\StealerLog\StealerLog;
+
 use function getenv;
 
 class StealerLogServiceProvider extends ServiceProvider

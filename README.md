@@ -198,6 +198,98 @@ $data = $paste->lookup('test@example.com');
 
 This will return a `Collection` of `PasteEntity` objects.
 
+## Usage examples for StealerLogs
+
+### Get a collection of domains that are associated with a specified email account
+
+```php
+use Icawebdesign\Hibp\StealerLog\StealerLog;
+use Icawebdesign\Hibp\HibpHttp;
+
+$stealerLog = new StealerLog(new HibpHttp($apiKey));
+$data = $stealerLog->getStealerLogsByEmailAddress('test@example.com');
+```
+
+This will return a Collection of domains
+```php
+print_r($data);
+```
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => netflix.com
+            [1] => spotify.com
+        )
+
+    [escapeWhenCastingToString:protected] => 
+)
+```
+
+### Get a collection of email addresses associated with a specified domain
+
+```php
+use Icawebdesign\Hibp\StealerLog\StealerLog;
+use Icawebdesign\Hibp\HibpHttp;
+
+$stealerLog = new StealerLog(new HibpHttp($apiKey));
+$data = $stealerLog->getStealerLogsByWebsiteDomain('gmail.com');
+```
+
+This will return a Collection of email addresses
+```php
+print_r($data);
+```
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [0] => andy@gmail.com
+            [1] => jane@gmail.com
+        )
+
+    [escapeWhenCastingToString:protected] => 
+)
+```
+
+### Get a collection of aliases and domains associated with an email domain
+
+```php
+use Icawebdesign\Hibp\StealerLog\StealerLog;
+use Icawebdesign\Hibp\HibpHttp;
+
+$stealerLog = new StealerLog(new HibpHttp($apiKey));
+$data = $stealerLog->getStealerLogsByEmailDomain('netflix.com');
+```
+
+This will return a Collection of aliases and their associated domains
+```php
+print_r($data);
+```
+```php
+Illuminate\Support\Collection Object
+(
+    [items:protected] => Array
+        (
+            [andy] => Array
+                (
+                    [0] => netflix.com
+                )
+
+            [jane] => Array
+                (
+                    [0] => netflix.com
+                    [1] => spotify.com
+                )
+
+        )
+
+    [escapeWhenCastingToString:protected] => 
+)
+```
+
 ## Subscription Status
 
 ### Get the current subscription status for an API Key

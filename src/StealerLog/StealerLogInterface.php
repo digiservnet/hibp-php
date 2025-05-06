@@ -9,5 +9,9 @@ interface StealerLogInterface
 {
     public function __construct(HibpHttp $client);
 
-    public function getStealerLogsByEmail(string $emailAddress): Collection;
+    public function getStealerLogsByEmailAddress(string $emailAddress, array $options = []): Collection;
+
+    public function getStealerLogsByWebsiteDomain(string $domain, array $options = []): Collection;
+
+    public function getStealerLogsByEmailDomain(string $domain, array $options = []): Collection;
 }

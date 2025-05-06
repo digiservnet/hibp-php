@@ -2,7 +2,10 @@
 
 ## [Unreleased]
 
+## [6.6.0] - 2025-05-10
 
+### Added
+- Added StealerLogs lookups
 
 ## [6.5.0] - 2024-10-07
 

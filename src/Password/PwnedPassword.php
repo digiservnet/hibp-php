@@ -59,7 +59,9 @@ class PwnedPassword implements PwnedPasswordInterface
         $match = (new PasswordData())->getRangeData($response, $hash);
 
         if ($match->collapse()->has($hash)) {
-            return $match->collapse()->get($hash)['count'];
+            $data = $match->collapse()->get($hash);
+
+            return $data['count'] ?? 0;
         }
 
         return 0;
@@ -97,7 +99,9 @@ class PwnedPassword implements PwnedPasswordInterface
         $match = (new PasswordData())->getRangeData($response, $hash);
 
         if ($match->collapse()->has($hash)) {
-            return $match->collapse()->get($hash)['count'];
+            $data = $match->collapse()->get($hash);
+
+            return $data['count'] ?? 0;
         }
 
         return 0;
@@ -143,7 +147,9 @@ class PwnedPassword implements PwnedPasswordInterface
         $match = (new PasswordData())->getRangeDataWithPadding($response, $hash);
 
         if ($match->collapse()->has($hash)) {
-            return $match->collapse()->get($hash)['count'];
+            $data = $match->collapse()->get($hash);
+
+            return $data['count'] ?? 0;
         }
 
         return 0;
@@ -189,7 +195,9 @@ class PwnedPassword implements PwnedPasswordInterface
         $match = (new PasswordData())->getRangeDataWithPadding($response, $hash);
 
         if ($match->collapse()->has($hash)) {
-            return $match->collapse()->get($hash)['count'];
+            $data = $match->collapse()->get($hash);
+
+            return $data['count'] ?? 0;
         }
 
         return 0;

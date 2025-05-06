@@ -7,6 +7,12 @@ use Psr\Http\Message\ResponseInterface;
 
 class PwnedPassword
 {
+    /**
+     * @param ResponseInterface $response
+     * @param string $hash
+     *
+     * @return Collection<int, Collection<string, array{hashSnippet: string, count: int, matched: bool}>>
+     */
     public function getRangeData(
         ResponseInterface $response,
         string $hash,
