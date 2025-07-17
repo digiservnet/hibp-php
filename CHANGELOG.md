@@ -7,6 +7,7 @@
 ### Changed
 
 - Included latest major versions of dependencies in `composer.json`
+- Adapted tests to resolve newer PHPStan issues
 
 ## [6.6.0] - 2025-05-10
 

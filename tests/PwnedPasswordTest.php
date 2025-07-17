@@ -42,7 +42,6 @@ class PwnedPasswordTest extends TestCase
         $count = $pwnedPassword->rangeFromHash(self::generateSha1Hash('password'));
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertIsInt($count);
         self::assertSame(3861493, $count);
     }
 
@@ -61,7 +60,6 @@ class PwnedPasswordTest extends TestCase
         $count = $pwnedPassword->ntlmRangeFromHash(self::generateNtlmHash('password'));
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertIsInt($count);
         self::assertSame(9659365, $count);
     }
 
@@ -186,7 +184,6 @@ class PwnedPasswordTest extends TestCase
         $count = $pwnedPassword->paddedRangeFromHash(self::generateSha1Hash('password'));
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertIsInt($count);
         self::assertSame(3861493, $count);
     }
 
@@ -203,7 +200,6 @@ class PwnedPasswordTest extends TestCase
         $count = $pwnedPassword->paddedNtlmRangeFromHash(self::generateNtlmHash('password'));
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertIsInt($count);
         self::assertSame(9659365, $count);
     }
 
@@ -220,7 +216,6 @@ class PwnedPasswordTest extends TestCase
         $count = $pwnedPassword->paddedRangeFromHash('0000000000000000000000000000000000000000');
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertIsInt($count);
         self::assertSame(0, $count);
     }
 
@@ -237,7 +232,6 @@ class PwnedPasswordTest extends TestCase
         $count = $pwnedPassword->paddedNtlmRangeFromHash('00000000000000000000000000000000');
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertIsInt($count);
         self::assertSame(0, $count);
     }
 
@@ -261,7 +255,6 @@ class PwnedPasswordTest extends TestCase
         );
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertIsInt($count);
         self::assertSame(3861493, $count);
     }
 
@@ -285,7 +278,6 @@ class PwnedPasswordTest extends TestCase
         );
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertIsInt($count);
         self::assertSame(9659365, $count);
     }
 
@@ -409,7 +401,7 @@ class PwnedPasswordTest extends TestCase
         $count = $pwnedPassword->rangeFromHash('0000000000000000000000000000000000000000');
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertEquals(0, $count);
+        self::assertSame(0, $count);
     }
 
     #[Test]
@@ -424,7 +416,7 @@ class PwnedPasswordTest extends TestCase
         $count = $pwnedPassword->ntlmRangeFromHash('00000000000000000000000000000000');
 
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
-        self::assertEquals(0, $count);
+        self::assertSame(0, $count);
     }
 
     #[Test]

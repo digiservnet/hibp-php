@@ -50,11 +50,10 @@ class PasteTest extends TestCase
         /** @var PasteEntity $account */
         $account = $pastes->first();
 
-        self::assertNotEmpty($account->source);
-        self::assertNotEmpty($account->id);
-        self::assertIsInt($account->emailCount);
-        self::assertIsString($account->link);
+        self::assertSame('Pastebin', $account->source);
+        self::assertSame('8Q0BvKD8', $account->id);
         self::assertSame(139, $account->emailCount);
+        self::assertSame("https://pastebin.com/{$account->id}", $account->link);
     }
 
     #[Test]

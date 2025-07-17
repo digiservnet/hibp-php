@@ -12,6 +12,7 @@ use Icawebdesign\Hibp\Breach\BreachSiteEntity;
 use Icawebdesign\Hibp\Breach\BreachSiteTruncatedEntity;
 use Icawebdesign\Hibp\Exception\BreachNotFoundException;
 use Icawebdesign\Hibp\HibpHttp;
+use Illuminate\Support\Collection;
 use Mockery;
 use PHPUnit\Framework\Attributes\Test;
 use PHPUnit\Framework\TestCase;
@@ -98,25 +99,38 @@ class BreachTest extends TestCase
             ->once()
             ->andReturn(new Response(HttpResponse::HTTP_OK, [], self::mockSingleAccount()));
 
-        $breach = (new Breach(new HibpHttp(client: $client)))->getBreach(account: '000webhost');
+        $breach = (new Breach(new HibpHttp(client: $client)))->getBreach(account: 'adobe');
 
-        self::assertNotEmpty($breach->title);
-        self::assertNotEmpty($breach->name);
-        self::assertNotEmpty($breach->domain);
-        self::assertNotEmpty($breach->breachDate);
-        self::assertNotEmpty($breach->addedDate);
-        self::assertNotEmpty($breach->modifiedDate);
-        self::assertNotEmpty($breach->pwnCount);
-        self::assertNotEmpty($breach->description);
-        self::assertNotEmpty($breach->dataClasses);
-        self::assertIsBool($breach->verified);
-        self::assertIsBool($breach->fabricated);
-        self::assertIsBool($breach->sensitive);
-        self::assertIsBool($breach->retired);
-        self::assertIsBool($breach->spamList);
-        self::assertIsBool($breach->malware);
-        self::assertIsBool($breach->subscriptionFree);
-        self::assertNotEmpty($breach->logoPath);
+        $dataClasses = Collection::make([
+            'Email addresses',
+            'Password hints',
+            'Passwords',
+            'Usernames',
+        ]);
+
+        self::assertSame('Adobe', $breach->title);
+        self::assertSame('Adobe', $breach->name);
+        self::assertSame('adobe.com', $breach->domain);
+        self::assertSame('2013-10-04', $breach->breachDate->toDateString());
+        self::assertSame('2013-12-04T00:00:00Z', $breach->addedDate->toIso8601ZuluString());
+        self::assertSame('2022-05-15T23:52:49Z', $breach->modifiedDate->toIso8601ZuluString());
+        self::assertSame(152445165, $breach->pwnCount);
+        self::assertSame(
+            'In October 2013, 153 million Adobe accounts were breached with each containing an internal ID, username, email, <em>encrypted</em> password and a password hint in plain text. The password cryptography was poorly done and many were quickly resolved back to plain text. The unencrypted hints also <a href="http://www.troyhunt.com/2013/11/adobe-credentials-and-serious.html" target="_blank" rel="noopener">disclosed much about the passwords</a> adding further to the risk that hundreds of millions of Adobe customers already faced.',
+            $breach->description,
+        );
+        self::assertEquals($dataClasses, $breach->dataClasses);
+        self::assertTrue($breach->verified);
+        self::assertFalse($breach->fabricated);
+        self::assertFalse($breach->sensitive);
+        self::assertFalse($breach->retired);
+        self::assertFalse($breach->spamList);
+        self::assertFalse($breach->malware);
+        self::assertFalse($breach->subscriptionFree);
+        self::assertSame(
+            'https://haveibeenpwned.com/Content/Images/PwnedLogos/Adobe.png',
+            $breach->logoPath,
+        );
     }
 
     #[Test]
@@ -514,23 +528,36 @@ class BreachTest extends TestCase
 
         $breach = (new Breach(new HibpHttp(client: $client)))->getLatestBreach();
 
-        self::assertNotEmpty($breach->title);
-        self::assertNotEmpty($breach->name);
-        self::assertNotEmpty($breach->domain);
-        self::assertNotEmpty($breach->breachDate);
-        self::assertNotEmpty($breach->addedDate);
-        self::assertNotEmpty($breach->modifiedDate);
-        self::assertNotEmpty($breach->pwnCount);
-        self::assertNotEmpty($breach->description);
-        self::assertNotEmpty($breach->dataClasses);
-        self::assertIsBool($breach->verified);
-        self::assertIsBool($breach->fabricated);
-        self::assertIsBool($breach->sensitive);
-        self::assertIsBool($breach->retired);
-        self::assertIsBool($breach->spamList);
-        self::assertIsBool($breach->malware);
-        self::assertIsBool($breach->subscriptionFree);
-        self::assertNotEmpty($breach->logoPath);
+        $dataClasses = Collection::make([
+            'Email addresses',
+            'Password hints',
+            'Passwords',
+            'Usernames',
+        ]);
+
+        self::assertSame('Adobe', $breach->title);
+        self::assertSame('Adobe', $breach->name);
+        self::assertSame('adobe.com', $breach->domain);
+        self::assertSame('2013-10-04', $breach->breachDate->toDateString());
+        self::assertSame('2013-12-04T00:00:00Z', $breach->addedDate->toIso8601ZuluString());
+        self::assertSame('2022-05-15T23:52:49Z', $breach->modifiedDate->toIso8601ZuluString());
+        self::assertSame(152445165, $breach->pwnCount);
+        self::assertSame(
+            'In October 2013, 153 million Adobe accounts were breached with each containing an internal ID, username, email, <em>encrypted</em> password and a password hint in plain text. The password cryptography was poorly done and many were quickly resolved back to plain text. The unencrypted hints also <a href="http://www.troyhunt.com/2013/11/adobe-credentials-and-serious.html" target="_blank" rel="noopener">disclosed much about the passwords</a> adding further to the risk that hundreds of millions of Adobe customers already faced.',
+            $breach->description,
+        );
+        self::assertEquals($dataClasses, $breach->dataClasses);
+        self::assertTrue($breach->verified);
+        self::assertFalse($breach->fabricated);
+        self::assertFalse($breach->sensitive);
+        self::assertFalse($breach->retired);
+        self::assertFalse($breach->spamList);
+        self::assertFalse($breach->malware);
+        self::assertFalse($breach->subscriptionFree);
+        self::assertSame(
+            'https://haveibeenpwned.com/Content/Images/PwnedLogos/Adobe.png',
+            $breach->logoPath,
+        );
     }
 
     #[Test]
