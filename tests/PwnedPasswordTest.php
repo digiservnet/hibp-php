@@ -2,18 +2,19 @@
 
 namespace Icawebdesign\Hibp\Tests;
 
-use Mockery;
 use GuzzleHttp\Client;
-use GuzzleHttp\Psr7\Request;
-use GuzzleHttp\Psr7\Response;
-use Icawebdesign\Hibp\HibpHttp;
-use PHPUnit\Framework\TestCase;
-use Illuminate\Support\Collection;
 use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\RequestException;
-use Icawebdesign\Hibp\Password\PwnedPassword;
-use Symfony\Component\HttpFoundation\Response as HttpResponse;
+use GuzzleHttp\Psr7\Request;
+use GuzzleHttp\Psr7\Response;
 use Icawebdesign\Hibp\Exception\PaddingHashCollisionException;
+use Icawebdesign\Hibp\HibpHttp;
+use Icawebdesign\Hibp\Password\PwnedPassword;
+use Illuminate\Support\Collection;
+use Mockery;
+use PHPUnit\Framework\Attributes\Test;
+use PHPUnit\Framework\TestCase;
+use Symfony\Component\HttpFoundation\Response as HttpResponse;
 
 class PwnedPasswordTest extends TestCase
 {
@@ -26,7 +27,7 @@ class PwnedPasswordTest extends TestCase
         parent::tearDown();
     }
 
-    /** @test */
+    #[Test]
     public function successful_range_lookup_returns_a_positive_integer(): void
     {
         $list = self::mockPasswordListSha1();
@@ -45,7 +46,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(3861493, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_ntlm_range_lookup_returns_a_positive_integer(): void
     {
         $list = self::mockPasswordListNtlm();
@@ -64,7 +65,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(9659365, $count);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -79,17 +80,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'The hash prefix was not in a valid format',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'The hash prefix was not in a valid format',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->rangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_ntlm_range_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -104,17 +107,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'The hash prefix was not in a valid format',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'The hash prefix was not in a valid format',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->ntlmRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_lookup_throws_a_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -129,17 +134,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'The hash prefix was not in a valid format',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'The hash prefix was not in a valid format',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->rangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_ntlm_range_lookup_throws_a_client_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -154,17 +161,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'The hash prefix was not in a valid format',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'The hash prefix was not in a valid format',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->ntlmRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function successful_range_with_padding_returns_a_positive_integer(): void
     {
         $client = Mockery::mock(Client::class);
@@ -181,7 +190,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(3861493, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_ntlm_range_with_padding_returns_a_positive_integer(): void
     {
         $client = Mockery::mock(Client::class);
@@ -198,7 +207,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(9659365, $count);
     }
 
-    /** @test */
+    #[Test]
     public function failed_range_with_padding_returns_zero(): void
     {
         $client = Mockery::mock(Client::class);
@@ -215,7 +224,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(0, $count);
     }
 
-    /** @test */
+    #[Test]
     public function failed_ntlm_range_with_padding_returns_zero(): void
     {
         $client = Mockery::mock(Client::class);
@@ -232,7 +241,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(0, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_range_with_padding_and_padding_header_returns_a_positive_integer(): void
     {
         $client = Mockery::mock(Client::class);
@@ -256,7 +265,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(3861493, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_ntlm_range_with_padding_and_padding_header_returns_a_positive_integer(): void
     {
         $client = Mockery::mock(Client::class);
@@ -280,7 +289,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(9659365, $count);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_request_with_padding_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -295,17 +304,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'The hash prefix was not in a valid format',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'The hash prefix was not in a valid format',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->paddedRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_ntlm_range_request_with_padding_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -320,17 +331,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'The hash prefix was not in a valid format',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'The hash prefix was not in a valid format',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->paddedNtlmRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_with_padding_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -345,17 +358,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'message',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'message',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->paddedRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_ntlm_range_with_padding_throws_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -370,17 +385,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'message',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'message',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->paddedNtlmRangeFromHash(hash: '&&');
     }
 
-    /** @test */
+    #[Test]
     public function failed_range_lookup_returns_zero(): void
     {
         $client = Mockery::mock(Client::class);
@@ -395,7 +412,7 @@ class PwnedPasswordTest extends TestCase
         self::assertEquals(0, $count);
     }
 
-    /** @test */
+    #[Test]
     public function failed_ntlm_range_lookup_returns_zero(): void
     {
         $client = Mockery::mock(Client::class);
@@ -410,7 +427,7 @@ class PwnedPasswordTest extends TestCase
         self::assertEquals(0, $count);
     }
 
-    /** @test */
+    #[Test]
     public function successful_range_data_lookup_returns_a_valid_collection(): void
     {
         $client = Mockery::mock(Client::class);
@@ -425,7 +442,7 @@ class PwnedPasswordTest extends TestCase
         self::assertGreaterThan(0, $response->last()['count']);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_data_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -440,17 +457,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'message',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'message',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->rangeDataFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_range_data_lookup_throws_a_request_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -465,17 +484,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: 'message',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: 'message',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->rangeDataFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
     }
 
-    /** @test */
+    #[Test]
     public function successful_padded_range_data_lookup_returns_a_valid_collection_with_zero_count_elements(): void
     {
         $client = Mockery::mock(Client::class);
@@ -491,7 +512,7 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(5, $response->last()['count']);
     }
 
-    /** @test */
+    #[Test]
     public function invalid_padded_range_data_request_throws_a_request_exception(): void
     {
         $this->expectException(RequestException::class);
@@ -506,17 +527,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: '',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: '',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->paddedRangeDataFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
     }
 
-    /** @test */
+    #[Test]
     public function invalid_padded_range_data_lookup_throws_a_request_exception(): void
     {
         $this->expectException(ClientException::class);
@@ -531,17 +554,19 @@ class PwnedPasswordTest extends TestCase
         $client
             ->expects('request')
             ->once()
-            ->andThrow(new ClientException(
-                message: '',
-                request: Mockery::mock(Request::class),
-                response: $mockedResponse,
-            ));
+            ->andThrow(
+                new ClientException(
+                    message: '',
+                    request: Mockery::mock(Request::class),
+                    response: $mockedResponse,
+                ),
+            );
 
         $pwnedPassword = new PwnedPassword(new HibpHttp(client: $client));
         $pwnedPassword->paddedRangeDataFromHash('5BAA61E4C9B93F3F0682250B6CF8331B7EE68FD8');
     }
 
-    /** @test */
+    #[Test]
     public function stripped_successful_padded_range_returns_a_valid_collection_without_zero_count_elements(): void
     {
         $hash = self::generateSha1Hash('password');
@@ -558,12 +583,13 @@ class PwnedPasswordTest extends TestCase
         self::assertSame(HttpResponse::HTTP_OK, $pwnedPassword->statusCode);
         self::assertGreaterThan(
             0,
-            PwnedPassword::stripZeroMatchesData($response, $hash)->last()
+            PwnedPassword::stripZeroMatchesData($response, $hash)->last(),
         );
     }
 
-    /** @test */
-    public function stripping_zero_matches_from_response_with_provided_hash_throws_padding_hash_collision_exception(): void
+    #[Test]
+    public function stripping_zero_matches_from_response_with_provided_hash_throws_padding_hash_collision_exception(
+    ): void
     {
         $this->expectException(PaddingHashCollisionException::class);
 
