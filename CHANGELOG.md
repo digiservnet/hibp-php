@@ -2,6 +2,17 @@
 
 ## [Unreleased]
 
+## [6.7.0] - 2026-03-21
+
+### Added
+
+- [Internal] Added PHP CS Fixer to dev dependencies
+- [Internal] Added PHP8.4 to docker setup
+
+### Fixed
+
+- Fixed returning a breach entity. The upstream API now defaults to a truncated (`name` only response)
+
 ## [6.6.1] - 2025-07-17
 
 ### Changed

@@ -13,7 +13,9 @@ use GuzzleHttp\Exception\ClientException;
 use GuzzleHttp\Exception\GuzzleException;
 use GuzzleHttp\Exception\RequestException;
 use Icawebdesign\Hibp\Exception\BreachNotFoundException;
+
 use function trim;
+
 use const JSON_THROW_ON_ERROR;
 
 class Breach implements BreachInterface
@@ -79,7 +81,7 @@ class Breach implements BreachInterface
         try {
             $response = $this->client->request(
                 'GET',
-                sprintf('%s/breach/%s', $this->apiRoot, urlencode($account)),
+                sprintf('%s/breach/%s?truncatedResponse=false', $this->apiRoot, urlencode($account)),
                 $options,
             );
         } catch (ClientException $exception) {

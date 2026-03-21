@@ -1,7 +1,10 @@
 on:
   push:
     branches:
-      - main
+      - '*'
+  pull_request:
+    branches:
+      - 'main'
 
 name: Run test suites & static analysis
 
