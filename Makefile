@@ -22,6 +22,11 @@ php83:
 stan83:
 	@docker compose exec -e XDEBUG_MODE=off -e COMPOSER_ROOT_VERSION=6 -w /opt/project hibp-php-php83 composer stan
 
-start-php83:
-	@docker compose up hibp-php-php83 -d
+start-php84:
+	@docker compose up hibp-php-php84 -d
 
+php84:
+	@docker compose exec -e XDEBUG_MODE=off -e COMPOSER_ROOT_VERSION=6 -w /opt/project hibp-php-php84 /bin/bash
+
+stan84:
+	@docker compose exec -e XDEBUG_MODE=off -e COMPOSER_ROOT_VERSION=6 -w /opt/project hibp-php-php84 composer stan

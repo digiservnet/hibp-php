@@ -23,3 +23,10 @@ services:
     entrypoint: /bin/sh
     tty: true
 
+  hibp-php-php84:
+    container_name: hibp-php-php84
+    image: digiserv/php8-cli:8.4.4-bookworm
+    volumes:
+      - ./:/opt/project
+    entrypoint: /bin/sh
+    tty: true

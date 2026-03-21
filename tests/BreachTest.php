@@ -486,8 +486,7 @@ class BreachTest extends TestCase
 
     #[Test]
     public function getting_filtered_truncated_breached_accounts_returns_a_collection_of_breach_site_truncated_entities(
-    ): void
-    {
+    ): void {
         $client = Mockery::mock(Client::class);
         $client
             ->expects('request')
@@ -647,7 +646,9 @@ class BreachTest extends TestCase
 
     private static function mockSingleAccount(): string
     {
-        $data = file_get_contents(sprintf('%s/_responses/breaches/single_account_breach.json', __DIR__));
+        $data = file_get_contents(
+            sprintf('%s/_responses/breaches/single_account_breach_not_truncated.json', __DIR__),
+        );
 
         return (false !== $data) ? $data : '{}';
     }

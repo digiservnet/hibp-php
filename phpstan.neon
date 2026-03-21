@@ -1,16 +1,6 @@
 parameters:
-    level: 8
+    level: 5
     customRulesetUsed: true
-
-    ignoreErrors:
-        - identifier: missingType.iterableValue
-        - identifier: missingType.generics
-        -
-            message: '#Parameter \#1 \$string of function urlencode expects string, string\|null given\.#'
-            path: src/Breach/Breach.php
-
-        - '#Unable to resolve the template type TMakeKey in call to method static method Illuminate\\Support\\Collection<\(int\|string\),mixed>::make\(\)#'
-        - '#Unable to resolve the template type TMakeValue in call to method static method Illuminate\\Support\\Collection<\(int\|string\),mixed>::make\(\)#'
 
 includes:
     - vendor/phpstan/phpstan-mockery/extension.neon
