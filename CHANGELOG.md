@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [6.8.0] - 2026-04-30
+
+### Added
+
+- Update dependencies to work with Laravel 13
+
 ## [6.7.0] - 2026-03-21
 
 ### Added
