@@ -7,3 +7,4 @@ api.key
 .phpunit.result.cache
 composer.lock
 .phpunit.cache/
+docker-compose.yml
