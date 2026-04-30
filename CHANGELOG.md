@@ -2,6 +2,12 @@
 
 ## [Unreleased]
 
+## [6.8.2] - 2026-04-30
+
+### Added
+
+- Update dependencies to work with Symfony 8
+
 ## [6.8.0] - 2026-04-30
 
 ### Added
