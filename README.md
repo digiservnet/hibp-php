@@ -5,6 +5,12 @@
 [![codecov](https://codecov.io/gh/digiservnet/hibp-php/branch/develop/graph/badge.svg?token=H7GAEEFXLP)](https://codecov.io/gh/digiservnet/hibp-php)
 [![License](https://poser.pugx.org/icawebdesign/hibp-php/license)](https://packagist.org/packages/icawebdesign/hibp-php)
 
+## NOTE: Repo relocation
+
+ℹ️ **This repo is moving to [Codeberg](https://codeberg.org/digiservnet/hibp-php) for various reasons. All future updates will be released at https://codeberg.org/digiservnet/hibp-php.**
+
+---
+
 HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and Pwned Passwords APIs (currently v3).
 
 The HIBP API now requires an [API Key](https://haveibeenpwned.com/API/Key) that needs to be purchased at the HIBP site for any lookups that use an email address. This currently means that if you're only using this package for lookups from the PwnedPassword section of the API, then an API key isn't required.
