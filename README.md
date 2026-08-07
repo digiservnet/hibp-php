@@ -7,7 +7,7 @@
 
 ## NOTE: Repo relocation
 
-This repo is moving to [Codeberg](https://codeberg.org/digiservnet/hibp-php) for various reasons. All future updates will be released at https://codeberg.org/digiservnet/hibp-php.
+**This repo is moving to [Codeberg](https://codeberg.org/digiservnet/hibp-php) for various reasons. All future updates will be released at https://codeberg.org/digiservnet/hibp-php.**
 
 HIBP-PHP is a composer library for accessing the [Have I Been Pwned](https://haveibeenpwned.com) and Pwned Passwords APIs (currently v3).
 
